@@ -25,7 +25,7 @@
         <li
           class="bg-gray-300 px-2 py-2 rounded hover:bg-gray-400 text-black delayed"
         >
-          <NuxtLink to="/ShipmentsTrack">من نحن</NuxtLink>
+          <NuxtLink to="/ShipmentsTrack">المشاريع الجديدة</NuxtLink>
         </li>
         <li
           class="bg-gray-300 px-2 py-2 rounded hover:bg-gray-400 text-black delayed"
