@@ -26,14 +26,18 @@ body {
   color: rgba(0, 0, 0, 0.8);
 }
 
-nav {
-  background: white;
+.nav {
+  background: rgb(238, 236, 236);
 }
 .dark body {
   background-color: #08111a;
-  color: #ebf4f1;
+  color: #5b5e5d;
 }
-.dark nav {
+.dark .nav {
+  @apply bg-sky-950;
+  color: white
+}
+.dark .sidebar {
   @apply bg-sky-950;
 }
 </style>

@@ -3,10 +3,20 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   //...
+  plugins: [
+    '~/plugins/echarts.js'
+  ],
+
+  runtimeConfig: {
+    public: {
+      host: process.env.NUXT_PUBLIC_HOST || '0.0.0.0',
+      port: process.env.NUXT_PUBLIC_PORT ? parseInt(process.env.NUXT_PUBLIC_PORT, 10) : 3000
+    }
+  },
   build: {
     transpile: ['vuetify'],
   },
-  modules: ["@nuxt/ui",
+  modules: ['@nuxtjs/i18n','nuxt-highcharts',"@nuxt/ui",
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
@@ -21,5 +31,38 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
+  },
+  i18n: {
+    lazy: true,
+    langDir: "locales",
+    strategy:"no_prefix",
+    locales: [
+      {
+        code: 'en-US',
+        iso: 'en-US',
+        name: 'English',
+        file: "en-US.json",
+        dir: 'ltr'
+      },
+      {
+        code: 'ar-AR',
+        iso: 'ar-AR',
+        name: 'Arabic',
+        file: "ar-AR.json",
+        dir: 'rtl'
+      },
+    ],
+    defaultLocale: 'en-US',
+
+  },
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap'
+        }
+      ]
+    }
   },
 })

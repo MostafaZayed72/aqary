@@ -1,3 +1,11 @@
 <template>
- <NuxtPage />
+    <NuxtLayout>
+        <NuxtPage />
+    </NuxtLayout>
 </template>
+
+<style>
+body {
+  font-family: 'Cairo', sans-serif;
+}
+</style>
