@@ -25,7 +25,7 @@
         <img class="w-[30%] md:w-[15%] lg:w-[10%] object-contain" src="/assets/images/logo.png" alt="Logo">
 
         <!-- Search -->
-        <input type="text" :placeholder="$t('Search By Companies or code')" class="hidden md:flex rounded-xl pa-2 w-[80%] md:w-[60%] lg:w-[70%]" style="border: 1px solid;">
+        <input type="text" :placeholder="$t('Search By Companies or code')" class="hidden md:flex rounded-xl text-end pa-2 w-[80%] md:w-[60%] lg:w-[70%]" style="border: 1px solid;">
 
         <!-- Color Mode -->
         <!-- Color Mode and language-->
