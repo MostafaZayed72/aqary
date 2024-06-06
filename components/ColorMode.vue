@@ -37,6 +37,10 @@ body {
   @apply bg-sky-950;
   color: white
 }
+.dark .chart {
+  @apply bg-sky-950;
+  color: white
+}
 .dark .sidebar {
   @apply bg-sky-950;
 }

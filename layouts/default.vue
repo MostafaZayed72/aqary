@@ -1,17 +1,66 @@
 <template>
-  <div class="flex h-screen" :class="$i18n.locale === 'ar-AR' ? 'ltr' : 'rtl'">
+  <div class=" h-screen" :class="$i18n.locale === 'ar-AR' ? 'ltr' : 'rtl'">
     <!-- Sidebar -->
     <div :class="sidebarClass" :style="sidebarStyle" class="sidebar px-4 shadow flex flex-col items-center gap-4 h-full transition-none fixed top-0 nav overflow-hidden text-center">
       <!-- Sidebar content -->
       <h1 class="rounded py-4 text-teal-400 delayed hover:text-teal-600 font-bold text-xl cursor-pointer" style="border-bottom: 1px solid;" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">{{ $t('Financial Report') }}</h1>
       <!-- Add other sidebar links here -->
-      <nuxt-link to="" class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full">{{ $t('Market Summary') }}</nuxt-link>
-      <nuxt-link to="" class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full">{{ $t('Sectors') }}</nuxt-link>
-      <nuxt-link to="" class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full">{{ $t('My Shares') }}</nuxt-link>
-      <nuxt-link to="" class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full">{{ $t('Automated analysis') }}</nuxt-link>
-      <nuxt-link to="" class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full">{{ $t('Dividends') }}</nuxt-link>
-      <nuxt-link to="" class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full">{{ $t('Comparisons') }}</nuxt-link>
-      <nuxt-link to="" class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full">{{ $t('News') }}</nuxt-link>
+      <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      :class="{ 'bg-teal-400': activeLink === 'Market Summary' }"
+      @click="setActive('Market Summary')"
+    >
+      {{ $t('Market Summary') }}
+    </nuxt-link>
+    <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      :class="{ 'bg-teal-400': activeLink === 'Sectors' }"
+      @click="setActive('Sectors')"
+    >
+      {{ $t('Sectors') }}
+    </nuxt-link>
+    <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      :class="{ 'bg-teal-400': activeLink === 'My Shares' }"
+      @click="setActive('My Shares')"
+    >
+      {{ $t('My Shares') }}
+    </nuxt-link>
+    <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      :class="{ 'bg-teal-400': activeLink === 'Automated analysis' }"
+      @click="setActive('Automated analysis')"
+    >
+      {{ $t('Automated analysis') }}
+    </nuxt-link>
+    <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      :class="{ 'bg-teal-400': activeLink === 'Dividends' }"
+      @click="setActive('Dividends')"
+    >
+      {{ $t('Dividends') }}
+    </nuxt-link>
+    <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      :class="{ 'bg-teal-400': activeLink === 'Comparisons' }"
+      @click="setActive('Comparisons')"
+    >
+      {{ $t('Comparisons') }}
+    </nuxt-link>
+    <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      :class="{ 'bg-teal-400': activeLink === 'News' }"
+      @click="setActive('News')"
+    >
+      {{ $t('News') }}
+    </nuxt-link>
       <input type="text" :placeholder="$t('Search')" class="flex text-center justify-center md:hidden rounded-xl pa-2  md:w-[60%] lg:w-[70%] w-full mx-auto" style="border: 1px solid;">
 
         
@@ -58,7 +107,8 @@
 export default {
   data() {
     return {
-      isSidebarExpanded: true, // Variable to track whether sidebar is expanded or collapsed
+      isSidebarExpanded: true, 
+      activeLink: 'Market Summary'
     };
   },
   computed: {
@@ -84,6 +134,9 @@ export default {
     toggleSidebar() {
       this.isSidebarExpanded = !this.isSidebarExpanded;
     },
+    setActive(link) {
+      this.activeLink = link;
+    }
   },
 };
 </script>

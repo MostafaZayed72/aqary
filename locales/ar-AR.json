@@ -8,5 +8,15 @@
     "Comparisons": "مقارنات",
     "News":"الأخبار",
     "Financial Report": "التقرير المالي",
-    "Search":"ابحث"
+    "Search":"ابحث",
+    "Shares issued (in millions)":"الأسهم المصدرة (بالمليون)",
+    "Net income (SAR in millions)":"صافي الدخل(ر.س بالمليون)",
+    "Shareholders equity (SAR in millions)":"حقوق المساهمين(ر.س بالمليون)",
+    "Market value (SAR in millions)":"القيمة السوقية(ر.س بالمليون)",
+    "Earnings per share (SAR)":"ربحية السهم (ر.س)",
+    "Book value (SAR)":"القيمة الدفترية(ر.س )",
+    "Number of sectors":"عدد القطاعات",
+    "Profitability repeater":"مكرر الربحية",
+    "Number of listed companies":"عدد الشركات المدرجة",
+    "Book value multiple":"مضاعف القيمة الدفترية"
 }

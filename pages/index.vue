@@ -1,5 +1,7 @@
 <template>
   <div>
+   <stocks />
+   <HomeMainNumbers />
   </div>
 </template>
 
