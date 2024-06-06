@@ -7,59 +7,59 @@
       <!-- Add other sidebar links here -->
       <nuxt-link
       to=""
-      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'Market Summary' }"
       @click="setActive('Market Summary')"
     >
-      {{ $t('Market Summary') }}
+      {{ $t('Market Summary') }} <Icon class="text-2xl" name="arcticons:stockswidget"/>
     </nuxt-link>
     <nuxt-link
       to=""
-      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'Sectors' }"
       @click="setActive('Sectors')"
     >
-      {{ $t('Sectors') }}
+      {{ $t('Sectors') }} <Icon class="text-2xl" name="mingcute:sector-fill" />
     </nuxt-link>
     <nuxt-link
       to=""
-      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'My Shares' }"
       @click="setActive('My Shares')"
     >
-      {{ $t('My Shares') }}
+      {{ $t('My Shares') }} <Icon class="text-2xl" name="streamline:stock"/>
     </nuxt-link>
     <nuxt-link
       to=""
-      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'Automated analysis' }"
       @click="setActive('Automated analysis')"
     >
-      {{ $t('Automated analysis') }}
+      {{ $t('Automated analysis') }} <Icon class="text-2xl" name="emojione-v1:stock-chart"/>
     </nuxt-link>
     <nuxt-link
       to=""
-      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'Dividends' }"
       @click="setActive('Dividends')"
     >
-      {{ $t('Dividends') }}
+      {{ $t('Dividends') }} <Icon class="text-2xl" name="ph:money-wavy-bold"/>
     </nuxt-link>
     <nuxt-link
       to=""
-      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'Comparisons' }"
       @click="setActive('Comparisons')"
     >
-      {{ $t('Comparisons') }}
+      {{ $t('Comparisons') }} <Icon class="text-2xl" name="uil:comparison"/>
     </nuxt-link>
     <nuxt-link
       to=""
-      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full"
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'News' }"
       @click="setActive('News')"
     >
-      {{ $t('News') }}
+      {{ $t('News') }} <Icon class="text-2xl" name="material-symbols:news-sharp"/>
     </nuxt-link>
       <input type="text" :placeholder="$t('Search')" class="flex text-center justify-center md:hidden rounded-xl pa-2  md:w-[60%] lg:w-[70%] w-full mx-auto" style="border: 1px solid;">
 

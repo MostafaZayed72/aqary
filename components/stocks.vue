@@ -1,5 +1,5 @@
 <template>
-  <div id="container" class="chart mx-auto" style="height: 600px; min-width: 310px"></div>
+  <div id="container" class="chart mx-auto" style="height: 600px; min-width: 310px" ></div>
 </template>
 
 <script setup>

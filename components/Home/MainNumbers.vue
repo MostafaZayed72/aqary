@@ -1,6 +1,6 @@
-<template>
-    <v-container class="nav  px-4 py-6 my-10 rounded-lg nav text-center flex justify-between" style="border: 1px solid #ccc;"
-        :style="$i18n.locale == 'ar-AR' ? ' direction:rtl' : ''"><v-row >
+<template> <v-container class="box  px-4 py-6 my-10 rounded-lg  text-center flex justify-between " style="border: 1px solid #ccc;"
+        :style="$i18n.locale == 'ar-AR' ? ' direction:rtl' : ''">
+   <v-row >
             <v-col cols="12" md="6" lg="3">
                 <div class="flex flex-col items-center">
                     <h1 class="text-3xl font-bold">339,260.34
