@@ -58,7 +58,7 @@
                     <h1 class="text-3xl font-bold">16.63
 
                     </h1>
-                    <h1>{{ $t('Profitability repeater') }}</h1>
+                    <h1>{{ $t('Price-earnings ratio') }}</h1>
                 </div>
             </v-col>
 

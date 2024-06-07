@@ -1,11 +1,9 @@
 
 
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
+
 export default defineNuxtConfig({
   //...
-  plugins: [
-    '~/plugins/echarts.js'
-  ],
 
   runtimeConfig: {
     public: {
@@ -26,6 +24,7 @@ export default defineNuxtConfig({
     //...
   ],
   vite: {
+    
     vue: {
       template: {
         transformAssetUrls,

@@ -16,8 +16,9 @@
     "Earnings per share (SAR)":"ربحية السهم (ر.س)",
     "Book value (SAR)":"القيمة الدفترية(ر.س )",
     "Number of sectors":"عدد القطاعات",
-    "Profitability repeater":"مكرر الربحية",
+    "Price-earnings ratio":"مكرر الربحية",
     "Number of listed companies":"عدد الشركات المدرجة",
     "Book value multiple":"مضاعف القيمة الدفترية",
-    "Net Earnings Percentage (PE)":"المكررات الربحية الصافية (PE)"
+    "The Lowest Price To Earning (PE)":"المكررات الربحية الأدنى (PE)",
+    "Company name":"اسم الشركة"
 }
