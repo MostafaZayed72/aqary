@@ -1,7 +1,7 @@
 <template>
   <div class=" h-screen" :class="$i18n.locale === 'ar-AR' ? 'ltr' : 'rtl'">
     <!-- Sidebar -->
-    <div :class="sidebarClass" :style="sidebarStyle" class="sidebar px-4 shadow flex flex-col items-center gap-4 h-full transition-none fixed top-0 nav overflow-hidden text-center">
+    <div :class="sidebarClass" :style="sidebarStyle" class="sidebar hidden px-4 shadow md:flex flex-col items-center gap-4 h-full transition-none fixed top-0 nav overflow-hidden text-center">
       <!-- Sidebar content -->
       <h1 class="rounded py-4 text-teal-400 delayed hover:text-teal-600 font-bold text-xl cursor-pointer" style="border-bottom: 1px solid;" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">{{ $t('Financial Report') }}</h1>
       <!-- Add other sidebar links here -->
@@ -69,29 +69,35 @@
     <!-- Main content container -->
     <div :class="mainContentClass" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
       <!-- Navbar -->
-      <nav class="flex items-center justify-between shadow sticky top-0 nav w-full z-50">
+      <nav class="flex items-center justify-center text-center mx-auto shadow sticky top-0 nav w-full z-50">
         <!-- Logo -->
-        <img class="w-[30%] md:w-[15%] lg:w-[10%] object-contain" src="/assets/images/logo.png" alt="Logo">
+        <img class="w-[20%] md:w-[15%] lg:w-[10%]" src="/assets/images/logo.png" alt="Logo">
 
         <!-- Search -->
         <input type="text" :placeholder="$t('Search By Companies or code')" class="hidden md:flex rounded-xl text-end pa-2 w-[80%] md:w-[60%] lg:w-[70%]" style="border: 1px solid;">
 
         <!-- Color Mode -->
         <!-- Color Mode and language-->
-        <div class="flex gap-2 items-center w-full justify-center md:hidden">       
+         
+        <div class="flex gap-2 items-center w-full justify-center text-center mx-auto md:hidden">      
+          
           <ColorMode />
 <LanguageSelector />
 </div>
-<ColorMode class="hidden md:flex"/>
-<LanguageSelector class="hidden md:flex"/>
+<HomeMenu class="md:hidden"/> 
+
+
+<div class="hidden flex items-center gap-2 md:flex mx-10">
+  <ColorMode />
+<LanguageSelector />
+</div>
         <!-- Toggle Sidebar Button -->
-        <button @click="toggleSidebar" class="p-2 ml-4">
+        <button @click="toggleSidebar" class="p-2 ml-20 hidden md:flex">
           <svg v-if="isSidebarExpanded" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
           </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-          </svg>
+          <Icon class="text-2xl" name="iconamoon:menu-burger-horizontal-bold" v-else />
+          
         </button>
       </nav>
 
@@ -107,8 +113,7 @@
 export default {
   data() {
     return {
-      isSidebarExpanded: true, 
-      activeLink: 'Market Summary'
+      isSidebarExpanded: false, 
     };
   },
   computed: {
