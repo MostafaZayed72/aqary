@@ -53,4 +53,11 @@ body {
 .dark .sidebar {
   @apply bg-sky-950;
 }
+
+.myRow{
+  border-top: 1px solid rgb(226, 223, 223);
+}
+.dark .myRow{
+  border-top: 1px solid white;
+}
 </style>

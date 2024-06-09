@@ -2,7 +2,7 @@
   <nav class="flex items-center justify-between shadow sticky top-0"
     :style="$i18n.locale == 'ar-AR' ? 'direction:rtl;' : 'direction:ltr;'">
     <!-- LOGO -->
-    <img class="w-[25%] md:w-[15%] lg:w-[10%] object-contain" src="/assets/images/logo.png" alt="">
+    <nuxt-link to="/"><img class="w-[25%] md:w-[15%] lg:w-[10%] object-contain cus" src="/assets/images/logo.png" alt=""></nuxt-link>
     <!-- SEARCH -->
     <input type="text" :placeholder="$t('Search By Companies or code')" class="rounded-xl pa-2 w-[80%] relative"
       style="border: 1px solid gainsboro;">
