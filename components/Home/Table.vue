@@ -48,20 +48,34 @@
   const sortKey = ref("");
   const sortOrder = ref("asc"); // 'asc' or 'desc'
   
+  const applySort = () => {
+  if (sortKey.value) {
+    items.value.sort((a, b) => {
+      let compare = 0;
+      if (a[sortKey.value] > b[sortKey.value]) compare = 1;
+      if (a[sortKey.value] < b[sortKey.value]) compare = -1;
+      return sortOrder.value === "asc" ? compare : -compare;
+    });
+  }
+};
+
   const fetchData = async () => {
-    try {
-      const response = await fetch('https://financialmodelingprep.com/api/v3/symbol/NASDAQ?apikey=lGvaDWwz5WCff8M2KPBlzTtlKrUU4YVb');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      items.value = data.slice(0, 60); // أخذ أول 20 سهم فقط
-      console.log(items.value);
-    } catch (err: any) {
-      error.value = err.message;
-      console.error('There was a problem with the fetch operation:', err);
+  try {
+    const response = await fetch('https://financialmodelingprep.com/api/v3/symbol/NASDAQ?apikey=lGvaDWwz5WCff8M2KPBlzTtlKrUU4YVb');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-  };
+    const data = await response.json();
+    // تخزين البيانات في متغير مؤقت
+    items.value = data;
+    console.log(items.value);
+    // قم بفرز البيانات بعد استلامها
+    applySort();
+  } catch (err: any) {
+    error.value = err.message;
+    console.error('There was a problem with the fetch operation:', err);
+  }
+};
   
   onMounted(() => {
     fetchData();
@@ -116,33 +130,26 @@
   ];
   
   const filteredRows = computed(() => {
-    let result = items.value;
-  
-    if (q.value) {
-      result = result.filter((item: any) => {
-        return Object.values(item).some((value) => {
-          return String(value).toLowerCase().includes(q.value.toLowerCase());
-        });
+  let result = [...items.value]; // استنساخ القائمة لتجنب التأثير الجانبي على البيانات الأصلية
+
+  if (q.value) {
+    result = result.filter((item: any) => {
+      return Object.values(item).some((value) => {
+        return String(value).toLowerCase().includes(q.value.toLowerCase());
       });
-    }
-  
-    if (sortKey.value) {
-      result.sort((a, b) => {
-        let compare = 0;
-        if (a[sortKey.value] > b[sortKey.value]) compare = 1;
-        if (a[sortKey.value] < b[sortKey.value]) compare = -1;
-        return sortOrder.value === "asc" ? compare : -compare;
-      });
-    }
-  
-    return result;
-  });
-  
-  const paginatedRows = computed(() => {
-    const start = (page.value - 1) * pageCount.value;
-    const end = start + pageCount.value;
-    return filteredRows.value.slice(start, end);
-  });
+    });
+  }
+
+  applySort(); // Call applySort here to sort the entire dataset
+
+  return result;
+});
+
+const paginatedRows = computed(() => {
+  const start = (page.value - 1) * pageCount.value;
+  const end = start + pageCount.value;
+  return filteredRows.value.slice(start, end);
+});
   
   const totalPages = computed(() => {
     return Math.ceil(filteredRows.value.length / pageCount.value);
