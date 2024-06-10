@@ -40,6 +40,9 @@ body {
   @apply bg-sky-950;
   color: white
 }
+/* .chart{
+  color: black
+} */
 .dark .chart {
   @apply bg-sky-950;
   color: white

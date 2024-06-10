@@ -2,8 +2,9 @@
   <div>
    <stocks />
    <HomeMainNumbers />
-   <!-- <HomeTopCompanies /> -->
-    <HomeTable />
+    <!-- <HomeTable /> -->
+        <HomeTopCompanies />
+
   </div>
 </template>
 
