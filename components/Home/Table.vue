@@ -1,215 +1,81 @@
 <template>
-    <div class="mt-20">
-      <div class="mx-auto w-[50%] lg:w-[30%] px-3 py-3.5 mb-10 border-gray-200 dark:border-gray-700">
-        <UInput v-model="q" placeholder="Filter stocks..." />
-      </div>
-      <div class=" myRow ">
-        <UTable class="w-[95%] mx-auto u-table"  :columns="columns" :rows="paginatedRows">
-          <template #header="{ column }">
-            <span @click="setSort(column.key)" class="cursor-pointer">
-              {{ column.label }}
-              <span v-if="sortKey === column.key">
-                {{ sortOrder === 'asc' ? '↑' : '↓' }}
-              </span>
-            </span>
-          </template>
-          <template #cell="{ column, row }">
-            <span :class="{ 'text-center': column.key === 'name' }">
-              {{ row[column.key] }}
-            </span>
-          </template>
-        </UTable>
-      </div>
-      <hr class="mx-auto my-4 w-[95%] border-t border-gray-200 dark:border-gray-700" />
-      <div class="flex justify-center items-center mt-4">
-      <button @click="goToFirstPage" :disabled="page === 1" class=" px-4 py-2 bg-gray-200 rounded">First</button>
-      <button @click="prevPage" :disabled="page === 1" class=" px-4 py-2 bg-gray-200 rounded">Previous</button>
-      <span class="mx-2">Page {{ page }} of {{ totalPages }}</span>
-      <button @click="nextPage" :disabled="page >= totalPages" class=" px-4 py-2 bg-gray-200 rounded">Next</button>
-      <button @click="goToLastPage" :disabled="page >= totalPages" class="px-4 py-2 bg-gray-200 rounded">Last</button>
-    </div>
-      <p v-if="error" class="text-center text-red font-bold">
-        Error loading stocks: {{ error }}
-      </p>
-      <p v-if="!items.length && !error" class="text-center font-bold">
-        Loading stocks...
-      </p>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref, onMounted, computed } from 'vue';
-  
-  const items = ref([]);
-  const error = ref(null);
-  const q = ref("");
-  const page = ref(1);
-  const pageCount = ref(10); // عدد العناصر في كل صفحة، يمكنك تغييره حسب الرغبة
-  const sortKey = ref("");
-  const sortOrder = ref("asc"); // 'asc' or 'desc'
-  
-  const applySort = () => {
-  if (sortKey.value) {
-    items.value.sort((a, b) => {
-      let compare = 0;
-      if (a[sortKey.value] > b[sortKey.value]) compare = 1;
-      if (a[sortKey.value] < b[sortKey.value]) compare = -1;
-      return sortOrder.value === "asc" ? compare : -compare;
-    });
-  }
-};
+  <v-card title="Stocks" flat class="nav rounded-lg">
+    <template v-slot:text>
+      <v-text-field
+        v-model="search"
+        label="Search"
+        prepend-inner-icon="mdi-magnify"
+        variant="outlined"
+        hide-details
+        single-line
+        class="nav rounded"
+      ></v-text-field>
+    </template>
 
-  const fetchData = async () => {
+    <v-data-table 
+    class="nav rounded-lg"
+      :headers="columns"
+      :items="filteredStocks"
+      :search="search"
+    ></v-data-table>
+  </v-card>
+</template>
+
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+
+const search = ref('');
+const stocks = ref([]);
+const error = ref(null);
+
+const columns = [
+  { key: 'symbol', title: 'Symbol' },
+  { key: 'name', title: 'Name' },
+  { key: 'price', title: 'Price' },
+  { key: 'changesPercentage', title: 'Changes Percentage' },
+  { key: 'change', title: 'Change' },
+  { key: 'dayLow', title: 'Day Low' },
+  { key: 'dayHigh', title: 'Day High' },
+  { key: 'yearHigh', title: 'Year High' },
+  { key: 'yearLow', title: 'Year Low' },
+  { key: 'marketCap', title: 'Market Cap' },
+  { key: 'priceAvg50', title: 'Price Avg 50' },
+  { key: 'priceAvg200', title: 'Price Avg 200' },
+  { key: 'exchange', title: 'Exchange' },
+  { key: 'volume', title: 'Volume' },
+  { key: 'avgVolume', title: 'Avg Volume' },
+  { key: 'open', title: 'Open' },
+  { key: 'previousClose', title: 'Previous Close' },
+  { key: 'eps', title: 'EPS' },
+  { key: 'pe', title: 'PE' },
+  { key: 'earningsAnnouncement', title: 'Earnings Announcement' },
+  { key: 'sharesOutstanding', title: 'Shares Outstanding' },
+  { key: 'timestamp', title: 'Timestamp' },
+];
+
+const fetchStocks = async () => {
   try {
-    const response = await fetch('https://financialmodelingprep.com/api/v3/symbol/NASDAQ?apikey=lGvaDWwz5WCff8M2KPBlzTtlKrUU4YVb');
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+    const response = await fetch(
+      'https://financialmodelingprep.com/api/v3/symbol/NASDAQ?apikey=MzMorahM3ZyGf4IScs3X7OcDcRhlLSbc'
+    );
+    if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
-    // تخزين البيانات في متغير مؤقت
-    items.value = data;
-    console.log(items.value);
-    // قم بفرز البيانات بعد استلامها
-    applySort();
-  } catch (err: any) {
+    stocks.value = data;
+  } catch (err) {
     error.value = err.message;
     console.error('There was a problem with the fetch operation:', err);
   }
 };
-  
-  onMounted(() => {
-    fetchData();
-  });
-  
-  const columns = [
-    {
-      key: "symbol", label: "Symbol", sortable: true,
-    },
-    { key: "name", label: "Name",   sortable: true,
-   },
-    { key: "price", label: "Price",  sortable: true,
-  },
-    { key: "changesPercentage", label: "Changes Percentage",   sortable: true,
-   },
-    { key: "change", label: "Change",   sortable: true,
-   },
-    { key: "dayLow", label: "Day Low",   sortable: true,
-   },
-    { key: "dayHigh", label: "Day High",   sortable: true,
-   },
-    { key: "yearHigh", label: "Year High",   sortable: true,
-   },
-    { key: "yearLow", label: "Year Low",   sortable: true,
-   },
-    { key: "marketCap", label: "Market Cap",   sortable: true,
-   },
-    { key: "priceAvg50", label: "Price Avg 50",   sortable: true,
-   },
-    { key: "priceAvg200", label: "Price Avg 200",   sortable: true,
-   },
-    { key: "exchange", label: "Exchange",   sortable: true,
-   },
-    { key: "volume", label: "Volume",   sortable: true,
-   },
-    { key: "avgVolume", label: "Avg Volume",   sortable: true,
-   },
-    { key: "open", label: "Open",   sortable: true,
-   },
-    { key: "previousClose", label: "Previous Close",   sortable: true,
-   },
-    { key: "eps", label: "EPS",   sortable: true,
-   },
-    { key: "pe", label: "PE",   sortable: true,
-   },
-    { key: "earningsAnnouncement", label: "Earnings Announcement",   sortable: true,
-   },
-    { key: "sharesOutstanding", label: "Shares Outstanding",   sortable: true,
-   },
-    { key: "timestamp", label: "Timestamp",   sortable: true,
-   },
-  ];
-  
-  const filteredRows = computed(() => {
-  let result = [...items.value]; // استنساخ القائمة لتجنب التأثير الجانبي على البيانات الأصلية
 
-  if (q.value) {
-    result = result.filter((item: any) => {
-      return Object.values(item).some((value) => {
-        return String(value).toLowerCase().includes(q.value.toLowerCase());
-      });
-    });
-  }
-
-  applySort(); // Call applySort here to sort the entire dataset
-
-  return result;
+onMounted(() => {
+  fetchStocks();
 });
 
-const paginatedRows = computed(() => {
-  const start = (page.value - 1) * pageCount.value;
-  const end = start + pageCount.value;
-  return filteredRows.value.slice(start, end);
+const filteredStocks = computed(() => {
+  return stocks.value.filter(stock =>
+    Object.values(stock).some(value =>
+      String(value).toLowerCase().includes(search.value.toLowerCase())
+    )
+  );
 });
-  
-  const totalPages = computed(() => {
-    return Math.ceil(filteredRows.value.length / pageCount.value);
-  });
-  
-  const selected = ref([]);
-  
-  const nextPage = () => {
-    if (page.value < totalPages.value) {
-      page.value++;
-    }
-  };
-  
-  const prevPage = () => {
-    if (page.value > 1) {
-      page.value--;
-    }
-  };
-  
-  const setSort = (key) => {
-    if (sortKey.value === key) {
-      sortOrder.value = sortOrder.value === "asc" ? "desc" : "asc";
-    } else {
-      sortKey.value = key;
-      sortOrder.value = "asc";
-    }
-  };
-  const goToFirstPage = () => {
-  page.value = 1;
-};
-
-const goToLastPage = () => {
-  page.value = totalPages.value;
-};
-
-  </script>
-  
-  <style>
-  input[type="checkbox" i] {
-    cursor: pointer;
-    appearance: auto;
-    box-sizing: border-box;
-    margin: 3px 3px 3px 4px;
-    padding: initial;
-    border: initial;
-  }
-  .text-center {
-    text-align: center;
-  }
-  
-  .text-left{
-    text-align: center !important;
-  }
-  .u-table th, .u-table td {
-    border-right: 1px solid #ddd; /* يمكنك تغيير اللون إلى ما يناسبك */
-  }
-  
-  .u-table th:last-child, .u-table td:last-child {
-    border-right: none; /* إزالة الخط الرأسي من آخر عمود */
-  }
-  
-  </style>
-  
+</script>
