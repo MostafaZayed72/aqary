@@ -1,9 +1,9 @@
 <template>
-  <v-card title="Stocks" flat class="nav rounded-lg">
+  <v-card :title="$t('Stocks Filter')" flat class="nav rounded-lg text-center">
     <template v-slot:text>
       <v-text-field
         v-model="search"
-        label="Search"
+        :label="$t('Search')"
         prepend-inner-icon="mdi-magnify"
         variant="outlined"
         hide-details
@@ -23,34 +23,34 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-
 const search = ref('');
 const stocks = ref([]);
 const error = ref(null);
+const { t } = useI18n();
 
 const columns = [
-  { key: 'symbol', title: 'Symbol' },
-  { key: 'name', title: 'Name' },
-  { key: 'price', title: 'Price' },
-  { key: 'changesPercentage', title: 'Changes Percentage' },
-  { key: 'change', title: 'Change' },
-  { key: 'dayLow', title: 'Day Low' },
-  { key: 'dayHigh', title: 'Day High' },
-  { key: 'yearHigh', title: 'Year High' },
-  { key: 'yearLow', title: 'Year Low' },
-  { key: 'marketCap', title: 'Market Cap' },
-  { key: 'priceAvg50', title: 'Price Avg 50' },
-  { key: 'priceAvg200', title: 'Price Avg 200' },
-  { key: 'exchange', title: 'Exchange' },
-  { key: 'volume', title: 'Volume' },
-  { key: 'avgVolume', title: 'Avg Volume' },
-  { key: 'open', title: 'Open' },
-  { key: 'previousClose', title: 'Previous Close' },
-  { key: 'eps', title: 'EPS' },
-  { key: 'pe', title: 'PE' },
-  { key: 'earningsAnnouncement', title: 'Earnings Announcement' },
-  { key: 'sharesOutstanding', title: 'Shares Outstanding' },
-  { key: 'timestamp', title: 'Timestamp' },
+{ key: 'symbol', title: t('Symbol') },
+  { key: 'name', title: t('Name') },
+  { key: 'price', title: t('Price') },
+  { key: 'changesPercentage', title: t('Changes Percentage') },
+  { key: 'change', title: t('Change') },
+  { key: 'dayLow', title: t('Day Low') },
+  { key: 'dayHigh', title: t('Day High') },
+  { key: 'yearHigh', title: t('Year High') },
+  { key: 'yearLow', title: t('Year Low') },
+  { key: 'marketCap', title: t('Market Cap') },
+  { key: 'priceAvg50', title: t('Price Avg 50') },
+  { key: 'priceAvg200', title: t('Price Avg 200') },
+  { key: 'exchange', title: t('Exchange') },
+  { key: 'volume', title: t('Volume') },
+  { key: 'avgVolume', title: t('Avg Volume') },
+  { key: 'open', title: t('Open') },
+  { key: 'previousClose', title: t('Previous Close') },
+  { key: 'eps', title: t('EPS') },
+  { key: 'pe', title: t('PE') },
+  { key: 'earningsAnnouncement', title: t('Earnings Announcement') },
+  { key: 'sharesOutstanding', title: t('Shares Outstanding') },
+  { key: 'timestamp', title: t('Timestamp') },
 ];
 
 const fetchStocks = async () => {
