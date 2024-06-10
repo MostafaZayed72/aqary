@@ -29,6 +29,9 @@ body {
 .nav {
   background: rgb(238, 236, 236);
 }
+.navy {
+  background: rgb(238, 236, 236);
+}
 .box {
   background: rgb(238, 236, 236);
 }
@@ -40,9 +43,14 @@ body {
   @apply bg-sky-950;
   color: white
 }
-/* .chart{
-  color: black
-} */
+.dark .navy {
+  @apply bg-teal-700;
+  color: white
+}
+
+.chart{
+  background: rgb(238, 236, 236);
+}
 .dark .chart {
   @apply bg-sky-950;
   color: white
@@ -50,8 +58,6 @@ body {
 .dark .box {
   @apply bg-sky-950;
   @apply text-teal-400;
-  
-
 }
 .dark .sidebar {
   @apply bg-sky-950;

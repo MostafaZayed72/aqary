@@ -1,5 +1,5 @@
 <template>
-  <v-card :title="$t('Stocks Filter')" flat class="nav rounded-lg text-center">
+  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center">
     <template v-slot:text>
       <v-text-field
         v-model="search"
@@ -8,13 +8,13 @@
         variant="outlined"
         hide-details
         single-line
-        class="nav rounded"
+        class="navy rounded"
       ></v-text-field>
     </template>
 
     <v-data-table 
-    class="nav rounded-lg"
-      :headers="columns"
+      class="navy rounded-lg"
+      :headers="translatedColumns"
       :items="filteredStocks"
       :search="search"
     ></v-data-table>
@@ -22,35 +22,37 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
 const search = ref('');
 const stocks = ref([]);
 const error = ref(null);
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const columns = [
-{ key: 'symbol', title: t('Symbol') },
-  { key: 'name', title: t('Name') },
-  { key: 'price', title: t('Price') },
-  { key: 'changesPercentage', title: t('Changes Percentage') },
-  { key: 'change', title: t('Change') },
-  { key: 'dayLow', title: t('Day Low') },
-  { key: 'dayHigh', title: t('Day High') },
-  { key: 'yearHigh', title: t('Year High') },
-  { key: 'yearLow', title: t('Year Low') },
-  { key: 'marketCap', title: t('Market Cap') },
-  { key: 'priceAvg50', title: t('Price Avg 50') },
-  { key: 'priceAvg200', title: t('Price Avg 200') },
-  { key: 'exchange', title: t('Exchange') },
-  { key: 'volume', title: t('Volume') },
-  { key: 'avgVolume', title: t('Avg Volume') },
-  { key: 'open', title: t('Open') },
-  { key: 'previousClose', title: t('Previous Close') },
-  { key: 'eps', title: t('EPS') },
-  { key: 'pe', title: t('PE') },
-  { key: 'earningsAnnouncement', title: t('Earnings Announcement') },
-  { key: 'sharesOutstanding', title: t('Shares Outstanding') },
-  { key: 'timestamp', title: t('Timestamp') },
+  { key: 'symbol', titleKey: 'Symbol' },
+  { key: 'name', titleKey: 'Name' },
+  { key: 'price', titleKey: 'Price' },
+  { key: 'changesPercentage', titleKey: 'Changes Percentage' },
+  { key: 'change', titleKey: 'Change' },
+  { key: 'dayLow', titleKey: 'Day Low' },
+  { key: 'dayHigh', titleKey: 'Day High' },
+  { key: 'yearHigh', titleKey: 'Year High' },
+  { key: 'yearLow', titleKey: 'Year Low' },
+  { key: 'marketCap', titleKey: 'Market Cap' },
+  { key: 'priceAvg50', titleKey: 'Price Avg 50' },
+  { key: 'priceAvg200', titleKey: 'Price Avg 200' },
+  { key: 'exchange', titleKey: 'Exchange' },
+  { key: 'volume', titleKey: 'Volume' },
+  { key: 'avgVolume', titleKey: 'Avg Volume' },
+  { key: 'open', titleKey: 'Open' },
+  { key: 'previousClose', titleKey: 'Previous Close' },
+  { key: 'eps', titleKey: 'EPS' },
+  { key: 'pe', titleKey: 'PE' },
+  { key: 'earningsAnnouncement', titleKey: 'Earnings Announcement' },
+  { key: 'sharesOutstanding', titleKey: 'Shares Outstanding' },
+  { key: 'timestamp', titleKey: 'Timestamp' },
 ];
 
 const fetchStocks = async () => {
@@ -71,6 +73,17 @@ onMounted(() => {
   fetchStocks();
 });
 
+const translatedColumns = computed(() => {
+  return columns.map(col => ({
+    ...col,
+    title: t(col.titleKey)
+  }));
+});
+
+watch(locale, () => {
+  // تحديث العناوين عند تغيير اللغة
+});
+
 const filteredStocks = computed(() => {
   return stocks.value.filter(stock =>
     Object.values(stock).some(value =>
@@ -79,3 +92,4 @@ const filteredStocks = computed(() => {
   );
 });
 </script>
+

@@ -3,7 +3,7 @@
     <Icon name="ic:baseline-language" class="w-6 h-6 cursor-pointer" @click="showOptions = !showOptions" />
     <div v-if="showOptions" class="options-container" :class="$i18n.locale == 'ar-AR' ?   'text-end right-0': 'left-0'">
       <div v-for="item in locales" :key="item" @click="selectLanguage(item)">
-        <NuxtLink to="" class="hover:bg-teal-400 block py-2 px-4 rounded text-black"> {{ item === 'ar-AR' ?
+        <NuxtLink  to="" class="hover:bg-teal-400 block py-2 px-4 rounded text-black"> {{ item === 'ar-AR' ?
           'العربية' : 'English' }}</NuxtLink>
       </div>
     </div>
@@ -14,7 +14,9 @@
 
 const { locale, setLocale } = useI18n();
 const locales = ['ar-AR', 'en-US'];
-
+const reloadPage = () => {
+  window.location.reload();
+};
 // const selectedLanguage = locale.value;
 const showOptions = ref(false);
 

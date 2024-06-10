@@ -3,7 +3,7 @@
    <stocks />
    <HomeMainNumbers />
     <HomeTable />
-        <HomeTopCompanies />
+        <!-- <HomeTopCompanies /> -->
 
   </div>
 </template>
