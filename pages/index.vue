@@ -2,7 +2,7 @@
   <div>
    <stocks />
    <HomeMainNumbers />
-    <!-- <HomeTable /> -->
+    <HomeTable />
         <HomeTopCompanies />
 
   </div>

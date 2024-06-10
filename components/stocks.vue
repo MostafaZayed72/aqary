@@ -13,7 +13,7 @@ const symbol = ref();
 async function fetchData() {
   try {
     const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/historical-price-full/ZOUSX?apikey=MzMorahM3ZyGf4IScs3X7OcDcRhlLSbc'
+      'https://financialmodelingprep.com/api/v3/historical-price-full/2222.SR?apikey=Y7XCNvyL9hb1aHHu548kyeyVLff2Jr4j'
     );
     const json = await response.json();
     data.value = json.historical.slice(0, 50);
@@ -89,54 +89,54 @@ if (process.client) {
         }, {
           title: {
             text: 'Volume',
-            style: {
-              color: '#45c8ff'
-            }
-          },
-          labels: {
-            style: {
-              color: '#45c8ff'
-            }
-          },
-          top: '65%',
-          height: '35%',
-          offset: 0,
-          lineWidth: 2
-        }],
-        series: [{
-          type: 'candlestick',
-          name: 'Stock Price',
-          data: priceData,
-          tooltip: {
-            valueDecimals: 2
-          },
-          yAxis: 0
-        }, {
-          type: 'column',
-          name: 'Volume',
-          data: volumeData,
-          yAxis: 1
-        }],
-        plotOptions: {
-          candlestick: {
-            color: '#FF0000',
-            upColor: '#00FF00'
-          }
-        },
-        legend: {
-          itemStyle: {
-            color: '#45c8ff'
-          }
-        }
-      });
-    }
-  });
+            style:{
+              color:'#45c8ff' 
+             } 
+         }, 
+         top:'65%', 
+         height:'35%', 
+         offset :0, 
+         lineWidth :2  
+       }],
+       series:[{
+         type:'candlestick', 
+         name:'Stock Price', 
+         data :priceData, 
+         tooltip:{
+           valueDecimals :2  
+         },  
+         yAxis :0,  
+         upColor:'#00FF00', // لون الشموع الخضراء (Up)
+         color:'#FF0000' // لون الشموع الحمراء (Down)
+       },{
+         type :'column', 
+         name :'Volume', 
+         data :volumeData,  
+         yAxis :1,  
+         color:'#45c8ff' // لون الفوليوم الأخضر (Up)
+       }],
+       plotOptions:{
+           series:{
+             dataGrouping:{
+               enabled:false // or groupPixelWidth :10
+             },
+             turboThreshold :0 // or a higher value like 1000
+           }
+       },
+       legend:{
+           itemStyle:{
+               color:'#45c8ff'   
+           }   
+       }   
+     });
+   }
+ });
 }
 </script>
 
 <style scoped>
-#container {
-  height: 600px;
-  min-width: 310px;
+#container{
+   height :600px;    
+   min-width :310px;    
 }
 </style>
