@@ -1,6 +1,6 @@
 <template>
   <v-card class="mb-6 rounded-lg nav">
-    <v-img :src="article.image"  style="border-radius: 10px; width: 380px;"/>
+    <v-img :src="article.image" class="w-100 "  style="border-radius: 10px; "/>
     <v-card-title class="text-lg font-bold">{{ article.title }}</v-card-title>
     <v-card-subtitle class="text-blue">{{ article.date }}</v-card-subtitle>
     <v-card-text>
