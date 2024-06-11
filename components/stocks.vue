@@ -1,5 +1,5 @@
 <template>
-  <div id="container" class="chart mx-auto" style="height: 600px; min-width: 310px;"></div>
+  <div id="container" class="chart mx-auto rounded-lg w-[90%]" style="height: 600px; min-width: 310px;"></div>
 </template>
 
 <script setup>
@@ -54,21 +54,21 @@ if (process.client) {
         rangeSelector: {
           selected: 1,
           inputStyle: {
-            color: 'black', // تغيير لون النص في حقول الإدخال إلى الأسود
+            color: '#2caffe', // تغيير لون النص في حقول الإدخال إلى الأسود
           },
 
         },
         title: {
           text: `${symbol.value} Price and Volume`,
           style: {
-            color: 'black'
+            color: '#2caffe'
           }
         },
         xAxis: {
           type: 'datetime',
           labels: {
             style: {
-              color: 'black'
+              color: '#2caffe'
             }
           }
         },
@@ -76,12 +76,12 @@ if (process.client) {
           title: {
             text: 'Price',
             style: {
-              color: 'black'
+              color: '#2caffe'
             }
           },
           labels: {
             style: {
-              color: 'black'
+              color: '#2caffe'
             }
           },
           height: '60%',
@@ -90,7 +90,7 @@ if (process.client) {
           title: {
             text: 'Volume',
             style:{
-              color:'black' 
+              color:'#2caffe' 
              } 
          }, 
          top:'65%', 
@@ -113,7 +113,7 @@ if (process.client) {
          name :'Volume', 
          data :volumeData,  
          yAxis :1,  
-         color:'black' // لون الفوليوم الأخضر (Up)
+         color:'#2caffe' // لون الفوليوم الأخضر (Up)
        }],
        plotOptions:{
            series:{
@@ -125,7 +125,7 @@ if (process.client) {
        },
        legend:{
            itemStyle:{
-               color:'black'   
+               color:'#2caffe'   
            }   
        }   
      });

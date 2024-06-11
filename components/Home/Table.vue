@@ -1,5 +1,5 @@
 <template>
-  <v-card :title="$t('Stocks Filter')" flat class="nav rounded-lg text-center">
+  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto w-[90%]">
     <template v-slot:text>
       <v-text-field
         v-model="search"
@@ -8,12 +8,12 @@
         variant="outlined"
         hide-details
         single-line
-        class="nav rounded"
+        class="navy rounded"
       ></v-text-field>
     </template>
 
     <v-data-table 
-      class="nav rounded-lg"
+      class="navy rounded-lg"
       :headers="translatedColumns"
       :items="filteredStocks"
       :search="search"
@@ -87,7 +87,7 @@ watch(locale, () => {
 const filteredStocks = computed(() => {
   return stocks.value.filter(stock =>
     Object.values(stock).some(value =>
-      String(value).toLowerCase().includes(search.value.toLowerCase())
+      String(value).toLowerCase().startsWith(search.value.toLowerCase())
     )
   );
 });

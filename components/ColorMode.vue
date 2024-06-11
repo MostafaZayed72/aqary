@@ -40,11 +40,11 @@ body {
   color: #5b5e5d;
 }
 .dark .nav {
-  @apply bg-teal-700;
+  @apply bg-dark1;
   color: white
 }
 .dark .navy {
-  @apply bg-teal-700;
+  @apply bg-dark1;
   color: white
 }
 
@@ -52,15 +52,15 @@ body {
   background: rgb(238, 236, 236);
 }
 .dark .chart {
-  @apply bg-teal-700;
+  @apply bg-dark1;
   color: white
 }
 .dark .box {
-  @apply bg-teal-700;
+  @apply bg-dark1;
   @apply text-white;
 }
 .dark .sidebar {
-  @apply bg-teal-700;
+  @apply bg-dark1;
 }
 
 .myRow{

@@ -4,6 +4,7 @@
    <HomeMainNumbers />
     <HomeTable />
         <!-- <HomeTopCompanies /> -->
+         <HomeNews class="mt-10"/>
 
   </div>
 </template>
