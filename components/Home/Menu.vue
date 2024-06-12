@@ -1,6 +1,6 @@
 <template>
     <div class="text-center" >
-      <v-menu open-on-hover>
+      <v-menu open-on-click>
         <template v-slot:activator="{ props }">
           <Icon class="text-2xl cursor-pointer" name="iconamoon:menu-burger-horizontal-bold" v-bind="props" />
         </template>
