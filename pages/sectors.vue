@@ -1,5 +1,6 @@
 <template>
-  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto w-[90%]">
+  
+  <v-card :title="$t('Filter stocks by sectors')" flat class="navy rounded-lg text-center mx-auto w-[90%]">
     <template v-slot:text>
       <v-text-field
         v-model="search"
@@ -17,7 +18,21 @@
       :headers="translatedColumns"
       :items="filteredStocks"
       :search="search"
-    ></v-data-table>
+    >
+      <template #item.{item}>
+        <td class="text-center">{{ item.symbol }}</td>
+        <td class="text-center">{{ item.companyName }}</td>
+        <td class="text-center">{{ item.price }}</td>
+        <td class="text-center">{{ item.lastAnnualDividend }}</td>
+        <td class="text-center">{{ item.volume }}</td>
+        <td class="text-center">{{ item.exchangeShortName }}</td>
+        <td class="text-center">{{ item.country }}</td>
+        <td class="text-center">{{ item.sector }}</td>
+        <td class="text-center">{{ item.industry }}</td>
+        <td class="text-center">{{ item.marketCap }}</td>
+        <td class="text-center">{{ item.beta }}</td>
+      </template>
+    </v-data-table>
   </v-card>
 </template>
 
@@ -32,37 +47,25 @@ const { t, locale } = useI18n();
 
 const columns = [
   { key: 'symbol', titleKey: 'Symbol' },
-  { key: 'name', titleKey: 'Name' },
+  { key: 'companyName', titleKey: 'Company Name' },
   { key: 'price', titleKey: 'Price' },
-  { key: 'changesPercentage', titleKey: 'Changes Percentage' },
-  { key: 'change', titleKey: 'Change' },
-  { key: 'dayLow', titleKey: 'Day Low' },
-  { key: 'dayHigh', titleKey: 'Day High' },
-  { key: 'yearHigh', titleKey: 'Year High' },
-  { key: 'yearLow', titleKey: 'Year Low' },
-  { key: 'marketCap', titleKey: 'Market Cap' },
-  { key: 'priceAvg50', titleKey: 'Price Avg 50' },
-  { key: 'priceAvg200', titleKey: 'Price Avg 200' },
-  { key: 'exchange', titleKey: 'Exchange' },
+  { key: 'lastAnnualDividend', titleKey: 'Last Annual Dividend' },
   { key: 'volume', titleKey: 'Volume' },
-  { key: 'avgVolume', titleKey: 'Avg Volume' },
-  { key: 'open', titleKey: 'Open' },
-  { key: 'previousClose', titleKey: 'Previous Close' },
-  { key: 'eps', titleKey: 'EPS' },
-  { key: 'pe', titleKey: 'PE' },
-  { key: 'earningsAnnouncement', titleKey: 'Earnings Announcement' },
-  { key: 'sharesOutstanding', titleKey: 'Shares Outstanding' },
-  { key: 'timestamp', titleKey: 'Timestamp' },
+  { key: 'exchangeShortName', titleKey: 'Exchange' },
+  { key: 'sector', titleKey: 'Sector' },
+  { key: 'industry', titleKey: 'Industry' },
+  { key: 'marketCap', titleKey: 'Market Cap' },
+  { key: 'beta', titleKey: 'Beta' },
 ];
 
 const fetchStocks = async () => {
   try {
     const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/symbol/NASDAQ?apikey=lGvaDWwz5WCff8M2KPBlzTtlKrUU4YVb'
+      'https://financialmodelingprep.com/api/v3/stock-screener?apikey=lGvaDWwz5WCff8M2KPBlzTtlKrUU4YVb'
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
-    stocks.value = data;
+    stocks.value = data.slice(0,50);
   } catch (err) {
     error.value = err.message;
     console.error('There was a problem with the fetch operation:', err);
@@ -76,7 +79,8 @@ onMounted(() => {
 const translatedColumns = computed(() => {
   return columns.map(col => ({
     ...col,
-    title: t(col.titleKey)
+    title: t(col.titleKey),
+    align: 'center' // تحديد مركز النص
   }));
 });
 
@@ -92,4 +96,3 @@ const filteredStocks = computed(() => {
   );
 });
 </script>
-

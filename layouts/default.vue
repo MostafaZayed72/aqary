@@ -14,7 +14,7 @@
       {{ $t('Market Summary') }} <Icon class="text-2xl" name="arcticons:stockswidget"/>
     </nuxt-link>
     <nuxt-link
-      to=""
+      to="/sectors"
       class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'Sectors' }"
       @click="setActive('Sectors')"

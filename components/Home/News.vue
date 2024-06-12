@@ -19,7 +19,7 @@
   
   onMounted(async () => {
     try {
-      const response = await fetch('https://financialmodelingprep.com/api/v3/fmp/articles?page=0&size=5&apikey=Y7XCNvyL9hb1aHHu548kyeyVLff2Jr4j');
+      const response = await fetch('https://financialmodelingprep.com/api/v3/fmp/articles?page=0&size=5&apikey=lGvaDWwz5WCff8M2KPBlzTtlKrUU4YVb');
       const data = await response.json();
       articles.value = data.content.map(article => ({
         title: article.title,

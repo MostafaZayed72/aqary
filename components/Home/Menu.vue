@@ -1,10 +1,10 @@
 <template>
-    <div class="text-center">
+    <div class="text-center" >
       <v-menu open-on-hover>
         <template v-slot:activator="{ props }">
           <Icon class="text-2xl cursor-pointer" name="iconamoon:menu-burger-horizontal-bold" v-bind="props" />
         </template>
-        <v-list>
+        <v-list :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
           <v-list-item >
             <v-list-item-title>
               <nuxt-link @click="setActive('market-summary')" :class="{ active: activeItem === 'market-summary' }"
@@ -19,12 +19,72 @@
           <v-list-item >
             <v-list-item-title>
               <nuxt-link @click="setActive('sectors')" :class="{ active: activeItem === 'sectors' }"
-                to="#"
+                to="/sectors"
                 class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
               >
                 {{ $t('Sectors') }}
                 <Icon class="text-2xl" name="mingcute:sector-fill" />
               </nuxt-link>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item >
+            <v-list-item-title>
+              <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
+      :class="{ 'bg-teal-400': activeLink === 'My Shares' }"
+      @click="setActive('My Shares')"
+    >
+      {{ $t('My Shares') }} <Icon class="text-2xl" name="streamline:stock"/>
+    </nuxt-link>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item >
+            <v-list-item-title>
+              <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
+      :class="{ 'bg-teal-400': activeLink === 'Automated analysis' }"
+      @click="setActive('Automated analysis')"
+    >
+      {{ $t('Automated analysis') }} <Icon class="text-2xl" name="emojione-v1:stock-chart"/>
+    </nuxt-link>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item >
+            <v-list-item-title>
+              <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
+      :class="{ 'bg-teal-400': activeLink === 'Dividends' }"
+      @click="setActive('Dividends')"
+    >
+      {{ $t('Dividends') }} <Icon class="text-2xl" name="ph:money-wavy-bold"/>
+    </nuxt-link>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item >
+            <v-list-item-title>
+              <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
+      :class="{ 'bg-teal-400': activeLink === 'Comparisons' }"
+      @click="setActive('Comparisons')"
+    >
+      {{ $t('Comparisons') }} <Icon class="text-2xl" name="uil:comparison"/>
+    </nuxt-link>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item >
+            <v-list-item-title>
+              <nuxt-link
+      to=""
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
+      :class="{ 'bg-teal-400': activeLink === 'News' }"
+      @click="setActive('News')"
+    >
+      {{ $t('News') }} <Icon class="text-2xl" name="material-symbols:news-sharp"/>
+    </nuxt-link>
             </v-list-item-title>
           </v-list-item>
         </v-list>

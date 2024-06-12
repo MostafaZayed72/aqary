@@ -13,7 +13,7 @@ const symbol = ref();
 async function fetchData() {
   try {
     const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/historical-price-full/2222.SR?apikey=Y7XCNvyL9hb1aHHu548kyeyVLff2Jr4j'
+      'https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?apikey=lGvaDWwz5WCff8M2KPBlzTtlKrUU4YVb'
     );
     const json = await response.json();
     data.value = json.historical.slice(0, 50);

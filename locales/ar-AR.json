@@ -42,5 +42,12 @@
     "EPS":"ربحية السهم",
     "Earnings Announcement":"إعلان الأرباح",
     "Shares Outstanding":"الأسهم المعلقة",
-    "Timestamp":"الطابع الزمني"
+    "Timestamp":"الطابع الزمني",
+    "More News":"المزيد من الأخبار",
+    "Filter stocks by sectors":"فلترة الأسهم حسب القطاع",
+    "Company Name":"اسم الشركة",
+    "Last Annual Dividend":"آخر توزيع أرباح سنوي",
+    "Sector":"القطاع",
+    "Industry":"الصناعة",
+    "Beta":"معدل تقلب السهم"
 }
