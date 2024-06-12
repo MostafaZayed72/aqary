@@ -6,7 +6,7 @@
       <h1 class="rounded py-4 text-teal-400 delayed hover:text-teal-600 font-bold text-xl cursor-pointer" style="border-bottom: 1px solid;" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">{{ $t('Financial Report') }}</h1>
       <!-- Add other sidebar links here -->
       <nuxt-link
-      to=""
+      to="/"
       class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'Market Summary' }"
       @click="setActive('Market Summary')"
@@ -106,6 +106,7 @@
         <slot />
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 

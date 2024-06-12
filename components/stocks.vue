@@ -1,5 +1,5 @@
 <template>
-  <div id="container" class="chart mx-auto rounded-lg w-100 md:w-[90%]" style="height: 600px; min-width: 310px;"></div>
+  <div id="container" class="chart mx-auto rounded-lg sm:w-100 md:w-[90%]" style="height: 600px; min-width: 310px;"></div>
 </template>
 
 <script setup>

@@ -1,5 +1,5 @@
 <template>
-  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto w-100 md:w-[90%]">
+  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
     <template v-slot:text>
       <v-text-field
         v-model="search"

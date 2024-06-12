@@ -8,7 +8,7 @@
           <v-list-item >
             <v-list-item-title>
               <nuxt-link @click="setActive('market-summary')" :class="{ active: activeItem === 'market-summary' }"
-                to="#"
+                to="/"
                 class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
               >
                 {{ $t('Market Summary') }}
