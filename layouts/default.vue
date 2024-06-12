@@ -106,7 +106,7 @@
         <slot />
       </div>
     </div>
-    <Footer class="sticky bottom-0"/>
+    <Footer />
   </div>
 </template>
 
