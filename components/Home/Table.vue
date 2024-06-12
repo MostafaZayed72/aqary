@@ -17,18 +17,28 @@
       :headers="translatedColumns"
       :items="filteredStocks"
       :search="search"
-    ></v-data-table>
+      item-value="symbol"
+    >
+      <template v-slot:item.symbol="{ item }">
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
+      </template>
+      <template v-slot:item.name="{ item }">
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.name }}</a>
+      </template>
+    </v-data-table>
   </v-card>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 const search = ref('');
 const stocks = ref([]);
 const error = ref(null);
 const { t, locale } = useI18n();
+const router = useRouter();
 
 const columns = [
   { key: 'symbol', titleKey: 'Symbol' },
@@ -91,5 +101,15 @@ const filteredStocks = computed(() => {
     )
   );
 });
+
+const navigateToStock = (symbol) => {
+  router.push(`/stocks/${symbol}`);
+};
 </script>
 
+<style scoped>
+#container {
+  height: 600px;
+  min-width: 310px;
+}
+</style>

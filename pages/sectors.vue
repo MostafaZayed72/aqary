@@ -1,5 +1,4 @@
 <template>
-  
   <v-card :title="$t('Filter stocks by sectors')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
     <template v-slot:text>
       <v-text-field
@@ -19,17 +18,41 @@
       :items="filteredStocks"
       :search="search"
     >
-      <template #item.{item}>
-        <td class="text-center">{{ item.symbol }}</td>
-        <td class="text-center">{{ item.companyName }}</td>
+      <template #item.symbol="{ item }">
+        <td class="text-center">
+          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
+        </td>
+      </template>
+      <template #item.companyName="{ item }">
+        <td class="text-center">
+          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.companyName }}</a>
+        </td>
+      </template>
+      <template #item.price="{ item }">
         <td class="text-center">{{ item.price }}</td>
+      </template>
+      <template #item.lastAnnualDividend="{ item }">
         <td class="text-center">{{ item.lastAnnualDividend }}</td>
+      </template>
+      <template #item.volume="{ item }">
         <td class="text-center">{{ item.volume }}</td>
+      </template>
+      <template #item.exchangeShortName="{ item }">
         <td class="text-center">{{ item.exchangeShortName }}</td>
+      </template>
+      <template #item.country="{ item }">
         <td class="text-center">{{ item.country }}</td>
+      </template>
+      <template #item.sector="{ item }">
         <td class="text-center">{{ item.sector }}</td>
+      </template>
+      <template #item.industry="{ item }">
         <td class="text-center">{{ item.industry }}</td>
+      </template>
+      <template #item.marketCap="{ item }">
         <td class="text-center">{{ item.marketCap }}</td>
+      </template>
+      <template #item.beta="{ item }">
         <td class="text-center">{{ item.beta }}</td>
       </template>
     </v-data-table>
@@ -39,11 +62,13 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 const search = ref('');
 const stocks = ref([]);
 const error = ref(null);
 const { t, locale } = useI18n();
+const router = useRouter();
 
 const columns = [
   { key: 'symbol', titleKey: 'Symbol' },
@@ -65,7 +90,7 @@ const fetchStocks = async () => {
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
-    stocks.value = data.slice(0,50);
+    stocks.value = data.slice(0, 50);
   } catch (err) {
     error.value = err.message;
     console.error('There was a problem with the fetch operation:', err);
@@ -95,4 +120,15 @@ const filteredStocks = computed(() => {
     )
   );
 });
+
+const navigateToStock = (symbol) => {
+  router.push(`/stocks/${symbol}`);
+};
 </script>
+
+<style scoped>
+#container {
+  height: 600px;
+  min-width: 310px;
+}
+</style>
