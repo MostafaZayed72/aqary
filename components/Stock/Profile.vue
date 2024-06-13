@@ -1,8 +1,9 @@
 <template>
     <div v-if="company" class="p-4 nav">
-      <v-card class="mx-auto my-4 nav" >
-        <v-img :src="company.image" class="white--text" height="200px">
-          <v-card-title class="headline">{{ company.companyName }}</v-card-title>
+      <v-card class="mx-auto my-4 nav">
+        <v-card-title class="headline">{{ company.companyName }}</v-card-title>
+        <v-img :src="company.image" class="white--text my-4" height="200px">
+          
         </v-img>
         <v-card-subtitle>{{ company.industry }} | {{ company.sector }}</v-card-subtitle>
         <v-card-text>
@@ -30,24 +31,34 @@
     </div>
   </template>
   
-  <script setup lang="ts">
+  <script setup>
+  import { ref, onMounted } from 'vue';
+  import { useRoute } from 'vue-router';
   
-  const company = ref<any>(null);
+  const company = ref(null);
+  const error = ref(null);
+  const isLoading = ref(true);
+  
+  // احصل على المعلمة id من الرابط
   const route = useRoute();
+  const symbol = ref(route.params.id.toUpperCase());
   
-  const fetchCompanyProfile = async (symbol: string) => {
+  async function fetchCompanyProfile(symbol) {
     try {
-      const response = await fetch(`https://financialmodelingprep.com/api/v3/profile/${symbol}?apikey=MzMorahM3ZyGf4IScs3X7OcDcRhlLSbc`);
-      const data = await response.json();
-      company.value = data[0];
-    } catch (error) {
-      console.error('Error fetching company profile:', error);
+      const response = await fetch(
+        `https://financialmodelingprep.com/api/v3/profile/${symbol}?apikey=MzMorahM3ZyGf4IScs3X7OcDcRhlLSbc`
+      );
+      const json = await response.json();
+      company.value = json[0];
+      isLoading.value = false;
+    } catch (err) {
+      error.value = err;
+      isLoading.value = false;
     }
-  };
+  }
   
   onMounted(() => {
-    const symbol = route.params.symbol || 'AAPL'; // Default to 'AAPL' if no symbol is provided in the URL
-    fetchCompanyProfile(symbol);
+    fetchCompanyProfile(symbol.value);
   });
   </script>
   
