@@ -1,6 +1,6 @@
 <template>
-    <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
-      <template v-slot:text>
+    <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%] " :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
+      <template v-slot:text >
         <v-text-field
           v-model="search"
           :label="$t('Search')"
@@ -12,8 +12,8 @@
         ></v-text-field>
       </template>
   
-      <v-row class="mb-4">
-        <v-col v-for="(column, index) in columns" :key="index" cols="12" sm="4">
+      <v-row class="mb-4" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
+        <v-col v-for="(column, index) in columns" :key="index" cols="12" sm="4" >
           <v-text-field
             v-if="column.filterType === 'text'"
             v-model="filters[column.key]"
@@ -35,6 +35,7 @@
       </v-row>
   
       <v-data-table 
+      
         class="navy rounded-lg"
         :headers="translatedColumns"
         :items="filteredStocks"
