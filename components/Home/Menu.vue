@@ -44,10 +44,10 @@
               <nuxt-link
       to=""
       class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
-      :class="{ 'bg-teal-400': activeLink === 'Automated analysis' }"
-      @click="setActive('Automated analysis')"
+      :class="{ 'bg-teal-400': activeLink === 'Stocks Scanner' }"
+      @click="setActive('Stocks Scanner')"
     >
-      {{ $t('Automated analysis') }} <Icon class="text-2xl" name="emojione-v1:stock-chart"/>
+      {{ $t('Stocks Scanner') }} <Icon class="text-2xl" name="streamline:scanner"/>
     </nuxt-link>
             </v-list-item-title>
           </v-list-item>

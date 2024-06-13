@@ -3,7 +3,7 @@
     "Sectors": "القطاعات",
     "Search By Companies or code": "ابحث بالشركات أو الكود",
     "My Shares":"أسهمي",
-    "Automated analysis":"التحليل الآلي",
+    "Stocks Scanner":"ماسح الأسهم",
     "Dividends":"التوزيعات النقدية",
     "Comparisons": "مقارنات",
     "News":"الأخبار",
@@ -40,7 +40,7 @@
     "Open":"الفتح",
     "Previous Close":"الإغلاق السابق",
     "EPS":"ربحية السهم",
-    "Earnings Announcement":"إعلان الأرباح",
+    "Earnings Announcement":"توزيع الأرباح السنوي",
     "Shares Outstanding":"الأسهم المعلقة",
     "Timestamp":"الطابع الزمني",
     "More News":"المزيد من الأخبار",
@@ -52,5 +52,6 @@
     "Beta":"معدل تقلب السهم",
     "Send E-mail":"راسلنا عبر البريد الإلكتروني",
     "Company Profile": "ملف الشركة",
-    "Numbers of the last session":"أرقام آخر جلسة"
+    "Numbers of the last session":"أرقام آخر جلسة",
+    "PE":"مكرر الربحية"
 }
