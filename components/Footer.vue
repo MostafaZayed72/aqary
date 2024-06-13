@@ -1,8 +1,9 @@
 <template>
     <div  class="mt-10 shadow nav py-4 px-10 ">
-        <div class="flex flex-col md:flex-row-reverse items-center justify-between gap-10">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-10">
             <!-- LOGO -->
-            <nuxt-link to="/" class="w-[50%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo.png" alt="Logo"></nuxt-link>
+            <nuxt-link v-if="$colorMode.preference == 'light'" to="/" class="w-[50%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo.png" alt="Logo"></nuxt-link>
+            <nuxt-link v-else to="/" class="w-[50%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo-dark.png" alt="Logo"></nuxt-link>
             <!-- MAIL US -->
              <div class="flex flex-col md:flex-row-reverse items-center gap-2 text-center">
                 <Icon class="text-3xl"  name="material-symbols:mail"/>
@@ -25,6 +26,7 @@
 
 <script setup>
 import { ref } from 'vue'
+const colorMode = useColorMode();
 
 const activeItem = ref(null)
 

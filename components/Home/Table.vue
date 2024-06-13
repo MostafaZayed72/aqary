@@ -12,7 +12,10 @@
       ></v-text-field>
     </template>
 
+    <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
+
     <v-data-table 
+      v-if="!loading"
       class="navy rounded-lg"
       :headers="translatedColumns"
       :items="filteredStocks"
@@ -26,6 +29,10 @@
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.name }}</a>
       </template>
     </v-data-table>
+    
+    <div v-else class="text-center pa-4">
+      Loading...
+    </div>
   </v-card>
 </template>
 
@@ -36,6 +43,7 @@ import { useRouter } from 'vue-router';
 
 const search = ref('');
 const stocks = ref([]);
+const loading = ref(false); // حالة التحميل
 const error = ref(null);
 const { t, locale } = useI18n();
 const router = useRouter();
@@ -66,6 +74,7 @@ const columns = [
 ];
 
 const fetchStocks = async () => {
+  loading.value = true; // بدء التحميل
   try {
     const response = await fetch(
       'https://financialmodelingprep.com/api/v3/symbol/NASDAQ?apikey=2YrQJiN4rDLCH2PfOsj5Up9utgAsazNN'
@@ -76,6 +85,8 @@ const fetchStocks = async () => {
   } catch (err) {
     error.value = err.message;
     console.error('There was a problem with the fetch operation:', err);
+  } finally {
+    loading.value = false; // انتهاء التحميل
   }
 };
 
