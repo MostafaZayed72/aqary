@@ -3,9 +3,9 @@
       <div v-for="article in news" :key="article.uuid" class="mb-4">
         <v-card class="mx-auto my-4 nav">
             <v-card-title class="headline">{{ article.title }}</v-card-title>
-          <v-img :src="article.image_url" class="white--text my-4 rounded" height="200px">
+          <img :src="article.image_url" class="white--text my-4 rounded-xl mx-auto" style="height: 200px;"   />
             
-          </v-img>
+         
           <v-card-subtitle>{{ article.source }} | {{ new Date(article.published_at).toLocaleDateString() }}</v-card-subtitle>
           <v-card-text>
             <div class="mb-4">

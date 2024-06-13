@@ -46,7 +46,7 @@
   async function fetchCompanyProfile(symbol) {
     try {
       const response = await fetch(
-        `https://financialmodelingprep.com/api/v3/profile/${symbol}?apikey=MzMorahM3ZyGf4IScs3X7OcDcRhlLSbc`
+        `https://financialmodelingprep.com/api/v3/profile/${symbol}?apikey=2YrQJiN4rDLCH2PfOsj5Up9utgAsazNN`
       );
       const json = await response.json();
       company.value = json[0];

@@ -17,7 +17,7 @@
   async function fetchData() {
     try {
       const response = await fetch(
-        `https://financialmodelingprep.com/api/v3/historical-price-full/${stockSymbol.value}?apikey=MzMorahM3ZyGf4IScs3X7OcDcRhlLSbc`
+        `https://financialmodelingprep.com/api/v3/historical-price-full/${stockSymbol.value}?apikey=2YrQJiN4rDLCH2PfOsj5Up9utgAsazNN`
       );
       const json = await response.json();
       data.value = json.historical.slice(0, 50);

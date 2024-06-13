@@ -68,7 +68,7 @@ const columns = [
 const fetchStocks = async () => {
   try {
     const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/symbol/NASDAQ?apikey=MzMorahM3ZyGf4IScs3X7OcDcRhlLSbc'
+      'https://financialmodelingprep.com/api/v3/symbol/NASDAQ?apikey=2YrQJiN4rDLCH2PfOsj5Up9utgAsazNN'
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
