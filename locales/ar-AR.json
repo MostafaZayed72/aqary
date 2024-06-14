@@ -53,5 +53,18 @@
     "Send E-mail":"راسلنا عبر البريد الإلكتروني",
     "Company Profile": "ملف الشركة",
     "Numbers of the last session":"أرقام آخر جلسة",
-    "PE":"مكرر الربحية"
+    "PE":"مكرر الربحية",
+    "Login":"تسجيل الدخول",
+    "Or Sign Up":"أو إنشاء حساب جديد",
+    "Confirm":"تأكيد",
+    "Close":"إغلاق",
+    "E-mail*":"البريد الإلكتروني*",
+    "Email*":"البريد الإلكتروني*",
+    "Password*":"كلمة السر*",
+    "First name*":"الإسم الأول*",
+    "Last name":"الإسم الأخير",
+    "Confirm Password*":"تأكيد كلمة السر*",
+    "*indicates required field":"حقل مطلوب*",
+    "Forget Password ?": "هل نسيت كلمة السر ؟"
+
 }

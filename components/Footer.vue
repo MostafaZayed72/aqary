@@ -1,5 +1,5 @@
 <template>
-    <div  class="mt-10 shadow nav py-4 px-10 ">
+    <div  class="mt-10 shadow nav py-4 px-10 z-10">
         <div class="flex flex-col md:flex-row items-center justify-between gap-10">
             <!-- LOGO -->
             <nuxt-link v-if="$colorMode.preference == 'light'" to="/" class="w-[50%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo.png" alt="Logo"></nuxt-link>
@@ -13,7 +13,7 @@
                    <h1 class="font-bold md:text-xl text-teal-400 hover:text-teal-500 delayed cursor-pointer">finance-report@info</h1>
              </div>
             <!-- START ICONS -->
-            <div class="icons flex gap-4 items-center">
+            <div class="icons flex gap-4 items-center z-50">
                 
 <Icon class="text-3xl cursor-pointer" name="logos:twitter"/>
 <Icon class="text-3xl cursor-pointer" name="logos:facebook"/>
