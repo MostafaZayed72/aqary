@@ -60,11 +60,13 @@
     "Close":"إغلاق",
     "E-mail*":"البريد الإلكتروني*",
     "Email*":"البريد الإلكتروني*",
-    "Password*":"كلمة السر*",
+    "Password*":"كلمة المرور*",
     "First name*":"الإسم الأول*",
     "Last name":"الإسم الأخير",
-    "Confirm Password*":"تأكيد كلمة السر*",
+    "Confirm Password*":"تأكيد كلمة المرور*",
     "*indicates required field":"حقل مطلوب*",
-    "Forget Password ?": "هل نسيت كلمة السر ؟"
+    "Forget Password ?": "هل نسيت كلمة المرور ؟",
+    "Reset Password":"إعادة تعيين كلمة المرور",
+    "Enter your email":"أدخل بريدك الإلكتروني"
 
 }
