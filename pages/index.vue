@@ -1,7 +1,10 @@
 <template>
   <div>
    <stocks />
-   <HomeMainNumbers />
+   <div class="flex flex-col md:flex-row  md:gap-4">
+    <HomeTopFive />
+    <HomeFewestFive />
+   </div>
     <HomeTable />
         <!-- <HomeTopCompanies /> -->
          <HomeNews class="mt-10"/>

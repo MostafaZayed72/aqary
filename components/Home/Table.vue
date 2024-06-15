@@ -28,6 +28,13 @@
       <template v-slot:item.name="{ item }">
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.name }}</a>
       </template>
+      <template v-slot:item.price="{ item }">
+        {{ formatNumber(item.price) }}
+      </template>
+      <template v-slot:item.changesPercentage="{ item }">
+        {{ formatNumber(item.changesPercentage) }}%
+      </template>
+      <!-- إضافة المزيد من التواريخ حسب الحاجة -->
     </v-data-table>
     
     <div v-else class="text-center pa-4">
@@ -77,7 +84,7 @@ const fetchStocks = async () => {
   loading.value = true; // بدء التحميل
   try {
     const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/symbol/NASDAQ?apikey=2YrQJiN4rDLCH2PfOsj5Up9utgAsazNN'
+      'https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh'
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
@@ -104,6 +111,11 @@ const translatedColumns = computed(() => {
 watch(locale, () => {
   // تحديث العناوين عند تغيير اللغة
 });
+
+const formatNumber = (number) => {
+  // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
+  return parseFloat(number).toFixed(2);
+};
 
 const filteredStocks = computed(() => {
   return stocks.value.filter(stock =>

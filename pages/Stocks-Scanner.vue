@@ -13,14 +13,14 @@
     </template>
 
     <v-row class="mb-4" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
-      <v-col v-for="(column, index) in columns" :key="index" cols="12" sm="4">
+      <v-col v-for="(column, index) in columnss" :key="index" cols="12" sm="4" >
         <v-text-field
           v-if="column.filterType === 'text'"
           v-model="filters[column.key]"
           :label="t(column.titleKey)"
           variant="outlined"
           hide-details
-          class="navy rounded"
+          class="navy rounded mx-4"
         ></v-text-field>
         <v-select
           v-if="column.filterType === 'select'"
@@ -72,6 +72,14 @@ const router = useRouter();
 
 const filters = ref({}); // Object to store filter values
 
+const columnss = [
+  { key: 'dayHigh', titleKey: 'Day High', filterType: 'text' },
+  { key: 'dayLow', titleKey: 'Day Low', filterType: 'text' },
+  { key: 'change', titleKey: 'Change', filterType: 'text' },
+  { key: 'changesPercentage', titleKey: 'Changes Percentage', filterType: 'text' },
+  { key: 'price', titleKey: 'Price', filterType: 'text' },
+];
+
 const columns = [
   { key: 'symbol', titleKey: 'Symbol', filterType: 'text' },
   { key: 'name', titleKey: 'Name', filterType: 'text' },
@@ -101,7 +109,7 @@ const fetchStocks = async () => {
   loading.value = true; // بدء التحميل
   try {
     const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/symbol/NASDAQ?apikey=2YrQJiN4rDLCH2PfOsj5Up9utgAsazNN'
+      'https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh'
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();

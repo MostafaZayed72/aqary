@@ -4,6 +4,7 @@
             <v-tab class="mx-auto" value="one"><h1 class="font-bold text-xl">{{ $t('Company Profile') }}</h1></v-tab>
             <v-tab class="mx-auto" value="two"><h1 class="font-bold text-xl">{{ $t('Numbers of the last session') }}</h1></v-tab>
             <v-tab class="mx-auto" value="three"><h1 class="font-bold text-xl">{{ $t('News') }}</h1></v-tab>
+            <v-tab class="mx-auto" value="four"><h1 class="font-bold text-xl">{{ $t('Financial Analysis') }}</h1></v-tab>
         </v-tabs>
 
         <v-card-text>
@@ -18,6 +19,10 @@
 
                 <v-window-item value="three">
                     <StockNews />
+
+                </v-window-item>
+                <v-window-item value="four">
+                    <StockData />
 
                 </v-window-item>
             </v-window>

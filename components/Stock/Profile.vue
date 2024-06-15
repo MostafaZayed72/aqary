@@ -2,28 +2,28 @@
     <div v-if="company" class="p-4 nav">
       <v-card class="mx-auto my-4 nav">
         <v-card-title class="headline">{{ company.companyName }}</v-card-title>
-        <v-img :src="company.image" class="white--text my-4" height="200px">
+        <img :src="company.image" class="white--text my-4 rounded mx-auto "   />
           
-        </v-img>
+        
         <v-card-subtitle>{{ company.industry }} | {{ company.sector }}</v-card-subtitle>
         <v-card-text>
           <div class="mb-4">
-            <strong>CEO:</strong> {{ company.ceo }}
+            <strong>{{ $t('CEO') }}:</strong> {{ company.ceo }}
           </div>
           <div class="mb-4">
-            <strong>Price:</strong> {{ company.price }} {{ company.currency }}
+            <strong>{{ $t('Price') }}:</strong> {{ company.price }} {{ company.currency }}
           </div>
           <div class="mb-4">
-            <strong>Market Cap:</strong> {{ company.mktCap }}
+            <strong>{{ $t('Market Cap') }}:</strong> {{ company.mktCap }}
           </div>
           <div class="mb-4">
-            <strong>Website:</strong>
+            <strong>{{ $t('Website') }}:</strong>
             <a :href="company.website" target="_blank" class="text-blue-500 underline">
               {{ company.website }}
             </a>
           </div>
           <div class="mb-4">
-            <strong>Description:</strong>
+            <strong>{{ $t('Description') }}:</strong>
             <p>{{ company.description }}</p>
           </div>
         </v-card-text>

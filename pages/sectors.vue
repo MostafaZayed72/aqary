@@ -32,19 +32,16 @@
         </td>
       </template>
       <template #item.price="{ item }">
-        <td class="text-center">{{ item.price }}</td>
+        <td class="text-center">{{ formatNumber(item.price) }}</td>
       </template>
       <template #item.lastAnnualDividend="{ item }">
-        <td class="text-center">{{ item.lastAnnualDividend }}</td>
+        <td class="text-center">{{ formatNumber(item.lastAnnualDividend) }}</td>
       </template>
       <template #item.volume="{ item }">
-        <td class="text-center">{{ item.volume }}</td>
+        <td class="text-center">{{ formatNumber(item.volume) }}</td>
       </template>
       <template #item.exchangeShortName="{ item }">
         <td class="text-center">{{ item.exchangeShortName }}</td>
-      </template>
-      <template #item.country="{ item }">
-        <td class="text-center">{{ item.country }}</td>
       </template>
       <template #item.sector="{ item }">
         <td class="text-center">{{ item.sector }}</td>
@@ -53,7 +50,7 @@
         <td class="text-center">{{ item.industry }}</td>
       </template>
       <template #item.marketCap="{ item }">
-        <td class="text-center">{{ item.marketCap }}</td>
+        <td class="text-center">{{ formatNumber(item.marketCap) }}</td>
       </template>
       <template #item.beta="{ item }">
         <td class="text-center">{{ item.beta }}</td>
@@ -123,6 +120,11 @@ const translatedColumns = computed(() => {
 watch(locale, () => {
   // تحديث العناوين عند تغيير اللغة
 });
+
+const formatNumber = (number) => {
+  // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
+  return parseFloat(number).toFixed(2);
+};
 
 const filteredStocks = computed(() => {
   return stocks.value.filter(stock =>

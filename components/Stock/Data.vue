@@ -1,23 +1,22 @@
-<!-- App.vue -->
+   <!-- App.vue -->
 
-<template>
+   <template>
     <div class="container mx-auto py-8">
-      <h1 class="text-2xl font-bold mb-4">Financial Data for 2024</h1>
-  
-      <v-card>
+
+      <v-card class="nav">
         <v-card-text>
           <v-container>
             <v-row v-if="financialData">
               <v-col cols="12" md="6" v-for="(value, key) in financialData" :key="key">
                 <v-card>
-                  <v-card-title>{{ key }}</v-card-title>
-                  <v-card-text>{{ value }}</v-card-text>
+                  <v-card-title class="bg-teal-400">{{ $t( key) }}</v-card-title>
+                  <v-card-text class="mt-4">{{ value }}</v-card-text>
                 </v-card>
               </v-col>
             </v-row>
             <v-row v-else>
               <v-col>
-                <p>Loading...</p>
+                <p>{{ $t('loadingMessage') }}</p>
               </v-col>
             </v-row>
           </v-container>
@@ -25,24 +24,24 @@
       </v-card>
     </div>
   </template>
-  
+
   <script setup>
   import { ref, onMounted, watch } from 'vue'
   import axios from 'axios'
   import { useRoute } from 'vue-router'
-  
+  import { useI18n } from 'vue-i18n'
+
   const financialData = ref(null)
   const route = useRoute()
-  
+  const { t } = useI18n()
+
   onMounted(async () => {
     fetchData(route.params.id)
   })
-  
+
   watch(route, (to, from) => {
     fetchData(to.params.id)
   })
-  
-  const symbol = ref(route.params.id.toUpperCase());
 
   async function fetchData(symbol) {
     try {
@@ -54,8 +53,7 @@
     }
   }
   </script>
-  
-  <style>
-  /* You can add Tailwind CSS styles here if needed */
+
+  <style scoped>
+  /* تحديد الأنماط الخاصة بك هنا إذا لزم الأمر */
   </style>
-  

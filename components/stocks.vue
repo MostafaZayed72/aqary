@@ -13,7 +13,7 @@ const symbol = ref();
 async function fetchData() {
   try {
     const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?apikey=2YrQJiN4rDLCH2PfOsj5Up9utgAsazNN'
+      'https://financialmodelingprep.com/api/v3/historical-price-full/%5ETASI.SR?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh'
     );
     const json = await response.json();
     data.value = json.historical.slice(0, 50);
@@ -59,7 +59,7 @@ if (process.client) {
 
         },
         title: {
-          text: `${symbol.value} Price and Volume`,
+          text: 'TASI Price and Volume',
           style: {
             color: '#2caffe'
           }
