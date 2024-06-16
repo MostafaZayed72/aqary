@@ -2,7 +2,9 @@
     <div>
         <h1 class="text-center mt-10 mb-2 text-xl font-bold  w-fit mx-auto px-4 py-2 rounded nav">{{ $t('Select a stock to see its analysis') }}</h1>
       <v-autocomplete
-        label="Autocomplete"
+        label="Choose Stock"
+        variant="outlined"
+        class="cursor-pointer"
         v-model="selectedName"
         :items="apiItems.map(item => item.name)"
       ></v-autocomplete>
