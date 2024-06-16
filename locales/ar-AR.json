@@ -122,6 +122,7 @@
   "equityValue": "قيمة الأسهم",
   "equityValuePerShare": "القيمة العادلة للسهم",
   "freeCashFlowT1": "تدفق النقد الحر T1",
-  "Financial Analysis":"التحليل المالي"
+  "Financial Analysis":"التحليل المالي",
+  "Select a stock to see its analysis":"اختر السهم لرؤية تحليله"
 
 }

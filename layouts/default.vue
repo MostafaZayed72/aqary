@@ -27,11 +27,20 @@
         {{ $t('My Shares') }} <Icon class="text-2xl" name="streamline:stock" />
       </nuxt-link>
       <nuxt-link
+      to="/Financial-Analysis/2222.SR"
+      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
+      :class="{ 'bg-teal-400': activeLink === 'Stocks Scanner' }"
+      @click="setActive('Financial Analysis')"
+    >
+      {{ $t('Financial Analysis') }} <Icon class="text-2xl" name="streamline:money-cash-bag-dollar-bag-payment-cash-money-finance"/>
+    </nuxt-link>
+      <nuxt-link
         to="/stocks-scanner"
         class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
         :class="{ 'bg-teal-400': isActiveLink('/stocks-scanner') }"
       >
         {{ $t('Stocks Scanner') }} <Icon class="text-2xl" name="streamline:scanner" />
+      
       </nuxt-link>
       <nuxt-link
         to="/dividends"
