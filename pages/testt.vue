@@ -1,86 +1,138 @@
 <template>
-  <div class="container mx-auto p-4">
-    <h2 class="text-2xl font-semibold mb-4 text-center text-teal-400">Stock Information</h2>
+  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
+    <template v-slot:text>
+      <v-text-field
+        v-model="search"
+        :label="$t('Search')"
+        prepend-inner-icon="mdi-magnify"
+        variant="outlined"
+        hide-details
+        single-line
+        class="navy rounded"
+      ></v-text-field>
+    </template>
 
-    <div class="flex flex-col   nav mb-8">
-      <v-autocomplete
-        v-model="selectedStock"
-        :items="stocksListNames"
-        label="Select Stock"
-        outlined
-      ></v-autocomplete>
-      <v-btn @click="fetchStockData" color="primary" class="mx-auto w-fit mb-4">Browse</v-btn>
-    </div>
+    <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
 
-    <div class="overflow-x-auto nav">
-      <table v-if="stocks.length > 0" class="min-w-full bg-white border-gray-200 shadow-md rounded-lg overflow-hidden nav">
-        <thead class="bg-teal-400">
-          <tr>
-            <th v-for="(value, key) in stocks[0]" :key="key" class="px-4 py-2 text-left">{{ key }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(stock, index) in stocks" :key="index">
-            <td v-for="(value, key) in stock" :key="key" class="border px-4 py-2 nav">{{ value }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <p v-else class="text-center mt-4 text-gray-600">No stock data available. Please select a stock.</p>
+    <v-data-table 
+      v-if="!loading"
+      class="navy rounded-lg"
+      :headers="translatedColumns"
+      :items="filteredStocks"
+      :search="search"
+      item-value="symbol"
+    >
+      <template v-slot:item.symbol="{ item }">
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
+      </template>
+      <template v-slot:item.name="{ item }">
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.name) }}</a>
+      </template>
+      <template v-slot:item.price="{ item }">
+        {{ formatNumber(item.price) }}
+      </template>
+      <template v-slot:item.changesPercentage="{ item }">
+        {{ formatNumber(item.changesPercentage) }}%
+      </template>
+      <!-- إضافة المزيد من التواريخ حسب الحاجة -->
+    </v-data-table>
+    
+    <div v-else class="text-center pa-4">
+      Loading...
     </div>
-  </div>
+  </v-card>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios';
+import { ref, computed, onMounted, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
-const selectedStock = ref(null);
+const search = ref('');
 const stocks = ref([]);
-const apiKey = 'yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh';
-let stocksList = ref([]);
+const loading = ref(false); // حالة التحميل
+const error = ref(null);
+const { t, locale } = useI18n();
+const router = useRouter();
 
-async function fetchStocksList() {
+const columns = [
+  { key: 'symbol', titleKey: 'Symbol' },
+  { key: 'name', titleKey: 'Name' },
+  { key: 'price', titleKey: 'Price' },
+  { key: 'changesPercentage', titleKey: 'Changes Percentage' },
+  { key: 'change', titleKey: 'Change' },
+  { key: 'dayLow', titleKey: 'Day Low' },
+  { key: 'dayHigh', titleKey: 'Day High' },
+  { key: 'yearHigh', titleKey: 'Year High' },
+  { key: 'yearLow', titleKey: 'Year Low' },
+  { key: 'marketCap', titleKey: 'Market Cap' },
+  { key: 'priceAvg50', titleKey: 'Price Avg 50' },
+  { key: 'priceAvg200', titleKey: 'Price Avg 200' },
+  { key: 'exchange', titleKey: 'Exchange' },
+  { key: 'volume', titleKey: 'Volume' },
+  { key: 'avgVolume', titleKey: 'Avg Volume' },
+  { key: 'open', titleKey: 'Open' },
+  { key: 'previousClose', titleKey: 'Previous Close' },
+  { key: 'eps', titleKey: 'EPS' },
+  { key: 'pe', titleKey: 'PE' },
+  { key: 'earningsAnnouncement', titleKey: 'Earnings Announcement' },
+  { key: 'sharesOutstanding', titleKey: 'Shares Outstanding' },
+  { key: 'timestamp', titleKey: 'Timestamp' },
+];
+
+const fetchStocks = async () => {
+  loading.value = true; // بدء التحميل
   try {
-    const response = await axios.get('https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=' + apiKey);
-    stocksList.value = response.data.map(stock => ({
-      name: stock.name,
-      symbol: stock.symbol
-    }));
-  } catch (error) {
-    console.error('Error fetching stocks list:', error);
-    alert('Failed to fetch stocks list. Please try again.');
+    const response = await fetch(
+      'https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh'
+    );
+    if (!response.ok) throw new Error('Network response was not ok');
+    const data = await response.json();
+    stocks.value = data;
+  } catch (err) {
+    error.value = err.message;
+    console.error('There was a problem with the fetch operation:', err);
+  } finally {
+    loading.value = false; // انتهاء التحميل
   }
-}
+};
 
-async function fetchStockData() {
-  if (!selectedStock.value) {
-    alert('Please select a stock from the list.');
-    return;
-  }
+onMounted(() => {
+  fetchStocks();
+});
 
-  // Find the symbol based on selectedStock name
-  const selectedStockSymbol = stocksList.value.find(stock => stock.name === selectedStock.value)?.symbol;
-  if (!selectedStockSymbol) {
-    alert('Stock symbol not found for selected stock name.');
-    return;
-  }
+const translatedColumns = computed(() => {
+  return columns.map(col => ({
+    ...col,
+    title: t(col.titleKey)
+  }));
+});
 
-  try {
-    const response = await axios.get(`https://financialmodelingprep.com/api/v3/quote/${selectedStockSymbol}?apikey=${apiKey}`);
-    stocks.value.push(response.data[0]); // Add fetched stock to the existing stocks array
-  } catch (error) {
-    console.error('Error fetching stock data:', error);
-    alert('Failed to fetch stock data. Please try again.');
-  }
-}
+watch(locale, () => {
+  // تحديث العناوين عند تغيير اللغة
+});
 
-// Fetch stocks list when component is mounted
-onMounted(fetchStocksList);
+const formatNumber = (number) => {
+  // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
+  return parseFloat(number).toFixed(2);
+};
 
-// Computed property to extract stock names from stocksList
-const stocksListNames = computed(() => stocksList.value.map(stock => stock.name));
+const filteredStocks = computed(() => {
+  return stocks.value.filter(stock =>
+    Object.values(stock).some(value =>
+      String(value).toLowerCase().startsWith(search.value.toLowerCase())
+    )
+  );
+});
+
+const navigateToStock = (symbol) => {
+  router.push(`/stocks/${symbol}`);
+};
 </script>
 
 <style scoped>
-/* Any Tailwind CSS customizations can be added here */
+#container {
+  height: 600px;
+  min-width: 310px;
+}
 </style>

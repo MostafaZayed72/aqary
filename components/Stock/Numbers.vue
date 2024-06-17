@@ -4,7 +4,7 @@
   </div>
   <div v-else-if="sessionData" class="p-4 nav">
     <v-card class="mx-auto my-4 nav">
-      <v-card-title class="headline">{{ sessionData.name }}</v-card-title>
+      <v-card-title class="headline">{{ $t(sessionData.name) }}</v-card-title>
       <v-card-subtitle>{{ sessionData.symbol }} | {{ sessionData.exchange }}</v-card-subtitle>
       <v-card-text>
         <div class="mb-4">

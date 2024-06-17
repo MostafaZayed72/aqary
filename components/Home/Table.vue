@@ -26,7 +26,7 @@
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
       </template>
       <template v-slot:item.name="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.name }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.name) }}</a>
       </template>
       <template v-slot:item.price="{ item }">
         {{ formatNumber(item.price) }}

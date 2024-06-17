@@ -1,5 +1,5 @@
 <template>
-  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
+  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]" :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
     <template v-slot:text>
       <v-text-field
         v-model="search"
@@ -48,7 +48,7 @@
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
       </template>
       <template v-slot:item.name="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.name }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.name) }}</a>
       </template>
     </v-data-table>
 

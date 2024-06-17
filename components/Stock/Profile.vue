@@ -1,7 +1,7 @@
 <template>
     <div v-if="company" class="p-4 nav">
       <v-card class="mx-auto my-4 nav">
-        <v-card-title class="headline">{{ company.companyName }}</v-card-title>
+        <v-card-title class="headline">{{ $t(company.companyName) }}</v-card-title>
         <img :src="company.image" class="white--text my-4 rounded mx-auto "   />
           
         

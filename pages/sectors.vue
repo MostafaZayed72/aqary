@@ -28,7 +28,7 @@
       </template>
       <template #item.companyName="{ item }">
         <td class="text-center">
-          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.companyName }}</a>
+          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.companyName) }}</a>
         </td>
       </template>
       <template #item.price="{ item }">

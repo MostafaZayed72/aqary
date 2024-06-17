@@ -23,7 +23,7 @@
         </thead>
         <tbody>
           <tr v-for="(stock, index) in stocks" :key="index">
-            <td v-for="(value, key) in stock" :key="key" class="border px-4 py-2 nav">{{ value }}</td>
+            <td v-for="(value, key) in stock" :key="key" class="border px-4 py-2 nav">{{ $t(value) }}</td>
             <td class="border px-4 py-2 nav">
               <v-btn @click="deleteStock(index)" color="error" outlined>{{ $t('Delete') }}</v-btn> <!-- زر لحذف السهم -->
             </td>
