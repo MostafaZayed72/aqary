@@ -13,7 +13,7 @@
         <!-- رابط يحتوي على رمز السهم -->
         <nuxt-link :to="`/stocks/${item.symbol}`" class="cursor-pointer">
           <span :class="{'text-green-500': item.changesPercentage > 0, 'text-red-500': item.changesPercentage <= 0}">
-            {{ item.name }}
+            {{ $t(item.name) }}
           </span>
         </nuxt-link>
       </template>

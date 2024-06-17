@@ -120,7 +120,7 @@ const formatNumber = (number) => {
 const filteredStocks = computed(() => {
   return stocks.value.filter(stock =>
     Object.values(stock).some(value =>
-      String(value).toLowerCase().startsWith(search.value.toLowerCase())
+      String(value).toLowerCase().includes(search.value.toLowerCase())
     )
   );
 });
