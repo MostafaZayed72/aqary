@@ -123,6 +123,11 @@
   "equityValuePerShare": "القيمة العادلة للسهم",
   "freeCashFlowT1": "تدفق النقد الحر T1",
   "Financial Analysis":"التحليل المالي",
-  "Select a stock to see its analysis":"اختر السهم لرؤية تحليله"
+  "Select a stock to see its analysis":"اختر السهم لرؤية تحليله",
+  "Add to comparison list":"أضف إلى قائمة المقارنة",
+  "Stocks comparison":"مقارنة الأسهم",
+  "No stock data available. Please select a stock.":"لم يتم تحديد أسهم للمقارنة ، برجاء تحديد الأسهم",
+  "Select stock":"اختر سهماً",
+  "Delete":"حذف"
 
 }

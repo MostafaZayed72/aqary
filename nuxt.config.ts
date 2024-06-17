@@ -4,7 +4,6 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
 export default defineNuxtConfig({
   //...
-
   runtimeConfig: {
     public: {
       host: process.env.NUXT_PUBLIC_HOST || '0.0.0.0',
