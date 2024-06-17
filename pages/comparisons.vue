@@ -17,13 +17,16 @@
       <table v-if="stocks.length > 0" class="min-w-full bg-white border-gray-200 shadow-md rounded-lg overflow-hidden nav">
         <thead class="bg-teal-400">
           <tr>
-            <th v-for="(value, key) in stocks[0]" :key="key" class="px-4 py-2 text-left">{{ $t(key) }}</th>
-            <th class="px-4 py-2 text-left">{{ $t('Delete') }}</th> <!-- إضافة عمود للإجراءات -->
+            <th v-for="(value, key) in stocks[0]" :key="key" v-if="key !== 'symbol'" class="px-4 py-2 text-left">{{ $t(key) }}</th>
+            <th class="px-4 py-2 text-left">{{ $t('Actions') }}</th> <!-- إضافة عمود للإجراءات -->
           </tr>
         </thead>
         <tbody>
           <tr v-for="(stock, index) in stocks" :key="index">
-            <td v-for="(value, key) in stock" :key="key" class="border px-4 py-2 nav">{{ $t(value) }}</td>
+            <td v-for="(value, key) in stock" :key="key" v-if="key !== 'symbol'" class="border px-4 py-2 nav">
+              <!-- استخدام router-link لتحويل المسار عند النقر -->
+              <router-link :to="`/stocks/${stock.symbol}`">{{ $t(value) }}</router-link>
+            </td>
             <td class="border px-4 py-2 nav">
               <v-btn @click="deleteStock(index)" color="error" outlined>{{ $t('Delete') }}</v-btn> <!-- زر لحذف السهم -->
             </td>
@@ -32,7 +35,6 @@
       </table>
       <p v-else class="text-center mt-4 text-gray-600 nav">{{ $t('No stock data available. Please select a stock.') }}</p>
     </div>
-
   </div>
 </template>
 
@@ -47,7 +49,6 @@ const apiKey = 'yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh';
 let stocksList = ref([]);
 
 const translations = {
-  symbol: 'الرمز',
   name: 'الاسم',
   price: 'السعر',
   change: 'التغيير',
@@ -75,10 +76,10 @@ const translations = {
 
 async function fetchStocksList() {
   try {
-    const response = await axios.get('https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=' + apiKey);
+    const response = await axios.get(`https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=${apiKey}`);
     stocksList.value = response.data.map(stock => ({
       name: stock.name,
-      symbol: stock.symbol
+      symbol: stock.symbol.replace('.sr', '')  // إزالة .sr من الرموز
     }));
   } catch (error) {
     console.error('Error fetching stocks list:', error);
@@ -92,33 +93,40 @@ async function fetchStockData() {
     return;
   }
 
-  const selectedStockSymbol = stocksList.value.find(stock => stock.name === selectedStock.value)?.symbol;
-  if (!selectedStockSymbol) {
+  const selectedStockItem = stocksList.value.find(stock => stock.name === selectedStock.value);
+  if (!selectedStockItem) {
     alert('Stock symbol not found for selected stock name.');
     return;
   }
 
-  isLoading.value = true;  // بدء التحميل
+  const selectedStockSymbol = selectedStockItem.symbol;
+  isLoading.value = true;
 
   try {
     const response = await axios.get(`https://financialmodelingprep.com/api/v3/quote/${selectedStockSymbol}?apikey=${apiKey}`);
-    stocks.value.push(response.data[0]);
+    const stockData = response.data[0];
+
+    // تأكد من أن الرمز مضبوط في البيانات
+    if (stockData.symbol) {
+      stocks.value.push(stockData);
+    } else {
+      console.error('Stock data does not contain a symbol:', stockData);
+    }
   } catch (error) {
     console.error('Error fetching stock data:', error);
     alert('Failed to fetch stock data. Please try again.');
   } finally {
-    isLoading.value = false;  // إنهاء التحميل
+    isLoading.value = false;
   }
 }
 
 function deleteStock(index) {
-  stocks.value.splice(index, 1); // حذف السهم من قائمة الأسهم
+  stocks.value.splice(index, 1);
 }
 
 onMounted(fetchStocksList);
 
 const stocksListNames = computed(() => stocksList.value.map(stock => stock.name));
-const translatedStocksListNames = computed(() => stocksListNames.value.map(name => t(name)));
 
 function translateKey(key) {
   return translations[key] || key;
@@ -126,8 +134,7 @@ function translateKey(key) {
 
 definePageMeta({
   layout: 'custom'
-})
-</script>
+});</script>
 
 <style scoped>
 /* أي تخصيصات لـ Tailwind CSS يمكن إضافتها هنا */

@@ -45,7 +45,7 @@
       item-value="symbol"
     >
       <template v-slot:item.symbol="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ cleanSymbol(item.symbol) }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
       </template>
       <template v-slot:item.name="{ item }">
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.name) }}</a>
@@ -120,7 +120,7 @@ const fetchStocks = async () => {
     const data = await response.json();
     stocks.value = data.map(stock => ({
       ...stock,
-      symbol: cleanSymbol(stock.symbol)
+      symbol: (stock.symbol)
     }));
   } catch (err) {
     error.value = err.message;
@@ -150,10 +150,6 @@ const formatNumber = (number) => {
   return parseFloat(number).toFixed(2);
 };
 
-const cleanSymbol = (symbol) => {
-  // حذف .SR من الرمز
-  return symbol.replace('.SR', '');
-};
 
 const filteredStocks = computed(() => {
   return stocks.value.filter(stock => {
