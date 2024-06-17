@@ -134,7 +134,8 @@ function translateKey(key) {
 
 definePageMeta({
   layout: 'custom'
-});</script>
+});
+</script>
 
 <style scoped>
 /* أي تخصيصات لـ Tailwind CSS يمكن إضافتها هنا */

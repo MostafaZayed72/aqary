@@ -62,7 +62,7 @@
     "Email*":"البريد الإلكتروني*",
     "Password*":"كلمة المرور*",
     "First name*":"الإسم الأول*",
-    "Last name":"الإسم الأخير",
+    "Mobile*":"الموبايل*",
     "Confirm Password*":"تأكيد كلمة المرور*",
     "*indicates required field":"حقل مطلوب*",
     "Forget Password ?": "هل نسيت كلمة المرور ؟",
@@ -788,7 +788,8 @@
     "9595.SR": "9595",
     "9596.SR": "9596",
     "9598.SR": "9598",
-    "9599.SR": "9599"
+    "9599.SR": "9599",
+    "Your account has been successfully confirmed":"تم تأكيد حسابك بنجاح"
 
 
 

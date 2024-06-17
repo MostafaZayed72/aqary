@@ -63,22 +63,11 @@
     </nuxt-link>
             </v-list-item-title>
           </v-list-item>
+          
           <v-list-item >
             <v-list-item-title>
               <nuxt-link
-      to=""
-      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
-      :class="{ 'bg-teal-400': activeLink === 'Dividends' }"
-      @click="setActive('Dividends')"
-    >
-      {{ $t('Dividends') }} <Icon class="text-2xl" name="ph:money-wavy-bold"/>
-    </nuxt-link>
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item >
-            <v-list-item-title>
-              <nuxt-link
-      to=""
+      to="/comparisons"
       class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'Comparisons' }"
       @click="setActive('Comparisons')"

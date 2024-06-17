@@ -42,13 +42,7 @@
           {{ $t('Stocks Scanner') }} <Icon class="text-2xl" name="streamline:scanner" />
         
         </nuxt-link>
-        <nuxt-link
-          to="/dividends"
-          class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
-          :class="{ 'bg-teal-400': isActiveLink('/dividends') }"
-        >
-          {{ $t('Dividends') }} <Icon class="text-2xl" name="ph:money-wavy-bold" />
-        </nuxt-link>
+       
         <nuxt-link
           to="/comparisons"
           class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"

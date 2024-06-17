@@ -47,7 +47,7 @@
             <v-col cols="12" md="4" sm="6">
               <v-text-field
                 hint="example of helper text only on focus"
-                :label="$t('Last name')"
+                :label="$t('Mobile*')"
               ></v-text-field>
             </v-col>
 
