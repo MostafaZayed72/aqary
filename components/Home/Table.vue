@@ -23,7 +23,7 @@
       item-value="symbol"
     >
       <template v-slot:item.symbol="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ cleanSymbol(item.symbol) }}</a>
       </template>
       <template v-slot:item.name="{ item }">
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.name) }}</a>
@@ -34,7 +34,6 @@
       <template v-slot:item.changesPercentage="{ item }">
         {{ formatNumber(item.changesPercentage) }}%
       </template>
-      <!-- إضافة المزيد من التواريخ حسب الحاجة -->
     </v-data-table>
     
     <div v-else class="text-center pa-4">
@@ -88,7 +87,10 @@ const fetchStocks = async () => {
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
-    stocks.value = data;
+    stocks.value = data.map(stock => ({
+      ...stock,
+      symbol: cleanSymbol(stock.symbol)
+    }));
   } catch (err) {
     error.value = err.message;
     console.error('There was a problem with the fetch operation:', err);
@@ -115,6 +117,11 @@ watch(locale, () => {
 const formatNumber = (number) => {
   // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
   return parseFloat(number).toFixed(2);
+};
+
+const cleanSymbol = (symbol) => {
+  // حذف .SR من الرمز
+  return symbol.replace('.SR', '');
 };
 
 const filteredStocks = computed(() => {

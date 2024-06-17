@@ -212,7 +212,7 @@
   "Arabian Pipes Company": "أنابيب",
   "Nama Chemicals Company": "نماء للكيماويات",
   "National Metal Manufacturing and Casting Co.": "معدنية",
-  "Saudi Arabian Oil Company (Saudi Aramco)": "أرامكو السعودية",
+  "Saudi Arabian Oil Company": "أرامكو السعودية",
   "Saudi Aramco Base Oil Company - Luberef": "لوبريف",
   "Saudi Chemical Holding Company": "الكيميائية",
   "Zamil Industrial Investment Company": "الزامل للصناعة",
@@ -447,10 +447,10 @@
 "Balady Poultry Trading Co.": "بلدي",
 "Waja Company": "وجا",
 "Knowledge Net Company": "نولجنت",
-"Saudi Arabian Oil Company":"شركة الزيوت العرربية السعودية",
 "Osool and Bakheet Investment Co.":"شركة أصول وبخيت للإستثمار",
 "Professional Medical Expertise Co.":"شركة الخبرة الطبية المهنية",
 "Saudi Basic Industries Corporation":"الشركة السعودية للصناعات الأساسية",
-"National Gas & Industerialization Co.":"شركة الغاز والتصنيع الوطنية"
+"National Gas & Industerialization Co.":"شركة الغاز والتصنيع الوطنية",
+"SAR":"ريال"
 
 }

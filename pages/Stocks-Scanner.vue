@@ -13,7 +13,7 @@
     </template>
 
     <v-row class="mb-4" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
-      <v-col v-for="(column, index) in columnss" :key="index" cols="12" sm="4" >
+      <v-col v-for="(column, index) in columnss" :key="index" cols="12" sm="4">
         <v-text-field
           v-if="column.filterType === 'text'"
           v-model="filters[column.key]"
@@ -45,10 +45,16 @@
       item-value="symbol"
     >
       <template v-slot:item.symbol="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ cleanSymbol(item.symbol) }}</a>
       </template>
       <template v-slot:item.name="{ item }">
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.name) }}</a>
+      </template>
+      <template v-slot:item.price="{ item }">
+        {{ formatNumber(item.price) }}
+      </template>
+      <template v-slot:item.changesPercentage="{ item }">
+        {{ formatNumber(item.changesPercentage) }}%
       </template>
     </v-data-table>
 
@@ -71,7 +77,6 @@ const { t, locale } = useI18n();
 const router = useRouter();
 
 const filters = ref({}); // Object to store filter values
-
 const columnss = [
   { key: 'dayHigh', titleKey: 'Day High', filterType: 'text' },
   { key: 'dayLow', titleKey: 'Day Low', filterType: 'text' },
@@ -113,7 +118,10 @@ const fetchStocks = async () => {
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
-    stocks.value = data;
+    stocks.value = data.map(stock => ({
+      ...stock,
+      symbol: cleanSymbol(stock.symbol)
+    }));
   } catch (err) {
     error.value = err.message;
     console.error('There was a problem with the fetch operation:', err);
@@ -137,14 +145,24 @@ watch(locale, () => {
   // تحديث العناوين عند تغيير اللغة
 });
 
+const formatNumber = (number) => {
+  // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
+  return parseFloat(number).toFixed(2);
+};
+
+const cleanSymbol = (symbol) => {
+  // حذف .SR من الرمز
+  return symbol.replace('.SR', '');
+};
+
 const filteredStocks = computed(() => {
   return stocks.value.filter(stock => {
     const matchesSearch = Object.values(stock).some(value =>
-      String(value).toLowerCase().startsWith(search.value.toLowerCase())
+      String(value).toLowerCase().includes(search.value.toLowerCase())
     );
 
     const matchesFilters = Object.keys(filters.value).every(key => {
-      return !filters.value[key] || String(stock[key]).toLowerCase().startsWith(filters.value[key].toLowerCase());
+      return !filters.value[key] || String(stock[key]).toLowerCase().includes(filters.value[key].toLowerCase());
     });
 
     return matchesSearch && matchesFilters;

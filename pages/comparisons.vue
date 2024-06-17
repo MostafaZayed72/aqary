@@ -118,6 +118,7 @@ function deleteStock(index) {
 onMounted(fetchStocksList);
 
 const stocksListNames = computed(() => stocksList.value.map(stock => stock.name));
+const translatedStocksListNames = computed(() => stocksListNames.value.map(name => t(name)));
 
 function translateKey(key) {
   return translations[key] || key;

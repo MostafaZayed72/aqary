@@ -11,7 +11,7 @@
             <strong>{{ $t('CEO') }}:</strong> {{ company.ceo }}
           </div>
           <div class="mb-4">
-            <strong>{{ $t('Price') }}:</strong> {{ company.price }} {{ company.currency }}
+            <strong>{{ $t('Price') }}:</strong> {{ company.price }} {{ $t('SAR') }}
           </div>
           <div class="mb-4">
             <strong>{{ $t('Market Cap') }}:</strong> {{ company.mktCap }}
