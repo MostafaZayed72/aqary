@@ -17,7 +17,7 @@
       <table v-if="stocks.length > 0" class="min-w-full bg-white border-gray-200 shadow-md rounded-lg overflow-hidden nav">
         <thead class="bg-teal-400">
           <tr>
-            <th v-for="(value, key) in stocks[0]" :key="key" class="px-4 py-2 text-left">{{ translateKey(key) }}</th>
+            <th v-for="(value, key) in stocks[0]" :key="key" class="px-4 py-2 text-left">{{ $t(key) }}</th>
             <th class="px-4 py-2 text-left">{{ $t('Delete') }}</th> <!-- إضافة عمود للإجراءات -->
           </tr>
         </thead>
