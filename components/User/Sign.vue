@@ -1,5 +1,4 @@
 <template>
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
   <div class="pa-4 text-center w-100" :style="$i18n.locale == 'ar-AR' ? 'direction:rtl' : ''">
     <v-dialog
       v-model="dialog"
