@@ -55,6 +55,12 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      meta: [
+        {
+          'http-equiv': 'Content-Security-Policy',
+          content: 'upgrade-insecure-requests'
+        }
+      ],
       link: [
         {
           rel: 'stylesheet',
