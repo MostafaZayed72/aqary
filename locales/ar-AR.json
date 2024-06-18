@@ -790,7 +790,9 @@
     "9598.SR": "9598",
     "9599.SR": "9599",
     "Your account has been successfully confirmed":"تم تأكيد حسابك بنجاح",
-    "Go to home page":"الذهاب للصفحة الرئيسية"
+    "Go to home page":"الذهاب للصفحة الرئيسية",
+    "User successfully created and Verification Mail has been sent to the user": "تم إنشاء الحساب ، وتم إرسال رسالة إلى بريدك الإلكتروني ، اذهب إلى بريدك لتأكيد الحساب",
+    "The Email field is required.":"البريد الإلكتروني مطلوب"
 
 
 
