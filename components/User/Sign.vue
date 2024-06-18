@@ -145,22 +145,45 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- Response Dialog -->
+    <v-dialog
+      v-model="responseDialog"
+      max-width="400"
+    >
+      <v-card>
+        <v-card-title class="headline">{{ $t('Response') }}</v-card-title>
+        <v-card-text>
+          <p>{{ responseMessage }}</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            :text="$t('Close')"
+            @click="responseDialog = false"
+          ></v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 
-// تعريف المتغيرات
+// State variables
 const dialog = ref(false);
 const forgotPasswordDialog = ref(false);
+const responseDialog = ref(false);
+const responseMessage = ref('');
 const userName = ref('');
 const mobile = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 
-// تعريف الدوال
+// Functions
 const openForgotPasswordDialog = () => {
   forgotPasswordDialog.value = true;
 };
@@ -186,10 +209,12 @@ const SignUp = async () => {
     }
 
     const data = await response.json();
-    console.log(data);
+    responseMessage.value = JSON.stringify(data);
     dialog.value = false;
+    responseDialog.value = true;
   } catch (error) {
-    console.error('There was a problem with your fetch operation:', error);
+    responseMessage.value = 'There was a problem with your fetch operation: ' + error.message;
+    responseDialog.value = true;
   }
 };
 </script>
