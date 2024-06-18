@@ -15,7 +15,7 @@
         ></v-btn>
       </template>
 
-      <!-- SIGN UP -->
+      <!-- SIGN IN -->
       <v-card
         prepend-icon="mdi-account"
         :title="$t('Login')"
@@ -35,10 +35,12 @@
         >{{ $t('Forget Password ?') }}</small>
         <h1 class="text-center my-2 font-bold text-xl">{{ $t('Or Sign Up') }}</h1>
 
+        <!-- SIGN UP -->
         <v-card-text>
           <v-row dense>
             <v-col cols="12" md="4" sm="6">
               <v-text-field
+                v-model="userName"
                 :label="$t('Username*')"
                 required
               ></v-text-field>
@@ -46,6 +48,7 @@
 
             <v-col cols="12" md="4" sm="6">
               <v-text-field
+                v-model="mobile"
                 hint="example of helper text only on focus"
                 :label="$t('Mobile*')"
               ></v-text-field>
@@ -55,6 +58,7 @@
 
             <v-col cols="12" md="4" sm="6">
               <v-text-field
+                v-model="email"
                 :label="$t('Email*')"
                 required
               ></v-text-field>
@@ -62,6 +66,7 @@
 
             <v-col cols="12" md="4" sm="6">
               <v-text-field
+                v-model="password"
                 :label="$t('Password*')"
                 type="password"
                 required
@@ -70,6 +75,7 @@
 
             <v-col cols="12" md="4" sm="6">
               <v-text-field
+                v-model="confirmPassword"
                 :label="$t('Confirm Password*')"
                 type="password"
                 required
@@ -99,7 +105,7 @@
             color="primary"
             :text="$t('Confirm')"
             variant="tonal"
-            @click="dialog = false"
+            @click="SignUp"
           ></v-btn>
         </v-card-actions>
       </v-card>
@@ -142,16 +148,48 @@
   </div>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    dialog: false,
-    forgotPasswordDialog: false
-  }),
-  methods: {
-    openForgotPasswordDialog() {
-      this.forgotPasswordDialog = true;
+<script setup>
+import { ref } from 'vue';
+
+// تعريف المتغيرات
+const dialog = ref(false);
+const forgotPasswordDialog = ref(false);
+const userName = ref('');
+const mobile = ref('');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+
+// تعريف الدوال
+const openForgotPasswordDialog = () => {
+  forgotPasswordDialog.value = true;
+};
+
+const SignUp = async () => {
+  try {
+    const response = await fetch('http://development.somee.com/api/User/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userName: userName.value,
+        Mobile: mobile.value,
+        email: email.value,
+        password: password.value,
+        confirmPassword: confirmPassword.value,
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
     }
+
+    const data = await response.json();
+    console.log(data);
+    dialog.value = false;
+  } catch (error) {
+    console.error('There was a problem with your fetch operation:', error);
   }
-}
+};
 </script>
