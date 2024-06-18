@@ -1,4 +1,5 @@
 <template>
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
   <div class="pa-4 text-center w-100" :style="$i18n.locale == 'ar-AR' ? 'direction:rtl' : ''">
     <v-dialog
       v-model="dialog"
@@ -170,7 +171,7 @@ const SignUp = async () => {
     const response = await fetch('http://development.somee.com/api/User/register', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         userName: userName.value,
