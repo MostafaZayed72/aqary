@@ -56,10 +56,8 @@ export default defineNuxtConfig({
   app: {
     head: {
       meta: [
-        {
-          'http-equiv': 'Content-Security-Policy',
-          content: 'upgrade-insecure-requests'
-        }
+        { name: 'Content-Security-Policy', content: 'upgrade-insecure-requests' }
+
       ],
       link: [
         {
