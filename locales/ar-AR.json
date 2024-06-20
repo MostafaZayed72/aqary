@@ -792,8 +792,9 @@
     "Your account has been successfully confirmed":"تم تأكيد حسابك بنجاح",
     "Go to home page":"الذهاب للصفحة الرئيسية",
     "User successfully created and Verification Mail has been sent to the user": "تم إنشاء الحساب ، وتم إرسال رسالة إلى بريدك الإلكتروني ، اذهب إلى بريدك لتأكيد الحساب",
-    "The Email field is required.":"البريد الإلكتروني مطلوب"
-
+    "The Email field is required.":"البريد الإلكتروني مطلوب",
+    "Select Sector":"اختر القطاع",
+"Financial Services":"الخدمات المالية"
 
 
 
