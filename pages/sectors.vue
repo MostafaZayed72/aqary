@@ -1,59 +1,36 @@
 <template>
-  <v-card :title="$t('Filter stocks by sectors')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
+  <v-card :title="$t('Filter stocks by sector')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
     <template v-slot:text>
-      <v-text-field
-        v-model="search"
-        :label="$t('Search')"
-        prepend-inner-icon="mdi-magnify"
-        variant="outlined"
-        hide-details
-        single-line
-        class="navy rounded"
-      ></v-text-field>
+      <v-text-field v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" variant="outlined"
+        hide-details single-line class="navy rounded"></v-text-field>
+
+      <!-- Filter Chips for Sectors -->
+      <v-chip-group v-model="selectedSector" class="mt-4">
+        <v-chip v-for="sector in sectors" :key="sector" :value="sector" class="ma-1 hover:bg-teal-400 delayed"
+          color="primary" label="true">
+          {{ $t(sector) }}
+        </v-chip>
+      </v-chip-group>
     </template>
 
     <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
 
-    <v-data-table 
-      v-if="!loading"
-      class="navy rounded-lg"
-      :headers="translatedColumns"
-      :items="filteredStocks"
-      :search="search"
-    >
-      <template #item.symbol="{ item }">
-        <td class="text-center">
-          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
-        </td>
+    <v-data-table v-if="!loading" class="navy rounded-lg text-start" :headers="translatedColumns"
+      :items="filteredStocks" :search="search" item-value="symbol">
+      <template v-slot:item.symbol="{ item }">
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
       </template>
-      <template #item.companyName="{ item }">
-        <td class="text-center">
-          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.companyName) }}</a>
-        </td>
+      <template v-slot:item.name="{ item }">
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ translateName(item.name) }}</a>
       </template>
-      <template #item.price="{ item }">
-        <td class="text-center">{{ formatNumber(item.price) }}</td>
+      <template v-slot:item.sector="{ item }">
+        {{ $t(item.sector) }}
       </template>
-      <template #item.lastAnnualDividend="{ item }">
-        <td class="text-center">{{ formatNumber(item.lastAnnualDividend) }}</td>
+      <template v-slot:item.price="{ item }">
+        {{ formatNumber(item.price) }}
       </template>
-      <template #item.volume="{ item }">
-        <td class="text-center">{{ formatNumber(item.volume) }}</td>
-      </template>
-      <template #item.exchangeShortName="{ item }">
-        <td class="text-center">{{ item.exchangeShortName }}</td>
-      </template>
-      <template #item.sector="{ item }">
-        <td class="text-center">{{ item.sector }}</td>
-      </template>
-      <template #item.industry="{ item }">
-        <td class="text-center">{{ item.industry }}</td>
-      </template>
-      <template #item.marketCap="{ item }">
-        <td class="text-center">{{ formatNumber(item.marketCap) }}</td>
-      </template>
-      <template #item.beta="{ item }">
-        <td class="text-center">{{ item.beta }}</td>
+      <template v-slot:item.changesPercentage="{ item }">
+        {{ formatNumber(item.changesPercentage) }}%
       </template>
     </v-data-table>
 
@@ -70,38 +47,53 @@ import { useRouter } from 'vue-router';
 
 const search = ref('');
 const stocks = ref([]);
-const loading = ref(false); // حالة التحميل
+const loading = ref(false);
 const error = ref(null);
+const selectedSector = ref([]);
 const { t, locale } = useI18n();
 const router = useRouter();
+const sectors = ref([
+  'Consumer Cyclical',
+  'Basic Materials',
+  'Industrials',
+  'Consumer Defensive',
+  'Healthcare',
+  'Technology',
+  'Utilities',
+  'Energy',
+  'Real Estate',
+  'Communication Services',
+  'Financial Services'
+
+]);
 
 const columns = [
   { key: 'symbol', titleKey: 'Symbol' },
-  { key: 'companyName', titleKey: 'Company Name' },
+  { key: 'name', titleKey: 'Name' },
   { key: 'price', titleKey: 'Price' },
-  { key: 'lastAnnualDividend', titleKey: 'Last Annual Dividend' },
-  { key: 'volume', titleKey: 'Volume' },
-  { key: 'exchangeShortName', titleKey: 'Exchange' },
-  { key: 'sector', titleKey: 'Sector' },
-  { key: 'industry', titleKey: 'Industry' },
   { key: 'marketCap', titleKey: 'Market Cap' },
-  { key: 'beta', titleKey: 'Beta' },
+  { key: 'sharesOutstanding', titleKey: 'Shares Outstanding' },
+  { key: 'pe', titleKey: 'PE' },
+  { key: 'earningsAnnouncement', titleKey: 'Earnings Announcement' },
+  { key: 'yearHigh', titleKey: 'Year High' },
+  { key: 'yearLow', titleKey: 'Year Low' },
+  // Add more columns as needed
 ];
 
 const fetchStocks = async () => {
-  loading.value = true; // بدء التحميل
+  loading.value = true;
   try {
     const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/stock-screener?apikey=2YrQJiN4rDLCH2PfOsj5Up9utgAsazNN'
+      'https://development.somee.com/api/StockMarket/GetAllSymbolData?apikey=pYR3gnW9oyf6juDsf5rtdP7hs2d8wuHg'
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
-    stocks.value = data.slice(0, 50);
+    stocks.value = data;
   } catch (err) {
     error.value = err.message;
     console.error('There was a problem with the fetch operation:', err);
   } finally {
-    loading.value = false; // انتهاء التحميل
+    loading.value = false;
   }
 };
 
@@ -112,27 +104,42 @@ onMounted(() => {
 const translatedColumns = computed(() => {
   return columns.map(col => ({
     ...col,
-    title: t(col.titleKey),
-    align: 'center' // تحديد مركز النص
+    title: t(col.titleKey)
   }));
 });
 
 watch(locale, () => {
-  // تحديث العناوين عند تغيير اللغة
+  selectedSector.value = []; // Reset selected sectors when language changes
 });
 
 const formatNumber = (number) => {
-  // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
   return parseFloat(number).toFixed(2);
 };
 
 const filteredStocks = computed(() => {
-  return stocks.value.filter(stock =>
-    Object.values(stock).some(value =>
-      String(value).toLowerCase().startsWith(search.value.toLowerCase())
-    )
-  );
+  let result = stocks.value;
+
+  if (selectedSector.value.length > 0) {
+    result = result.filter(stock => selectedSector.value.includes(stock.sector));
+  }
+
+  if (search.value) {
+    result = result.filter(stock =>
+      Object.values(stock).some(value =>
+        String(value).toLowerCase().includes(search.value.toLowerCase())
+      )
+    );
+  }
+
+  // Filter out stocks with empty or undefined sector
+  result = result.filter(stock => stock.sector && stock.sector !== "");
+
+  return result;
 });
+
+const translateName = (name) => {
+  return t(name);
+};
 
 const navigateToStock = (symbol) => {
   router.push(`/stocks/${symbol}`);
@@ -140,8 +147,7 @@ const navigateToStock = (symbol) => {
 </script>
 
 <style scoped>
-#container {
-  height: 600px;
-  min-width: 310px;
+.delayed {
+  transition: 0.5s;
 }
 </style>
