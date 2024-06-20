@@ -1,31 +1,30 @@
 <template>
-  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
+  <v-card :title="$t('Filter stocks by sector')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
     <template v-slot:text>
-      <!-- Filter Select for Sectors -->
-      <v-select
-        v-if="sectors.length > 0"
-        v-model="selectedSector"
-        :items="sectors"
-        :label="$t('Select Sector')"
-        class="mt-4 navy rounded"
-      ></v-select>
+      <v-text-field v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" variant="outlined"
+        hide-details single-line class="navy rounded"></v-text-field>
+
+      <!-- Filter Chips for Sectors -->
+      <v-chip-group v-model="selectedSector" class="mt-4">
+        <v-chip v-for="sector in sectors" :key="sector" :value="sector" class="ma-1 hover:bg-teal-400 delayed"
+          color="primary" label="true">
+          {{ $t(sector) }}
+        </v-chip>
+      </v-chip-group>
     </template>
 
     <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
 
-    <v-data-table
-      v-if="!loading"
-      class="navy rounded-lg"
-      :headers="translatedColumns"
-      :items="filteredStocks"
-      :search="search"
-      item-value="symbol"
-    >
+    <v-data-table v-if="!loading" class="navy rounded-lg text-start" :headers="translatedColumns"
+      :items="filteredStocks" :search="search" item-value="symbol">
       <template v-slot:item.symbol="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
       </template>
       <template v-slot:item.name="{ item }">
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ translateName(item.name) }}</a>
+      </template>
+      <template v-slot:item.sector="{ item }">
+        {{ $t(item.sector) }}
       </template>
       <template v-slot:item.price="{ item }">
         {{ formatNumber(item.price) }}
@@ -33,11 +32,8 @@
       <template v-slot:item.changesPercentage="{ item }">
         {{ formatNumber(item.changesPercentage) }}%
       </template>
-      <template v-slot:item.sector="{ item }">
-        {{ item.sector }}
-      </template>
     </v-data-table>
-    
+
     <div v-else class="text-center pa-4">
       Loading...
     </div>
@@ -53,11 +49,21 @@ const search = ref('');
 const stocks = ref([]);
 const loading = ref(false);
 const error = ref(null);
-const selectedSector = ref('');
+const selectedSector = ref([]);
 const { t, locale } = useI18n();
 const router = useRouter();
 const sectors = ref([
-  t('Financial Services'),
+  'Consumer Cyclical',
+  'Basic Materials',
+  'Industrials',
+  'Consumer Defensive',
+  'Healthcare',
+  'Technology',
+  'Utilities',
+  'Energy',
+  'Real Estate',
+  'Communication Services',
+  'Financial Services'
 
 ]);
 
@@ -65,30 +71,17 @@ const columns = [
   { key: 'symbol', titleKey: 'Symbol' },
   { key: 'name', titleKey: 'Name' },
   { key: 'price', titleKey: 'Price' },
-  { key: 'changesPercentage', titleKey: 'Changes Percentage' },
-  { key: 'sector', titleKey: 'Sector' },
-  { key: 'change', titleKey: 'Change' },
-  { key: 'dayLow', titleKey: 'Day Low' },
-  { key: 'dayHigh', titleKey: 'Day High' },
-  { key: 'yearHigh', titleKey: 'Year High' },
-  { key: 'yearLow', titleKey: 'Year Low' },
   { key: 'marketCap', titleKey: 'Market Cap' },
-  { key: 'priceAvg50', titleKey: 'Price Avg 50' },
-  { key: 'priceAvg200', titleKey: 'Price Avg 200' },
-  { key: 'exchange', titleKey: 'Exchange' },
-  { key: 'volume', titleKey: 'Volume' },
-  { key: 'avgVolume', titleKey: 'Avg Volume' },
-  { key: 'open', titleKey: 'Open' },
-  { key: 'previousClose', titleKey: 'Previous Close' },
-  { key: 'eps', titleKey: 'EPS' },
+  { key: 'sharesOutstanding', titleKey: 'Shares Outstanding' },
   { key: 'pe', titleKey: 'PE' },
   { key: 'earningsAnnouncement', titleKey: 'Earnings Announcement' },
-  { key: 'sharesOutstanding', titleKey: 'Shares Outstanding' },
-  { key: 'timestamp', titleKey: 'Timestamp' },
+  { key: 'yearHigh', titleKey: 'Year High' },
+  { key: 'yearLow', titleKey: 'Year Low' },
+  // Add more columns as needed
 ];
 
 const fetchStocks = async () => {
-  loading.value = true; 
+  loading.value = true;
   try {
     const response = await fetch(
       'https://development.somee.com/api/StockMarket/GetAllSymbolData?apikey=pYR3gnW9oyf6juDsf5rtdP7hs2d8wuHg'
@@ -116,7 +109,7 @@ const translatedColumns = computed(() => {
 });
 
 watch(locale, () => {
-  // تحديث العناوين عند تغيير اللغة
+  selectedSector.value = []; // Reset selected sectors when language changes
 });
 
 const formatNumber = (number) => {
@@ -126,8 +119,8 @@ const formatNumber = (number) => {
 const filteredStocks = computed(() => {
   let result = stocks.value;
 
-  if (selectedSector.value) {
-    result = result.filter(stock => stock.sector === selectedSector.value);
+  if (selectedSector.value.length > 0) {
+    result = result.filter(stock => selectedSector.value.includes(stock.sector));
   }
 
   if (search.value) {
@@ -137,6 +130,9 @@ const filteredStocks = computed(() => {
       )
     );
   }
+
+  // Filter out stocks with empty or undefined sector
+  result = result.filter(stock => stock.sector && stock.sector !== "");
 
   return result;
 });
@@ -151,8 +147,7 @@ const navigateToStock = (symbol) => {
 </script>
 
 <style scoped>
-#container {
-  height: 600px;
-  min-width: 310px;
+.delayed {
+  transition: 0.5s;
 }
 </style>

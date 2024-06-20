@@ -41,7 +41,7 @@
     "Previous Close":"الإغلاق السابق",
     "EPS":"ربحية السهم",
     "Earnings Announcement":"توزيع الأرباح السنوي",
-    "Shares Outstanding":"الأسهم المعلقة",
+    "Shares Outstanding":"الأسهم المصدرة",
     "Timestamp":"الطابع الزمني",
     "More News":"المزيد من الأخبار",
     "Filter stocks by sectors":"فلترة الأسهم حسب القطاع",
@@ -228,7 +228,7 @@
   "Sahara International Petrochemical Company": "سبكيم العالمية",
   "Al-Babtain Power and Telecommunication Co.": "البابطين",
   "Advanced Petrochemical Company": "المتقدمة",
-  "Al Abdullatif Industrial Investment Company": "العبداللطيف",
+  "Al Abdullatif Industrial Investment Company": "آل عبداللطيف",
   "Saudi Kayan Petrochemical Company": "كيان السعودية",
   "Saudi Vitrified Clay Pipe Company": "الفخارية",
   "Middle East Specialized Cables Company": "مسك",
@@ -794,7 +794,18 @@
     "User successfully created and Verification Mail has been sent to the user": "تم إنشاء الحساب ، وتم إرسال رسالة إلى بريدك الإلكتروني ، اذهب إلى بريدك لتأكيد الحساب",
     "The Email field is required.":"البريد الإلكتروني مطلوب",
     "Select Sector":"اختر القطاع",
-"Financial Services":"الخدمات المالية"
+"Financial Services":"الخدمات المالية",
+"Consumer Cyclical":"الخدمات الإستهلاكية",
+"Basic Materials":"المواد الأساسية",
+"Industrials":"الصناعات",
+"Technology":"التكنولوجيا",
+"Consumer Defensive":"القطاع الإستهلاكي",
+"Healthcare":"الصحة",
+"Utilities":"قطاع الخدمات",
+"Energy":"الطاقة",
+"Real Estate": "العقارات",
+"Communication Services":"الخدمات الإجتماعية",
+"Filter stocks by sector":"فلترة الأسهم حسب القطاع"
 
 
 
