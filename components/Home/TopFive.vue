@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto nav pa-4 rounded my-10">
-    <h1 class="text-3xl font-bold my-4 text-center">أعلى 5 أسهم من حيث التغيير في النسبة</h1>
+    <h1 class="text-3xl font-bold my-4 text-center">{{ $t('Top 10 stocks in terms of percentage change') }}</h1>
     
     <!-- عرض شرطي لـ "Loading" -->
     <div v-if="loading" class="text-center my-4">
@@ -52,7 +52,7 @@ onMounted(async () => {
     // Sort stocks by changesPercentage descending
     stocks.sort((a, b) => b.changesPercentage - a.changesPercentage);
     // Take top 5 stocks
-    topStocks.value = stocks.slice(0, 5);
+    topStocks.value = stocks.slice(0, 10);
     loading.value = false; // تعيين قيمة false بعد انتهاء التحميل
   } catch (error) {
     console.error('Error fetching data:', error);
