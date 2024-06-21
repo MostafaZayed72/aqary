@@ -10,7 +10,7 @@
 
      <h1 class="font-bold md:text-xl"> : {{ $t('Send E-mail') }}</h1>
      <!-- <input type="text" class="px-20 py-2 bg-white rounded"> -->
-                   <h1 class="font-bold md:text-xl text-teal-400 hover:text-teal-500 delayed cursor-pointer">finance-report@info</h1>
+                   <h1 class="font-bold md:text-xl text-teal-400 hover:text-teal-500 delayed cursor-pointer">financial-report@info</h1>
              </div>
             <!-- START ICONS -->
             <div class="icons flex gap-4 items-center z-50">
