@@ -5,12 +5,14 @@
         hide-details single-line class="navy rounded"></v-text-field>
 
       <!-- Filter Chips for Sectors -->
-      <v-chip-group v-model="selectedSector" class="mt-4">
-        <v-chip v-for="sector in sectors" :key="sector" :value="sector" class="ma-1 hover:bg-teal-400 delayed"
-          color="primary" label="true">
-          {{ $t(sector) }}
-        </v-chip>
-      </v-chip-group>
+      <div class="flex flex-wrap nav">
+        <div class="nav" v-for="(sector, index) in sectors" :key="sector">
+          <v-chip :value="sector" class="ma-1 hover:bg-teal-400 delayed bg-gray-500 text-white" color="primary" label>
+            {{ $t(sector) }}
+          </v-chip>
+        </div>
+      </div>
+
     </template>
 
     <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
@@ -63,8 +65,8 @@ const sectors = ref([
   'Energy',
   'Real Estate',
   'Communication Services',
-  'Financial Services'
-
+  'Financial Services',
+  'All'
 ]);
 
 const columns = [
@@ -119,7 +121,7 @@ const formatNumber = (number) => {
 const filteredStocks = computed(() => {
   let result = stocks.value;
 
-  if (selectedSector.value.length > 0) {
+  if (selectedSector.value.length > 0 && !selectedSector.value.includes('All')) {
     result = result.filter(stock => selectedSector.value.includes(stock.sector));
   }
 
@@ -149,5 +151,10 @@ const navigateToStock = (symbol) => {
 <style scoped>
 .delayed {
   transition: 0.5s;
+}
+
+.v-chip-group {
+  display: flex !important;
+  flex-wrap: wrap !important;
 }
 </style>
