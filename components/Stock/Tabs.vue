@@ -6,8 +6,8 @@
         color="white"
         class="bg-gray-500 text-black"
       >
-        <v-tab :value="1">{{ $t('Company Profile') }}</v-tab>
-        <v-tab :value="2">{{ $t('Financial statement') }}</v-tab>
+        <v-tab :value="1"><h1 class="font-bold text-xl">{{ $t('Company Profile') }}</h1></v-tab>
+        <v-tab :value="2"><h1 class="font-bold text-xl">{{ $t('Financial statement') }}</h1></v-tab>
       </v-tabs>
   
       <v-tabs-window v-model="tab">

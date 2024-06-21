@@ -33,7 +33,6 @@
       </v-card>
     </div>
 
-    <StockNews />
   </template>
   
   <script setup>

@@ -1,105 +1,109 @@
 <template>
-  <v-card class="nav rounded-lg">
-    <v-card-text>
-      <v-progress-circular
-        v-if="loading"
-        indeterminate
-        color="primary"
-        class="mx-auto"
-      ></v-progress-circular>
-      <v-data-table
-        v-else
-        :items="filteredFinancials"
-        :items-per-page="10"
-        class="elevation-1 nav"
-        hide-default-footer
-      >
-        <!-- Scoped slot for customizing table cell content -->
-        <template v-for="field in assetFields" v-slot:[`item.${field}`]="{ item }">
-          {{ formatCurrency(item[field]) }}
-        </template>
-      </v-data-table>
-    </v-card-text>
-  </v-card>
+  <v-data-table-server
+    class="nav"
+    v-model:items-per-page="itemsPerPage"
+    :headers="translatedHeaders"
+    :items="serverItems"
+    :items-length="totalItems"
+    :loading="loading"
+    item-value="date"
+    @update:options="loadItems"
+    :style="$i18n.locale === 'ar-AR' ? 'direction: rtl;' : 'direction: ltr;'"
+  ></v-data-table-server>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
 const route = useRoute(); // Access route params
-const financials = ref([]);
-const filteredFinancials = ref([]);
+const { t } = useI18n();
+
+const itemsPerPage = ref(5);
+const serverItems = ref([]);
 const loading = ref(true);
-const symbol = ref(''); // Define symbol as a reactive variable
+const totalItems = ref(0);
 
-// Fetch data from API on component mount
-onMounted(async () => {
+// ترجمة العناوين بشكل ديناميكي باستخدام مفتاح الترجمة
+const translatedHeaders = computed(() => [
+  { title: t('date'), key: 'date', align: 'start' },
+  { title: t('totalAssets'), key: 'totalAssets', align: 'start' },
+  { title: t('totalLiabilities'), key: 'totalLiabilities', align: 'start' },
+  { title: t('totalEquity'), key: 'totalEquity', align: 'start' },
+  { title: t('netDebt'), key: 'netDebt', align: 'start' },
+  { title: t('cashAndCashEquivalents'), key: 'cashAndCashEquivalents', align: 'start' },
+  { title: t('shortTermInvestments'), key: 'shortTermInvestments', align: 'start' },
+  { title: t('cashAndShortTermInvestments'), key: 'cashAndShortTermInvestments', align: 'start' },
+  { title: t('netReceivables'), key: 'netReceivables', align: 'start' },
+  { title: t('inventory'), key: 'inventory', align: 'start' },
+  { title: t('otherCurrentAssets'), key: 'otherCurrentAssets', align: 'start' },
+  { title: t('totalCurrentAssets'), key: 'totalCurrentAssets', align: 'start' },
+  { title: t('propertyPlantEquipmentNet'), key: 'propertyPlantEquipmentNet', align: 'start' },
+  { title: t('goodwill'), key: 'goodwill', align: 'start' },
+  { title: t('intangibleAssets'), key: 'intangibleAssets', align: 'start' },
+  { title: t('goodwillAndIntangibleAssets'), key: 'goodwillAndIntangibleAssets', align: 'start' },
+  { title: t('longTermInvestments'), key: 'longTermInvestments', align: 'start' },
+  { title: t('taxAssets'), key: 'taxAssets', align: 'start' },
+  { title: t('otherNonCurrentAssets'), key: 'otherNonCurrentAssets', align: 'start' },
+  { title: t('totalNonCurrentAssets'), key: 'totalNonCurrentAssets', align: 'start' },
+  { title: t('otherAssets'), key: 'otherAssets', align: 'start' },
+  { title: t('accountPayables'), key: 'accountPayables', align: 'start' },
+  { title: t('shortTermDebt'), key: 'shortTermDebt', align: 'start' },
+  { title: t('taxPayables'), key: 'taxPayables', align: 'start' },
+  { title: t('deferredRevenue'), key: 'deferredRevenue', align: 'start' },
+  { title: t('otherCurrentLiabilities'), key: 'otherCurrentLiabilities', align: 'start' },
+  { title: t('totalCurrentLiabilities'), key: 'totalCurrentLiabilities', align: 'start' },
+  { title: t('longTermDebt'), key: 'longTermDebt', align: 'start' },
+  { title: t('deferredRevenueNonCurrent'), key: 'deferredRevenueNonCurrent', align: 'start' },
+  { title: t('deferredTaxLiabilitiesNonCurrent'), key: 'deferredTaxLiabilitiesNonCurrent', align: 'end' },
+  { title: t('otherNonCurrentLiabilities'), key: 'otherNonCurrentLiabilities', align: 'start' },
+  { title: t('capitalLeaseObligations'), key: 'capitalLeaseObligations', align: 'start' },
+  { title: t('preferredStock'), key: 'preferredStock', align: 'start' },
+  { title: t('commonStock'), key: 'commonStock', align: 'start' },
+  { title: t('retainedEarnings'), key: 'retainedEarnings', align: 'start' },
+  { title: t('accumulatedOtherComprehensiveIncomeLoss'), key: 'accumulatedOtherComprehensiveIncomeLoss', align: 'start' },
+  { title: t('othertotalStockholdersEquity'), key: 'othertotalStockholdersEquity', align: 'start' },
+  { title: t('totalStockholdersEquity'), key: 'totalStockholdersEquity', align: 'start' },
+  { title: t('totalEquity'), key: 'totalEquity', align: 'start' },
+  { title: t('totalLiabilitiesAndStockholdersEquity'), key: 'totalLiabilitiesAndStockholdersEquity', align: 'start' },
+  { title: t('minorityInterest'), key: 'minorityInterest', align: 'start' },
+  { title: t('totalLiabilitiesAndTotalEquity'), key: 'totalLiabilitiesAndTotalEquity', align: 'start' },
+  { title: t('totalInvestments'), key: 'totalInvestments', align: 'start' },
+  { title: t('totalDebt'), key: 'totalDebt', align: 'start' },
+]);
+
+// استخدام route.params.id لتحديد قيمة الـ symbol في رابط الاستعلام
+const symbol = ref(route.params.id.toUpperCase());
+
+const loadItems = async ({ page, itemsPerPage, sortBy }) => {
+  loading.value = true;
   try {
-    // Get symbol from route params and convert to uppercase
-    symbol.value = route.params.id.toUpperCase();
-
-    const response = await fetch(
-      `https://financialmodelingprep.com/api/v4/company-outlook?symbol=${symbol.value}&apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`
-    );
-    const data = await response.json();
-
-    // Filter out 'cik' and 'finalLink' columns from financials
-    financials.value = data.financialsQuarter.balance.map(item => {
-      const { symbol, acceptedDate, reportedCurrency, date, link, cik, finalLink, ...rest } = item;
-      return rest;
-    });
-
-    filteredFinancials.value = financials.value;
-
-    loading.value = false;
+    const response = await axios.get(`https://financialmodelingprep.com/api/v4/company-outlook?symbol=${symbol.value}&apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`);
+    const financials = response.data.financialsQuarter.balance;
+    if (sortBy.length) {
+      const sortKey = sortBy[0].key;
+      const sortOrder = sortBy[0].order;
+      financials.sort((a, b) => {
+        const aValue = a[sortKey];
+        const bValue = b[sortKey];
+        return sortOrder === 'desc' ? bValue - aValue : aValue - bValue;
+      });
+    }
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    serverItems.value = financials.slice(start, end);
+    totalItems.value = financials.length;
   } catch (error) {
     console.error('Error fetching data:', error);
+  } finally {
     loading.value = false;
   }
-});
-
-// Define table headers with specified text and value properties
-const tableHeaders = [
-  { text: 'Date', value: 'date' },
-  { text: 'Cash & Cash Equivalents', value: 'cashAndCashEquivalents' },
-  { text: 'Short-Term Investments', value: 'shortTermInvestments' },
-  { text: 'Net Receivables', value: 'netReceivables' },
-  { text: 'Inventory', value: 'inventory' },
-  { text: 'Other Current Assets', value: 'otherCurrentAssets' },
-  { text: 'Total Current Assets', value: 'totalCurrentAssets' },
-  { text: 'Property Plant Equipment Net', value: 'propertyPlantEquipmentNet' },
-  { text: 'Goodwill', value: 'goodwill' },
-  { text: 'Intangible Assets', value: 'intangibleAssets' },
-  { text: 'Total Non-Current Assets', value: 'totalNonCurrentAssets' },
-  { text: 'Total Assets', value: 'totalAssets' }
-];
-
-// Define asset fields to display in the table
-const assetFields = [
-  'cashAndCashEquivalents',
-  'shortTermInvestments',
-  'netReceivables',
-  'inventory',
-  'otherCurrentAssets',
-  'totalCurrentAssets',
-  'propertyPlantEquipmentNet',
-  'goodwill',
-  'intangibleAssets',
-  'totalNonCurrentAssets',
-  'totalAssets'
-];
-
-// Helper function to format currency and remove SAR symbol
-const formatCurrency = (amount) => {
-  if (!amount) return '-';
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'SAR'
-  }).format(amount).replace('SAR', '').trim();
 };
-</script>
 
-<style scoped>
-/* Add custom scoped styles if necessary */
-</style>
+// تحميل البيانات عندما يتغير route.params.id
+watchEffect(() => {
+  symbol.value = route.params.id.toUpperCase();
+  loadItems({ page: 1, itemsPerPage: itemsPerPage.value, sortBy: [] });
+});
+</script>
