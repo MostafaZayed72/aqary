@@ -815,7 +815,18 @@
 "Low :": "الأقل :",
 "Volume :": "حجم التداول :",
 "Date :":"التاريخ :",
-"Company News":"أخبار الشركة"
+"Company News":"أخبار الشركة",
+"Balance sheet by quarter":"المركز المالي/ربع",
+"Balance sheet by year":"المركز المالي/عام",
+"Income statement by quarter":"قائمة الدخل/ربع",
+"Income statement by year":"قائمة الدخل/عام",
+"Cash flow by quarter":"التدفق النقدي/ربع",
+"Cash flow by Year":"التدفق النقدي/عام",
+"Financial statement":"القوائم المالية",
+"Period":"الفترة",
+"period":"الفترة",
+"inventory":"جدع",
+"date":"التاريخ"
 
 
 
