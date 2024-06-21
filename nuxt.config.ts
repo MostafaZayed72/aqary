@@ -1,5 +1,3 @@
-
-
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
 export default defineNuxtConfig({
@@ -10,9 +8,11 @@ export default defineNuxtConfig({
       port: process.env.NUXT_PUBLIC_PORT ? parseInt(process.env.NUXT_PUBLIC_PORT, 10) : 3000
     }
   },
+
   build: {
     transpile: ['vuetify'],
   },
+
   modules: ['@nuxtjs/i18n','nuxt-highcharts',"@nuxt/ui",
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     },
     //...
   ],
+
   vite: {
     
     vue: {
@@ -30,6 +31,7 @@ export default defineNuxtConfig({
       },
     },
   },
+
   i18n: {
     lazy: true,
     langDir: "locales",
@@ -53,6 +55,7 @@ export default defineNuxtConfig({
     defaultLocale: 'en-US',
 
   },
+
   app: {
     head: {
       meta: [
@@ -68,5 +71,9 @@ export default defineNuxtConfig({
         }
       ]
     }
+  },
+
+  devtools: {
+    enabled: false,
   },
 })

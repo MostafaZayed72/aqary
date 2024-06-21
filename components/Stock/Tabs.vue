@@ -1,8 +1,8 @@
 <template>
-    <v-card class="text-center nav rounded-lg mt-10">
-        <v-tabs v-model="tab" >
+    <v-card class="text-center navv  rounded-lg mt-10">
+        <v-tabs v-model="tab" class="bg-gray-500 text-black">
             <v-tab class="mx-auto" value="one"><h1 class="font-bold text-xl">{{ $t('Company Profile') }}</h1></v-tab>
-            <v-tab class="mx-auto" value="two"><h1 class="font-bold text-xl">{{ $t('Numbers of the last session') }}</h1></v-tab>
+            <v-tab class="mx-auto" value="two"><h1 class="font-bold text-xl">{{ $t('Financial statement') }}</h1></v-tab>
             <v-tab class="mx-auto" value="three"><h1 class="font-bold text-xl">{{ $t('News') }}</h1></v-tab>
             <v-tab class="mx-auto" value="four"><h1 class="font-bold text-xl">{{ $t('Financial Analysis') }}</h1></v-tab>
         </v-tabs>
@@ -14,7 +14,7 @@
                 </v-window-item>
 
                 <v-window-item value="two">
-<StockNumbers />
+<StockFinancialStatement />
                 </v-window-item>
 
                 <v-window-item value="three">
@@ -39,6 +39,6 @@ export default {
 
 <style>
 .v-tab--selected {
-    color: #0cadb3;
+    color: white;
 }
 </style>

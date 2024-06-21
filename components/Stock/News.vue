@@ -1,9 +1,11 @@
 <template>
-  <div class="p-4 nav">
+  
+  <div class="p-4 nav rounded-lg">
     <div v-if="isLoading" class="text-center">
       <p>Loading...</p>
     </div>
     <div v-else>
+      <h1 class="text-center text-2xl font-bold">{{ $t('Company News') }}</h1>
       <div v-if="news.length">
         <div v-for="article in news" :key="article.uuid" class="mb-4">
           <v-card class="mx-auto my-4 nav">

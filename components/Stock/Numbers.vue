@@ -1,56 +1,88 @@
 <template>
-  <div v-if="isLoading" class="p-4 nav">
+  <div v-if="isLoading" class=" nav" :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
     <p>Loading...</p>
   </div>
-  <div v-else-if="sessionData" class="p-4 nav">
-    <v-card class="mx-auto my-4 nav">
-      <v-card-title class="headline">{{ $t(sessionData.name) }}</v-card-title>
-      <v-card-subtitle>{{ sessionData.symbol }} | {{ sessionData.exchange }}</v-card-subtitle>
-      <v-card-text>
-        <div class="mb-4">
-          <strong>{{ $t('Price') }}:</strong> {{ sessionData.price }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Change') }}:</strong> {{ sessionData.change }} ({{ sessionData.changesPercentage }}%)
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Day Low') }}:</strong> {{ sessionData.dayLow }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Day High') }}:</strong> {{ sessionData.dayHigh }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Year Low') }}:</strong> {{ sessionData.yearLow }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Year High') }}:</strong> {{ sessionData.yearHigh }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Market Cap') }}:</strong> {{ formatMarketCap(sessionData.marketCap) }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Volume') }}:</strong> {{ sessionData.volume }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Average Volume') }}:</strong> {{ sessionData.avgVolume }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Open') }}:</strong> {{ sessionData.open }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Previous Close') }}:</strong> {{ sessionData.previousClose }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('EPS') }}:</strong> {{ sessionData.eps }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('P/E Ratio') }}:</strong> {{ sessionData.pe }}
-        </div>
-        <div class="mb-4">
-          <strong>{{ $t('Earnings Announcement') }}:</strong> {{ formatDate(sessionData.earningsAnnouncement) }}
-        </div>
-      </v-card-text>
-    </v-card>
+  <div v-else-if="sessionData" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
+    <v-container :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
+      <v-card class="mx-auto my-4 nav rounded-lg " :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
+        <v-card-title class="headline">{{ $t(sessionData.name) }}</v-card-title>
+        <v-card-subtitle>{{ $t(sessionData.symbol) }} | {{ sessionData.exchange }}</v-card-subtitle>
+        <v-card-text>
+          <v-row>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Price') }}:</strong> {{ sessionData.price }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Change') }}:</strong> {{ sessionData.change }} ({{ sessionData.changesPercentage }}%)
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Day Low') }}:</strong> {{ sessionData.dayLow }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Day High') }}:</strong> {{ sessionData.dayHigh }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Year Low') }}:</strong> {{ sessionData.yearLow }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Year High') }}:</strong> {{ sessionData.yearHigh }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Market Cap') }}:</strong> {{ formatMarketCap(sessionData.marketCap) }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Volume') }}:</strong> {{ sessionData.volume }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Average Volume') }}:</strong> {{ sessionData.avgVolume }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Open') }}:</strong> {{ sessionData.open }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Previous Close') }}:</strong> {{ sessionData.previousClose }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('EPS') }}:</strong> {{ sessionData.eps }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('P/E Ratio') }}:</strong> {{ sessionData.pe }}
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <div class="mb-4">
+                <strong>{{ $t('Earnings Announcement') }}:</strong> {{ formatDate(sessionData.earningsAnnouncement) }}
+              </div>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-container>
   </div>
   <div v-else class="p-4 nav">
     <p>No session data available.</p>

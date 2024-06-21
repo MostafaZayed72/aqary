@@ -39,6 +39,9 @@ body {
   background-color: #08111a;
   color: #5b5e5d;
 }
+.dark .navv {
+  background-color: #08111a;
+}
 .dark .nav {
   @apply bg-dark1;
   color: white

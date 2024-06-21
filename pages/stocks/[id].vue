@@ -1,4 +1,3 @@
 <template>
-    <StockChart />
     <StockTabs />
 </template>

@@ -807,7 +807,15 @@
 "Communication Services":"الخدمات الإجتماعية",
 "Filter stocks by sector":"فلترة الأسهم حسب القطاع",
 "Top 10 stocks in terms of percentage change":"أعلى 10 أسهم من حيث التغير في النسبة",
-"Lowest 10 stocks in terms of percentage change":"أدنى 10 أسهم من حيث التغير في النسبة"
+"Lowest 10 stocks in terms of percentage change":"أدنى 10 أسهم من حيث التغير في النسبة",
+"Saudi exchange data":"بيانات المؤشر السعودي",
+"Open :":"فتح :",
+"Close :":"إغلاق :",
+"High :": "الأعلى :",
+"Low :": "الأقل :",
+"Volume :": "حجم التداول :",
+"Date :":"التاريخ :",
+"Company News":"أخبار الشركة"
 
 
 

@@ -1,6 +1,9 @@
 <template>
-    <div v-if="company" class="p-4 nav">
-      <v-card class="mx-auto my-4 nav">
+  <StockNumbers />
+  <StockChart />
+
+    <div v-if="company" class=" nav rounded-lg">
+      <v-card class="mx-auto my-4 nav rounded-lg">
         <v-card-title class="headline">{{ $t(company.companyName) }}</v-card-title>
         <img :src="company.image" class="white--text my-4 rounded mx-auto "   />
           
@@ -29,6 +32,8 @@
         </v-card-text>
       </v-card>
     </div>
+
+    <StockNews />
   </template>
   
   <script setup>
