@@ -4,12 +4,12 @@
 
     <div v-if="company" class=" nav rounded-lg">
       <v-card class="mx-auto my-4 nav rounded-lg">
-        <v-card-title class="headline">{{ $t(company.companyName) }}</v-card-title>
+        <v-card-title class="headline text-center">{{ $t(company.companyName) }}</v-card-title>
         <img :src="company.image" class="white--text my-4 rounded mx-auto "   />
           
         
-        <v-card-subtitle>{{ company.industry }} | {{ company.sector }}</v-card-subtitle>
-        <v-card-text>
+        <v-card-subtitle class="text-center">{{ company.industry }} | {{ company.sector }}</v-card-subtitle>
+        <v-card-text class="text-center">
           <div class="mb-4">
             <strong>{{ $t('CEO') }}:</strong> {{ company.ceo }}
           </div>

@@ -815,12 +815,12 @@
 "Volume :": "حجم التداول :",
 "Date :":"التاريخ :",
 "Company News":"أخبار الشركة",
-"Balance sheet by quarter":"المركز المالي/ربع",
-"Balance sheet by year":"المركز المالي/عام",
-"Income statement by quarter":"قائمة الدخل/ربع",
-"Income statement by year":"قائمة الدخل/عام",
-"Cash flow by quarter":"التدفق النقدي/ربع",
-"Cash flow by Year":"التدفق النقدي/عام",
+"Balance sheet by quarter":"المركز المالي/ربع سنوي",
+"Balance sheet by year":"المركز المالي/سنوي",
+"Income statement by quarter":"قائمة الدخل/ربع سنوي",
+"Income statement by year":"قائمة الدخل/سنوي",
+"Cash flow by quarter":"التدفق النقدي/ربع سنوي",
+"Cash flow by Year":"التدفق النقدي/سنوي",
 "Financial statement":"القوائم المالية",
 "Period":"الفترة",
 "period":"الفترة",
@@ -916,7 +916,8 @@
 "operatingCashFlow": "التدفق النقدي التشغيلي",
 "capitalExpenditure": "النفقات الرأسمالية",
 "freeCashFlow": "التدفق النقدي الحر",
-"All":"الكل"
+"All":"الكل",
+"Add this stock to favorite":"أضف هذا السهم إلى المفضلة"
 
 
 
