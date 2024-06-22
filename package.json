@@ -32,6 +32,7 @@
     "vue-chartjs": "^5.3.1",
     "vue-highcharts": "^0.2.0",
     "vue-i18n": "^9.13.1",
+    "xlsx": "^0.18.5",
     "yfinance": "^0.0.6"
   }
 }

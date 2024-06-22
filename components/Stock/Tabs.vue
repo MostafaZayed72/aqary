@@ -1,5 +1,5 @@
 <template>
-  <h1 class="bg-gray-500 w-fit mb-2 px-10 py-2 rounded-lg text-white flex gap-2 items-center justify-center text-xl font-bold cursor-pointer">
+  <h1 class="bg-gray-500 hover:bg-gray-600 delayed w-fit mb-2 px-10 py-2 rounded-lg text-white flex gap-2 items-center justify-center text-xl font-bold cursor-pointer">
     {{ $t('Add this stock to favorite') }} 
     <Icon class="text-2xl text-red" name="material-symbols:favorite-rounded" />
   </h1>
@@ -16,6 +16,12 @@
       <v-tab :value="2" :class="{ 'active-tab': tab === 2 }">
         <h1 class="font-bold text-xl">{{ $t('Financial statement') }}</h1>
       </v-tab>
+      <v-tab :value="3" :class="{ 'active-tab': tab === 3 }">
+        <h1 class="font-bold text-xl">{{ $t('Financial Ratios') }}</h1>
+      </v-tab>
+      <v-tab :value="4" :class="{ 'active-tab': tab === 4 }">
+        <h1 class="font-bold text-xl">{{ $t('Comparisons') }}</h1>
+      </v-tab>
     </v-tabs>
 
     <v-tabs-window v-model="tab">
@@ -24,6 +30,12 @@
       </v-tabs-window-item>
       <v-tabs-window-item v-if="tab === 2" :value="2">
         <StockFinancialStatement />
+      </v-tabs-window-item>
+      <v-tabs-window-item v-if="tab === 3" :value="3">
+        <StockFinancialRatios />
+      </v-tabs-window-item>
+      <v-tabs-window-item v-if="tab === 4" :value="4">
+        <StockComparisons />
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>

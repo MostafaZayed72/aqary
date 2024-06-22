@@ -1,3 +1,4 @@
 <template>
-  <StockTabs />
+          <StockComparisons />
+
 </template>
