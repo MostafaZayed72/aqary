@@ -1,19 +1,17 @@
 <template>
   <v-card :title="$t('Filter stocks by sector')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
-    <template v-slot:text>
-      <v-text-field v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" variant="outlined"
-        hide-details single-line class="navy rounded"></v-text-field>
+    <v-text-field v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" variant="outlined"
+      hide-details single-line class="navy rounded"></v-text-field>
 
-      <!-- Filter Chips for Sectors -->
-      <div class="flex flex-wrap nav">
-        <div class="nav" v-for="(sector, index) in sectors" :key="sector">
-          <v-chip :value="sector" class="ma-1 hover:bg-teal-400 delayed bg-gray-500 text-white" color="primary" label>
-            {{ $t(sector) }}
-          </v-chip>
-        </div>
+    <!-- Filter Chips for Sectors -->
+    <v-chip-group v-model="selectedSector" class="mt-4 text-center">
+      <div class="grid grid-cols-2 mx-auto text-center gap-1 md:grid-cols-4 lg:grid-cols-6">
+        <v-chip v-for="sector in sectors" :key="sector" :value="sector" class="ma-1 hover:bg-teal-400 delayed text-center flex justify-center items-center rounded-lg w-[150px]"
+          color="primary" label="true">
+          {{ $t(sector) }}
+        </v-chip>
       </div>
-
-    </template>
+    </v-chip-group>
 
     <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
 
@@ -51,7 +49,7 @@ const search = ref('');
 const stocks = ref([]);
 const loading = ref(false);
 const error = ref(null);
-const selectedSector = ref([]);
+const selectedSector = ref(['All']);  // تعيين "All" بشكل افتراضي
 const { t, locale } = useI18n();
 const router = useRouter();
 const sectors = ref([
@@ -146,15 +144,22 @@ const translateName = (name) => {
 const navigateToStock = (symbol) => {
   router.push(`/stocks/${symbol}`);
 };
+
+const filterBySector = (sector) => {
+  if (sector === 'All') {
+    selectedSector.value = sectors.value.filter(s => s !== 'All');
+  } else {
+    if (selectedSector.value.includes(sector)) {
+      selectedSector.value = selectedSector.value.filter(s => s !== sector);
+    } else {
+      selectedSector.value.push(sector);
+    }
+  }
+};
 </script>
 
 <style scoped>
 .delayed {
   transition: 0.5s;
-}
-
-.v-chip-group {
-  display: flex !important;
-  flex-wrap: wrap !important;
 }
 </style>
