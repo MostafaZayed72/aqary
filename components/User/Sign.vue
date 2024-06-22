@@ -1,17 +1,20 @@
 <template>
   <div class="pa-4 text-center w-100" :style="$i18n.locale == 'ar-AR' ? 'direction:rtl' : ''">
-    <v-dialog v-model="dialog" max-width="600">
-      <template v-slot:activator="{ props: activatorProps }">
-        <v-btn class="text-none font-weight-regular" prepend-icon="mdi-account" :text="$t('Login')" variant="tonal"
-          v-bind="activatorProps" style="background-color: transparent"></v-btn>
-      </template>
+    <v-btn v-if="!isLoggedIn" class="text-none font-weight-regular" prepend-icon="mdi-account" :text="$t('Login')" variant="tonal"
+      @click="dialog = true" style="background-color: transparent"></v-btn>
+    <v-btn v-else class="text-none font-weight-regular" prepend-icon="mdi-account" :text="$t('Logout')" variant="tonal"
+      @click="signOut()" style="background-color: transparent"></v-btn>
 
+    <v-dialog v-model="dialog" max-width="600">
       <!-- SIGN IN -->
       <v-card prepend-icon="mdi-account" :title="$t('Login')">
-        <v-text-field :label="$t('E-mail*')" required></v-text-field>
-        <v-text-field label="Password*" type="password" required></v-text-field>
-        <small class="text-caption text-medium-emphasis mx-4 underline cursor-pointer hover:text-teal-400"
+        <v-text-field v-model="email" :label="$t('E-mail*')" required></v-text-field>
+        <v-text-field v-model="password" label="Password*" type="password" required></v-text-field>
+        <v-btn color="primary" class="w-fit mx-auto px-10 rounded" :text="$t('Confirm')" variant="tonal" @click="signIn"></v-btn>
+
+        <small class="text-caption mt-2 text-medium-emphasis mx-4 underline cursor-pointer hover:text-teal-400"
           @click="openForgotPasswordDialog">{{ $t('Forget Password ?') }}</small>
+
         <h1 class="text-center my-2 font-bold text-xl">{{ $t('Or Sign Up') }}</h1>
 
         <!-- SIGN UP -->
@@ -29,11 +32,11 @@
             <v-col cols="12" md="4" sm="6"></v-col>
 
             <v-col cols="12" md="4" sm="6">
-              <v-text-field v-model="email" :label="$t('Email*')" required></v-text-field>
+              <v-text-field v-model="signupEmail" :label="$t('Email*')" required></v-text-field>
             </v-col>
 
             <v-col cols="12" md="4" sm="6">
-              <v-text-field v-model="password" :label="$t('Password*')" type="password" required></v-text-field>
+              <v-text-field v-model="signupPassword" :label="$t('Password*')" type="password" required></v-text-field>
             </v-col>
 
             <v-col cols="12" md="4" sm="6">
@@ -56,7 +59,7 @@
 
           <v-btn :text="$t('Close')" variant="plain" @click="dialog = false"></v-btn>
 
-          <v-btn color="primary" :text="$t('Confirm')" variant="tonal" @click="SignUp"></v-btn>
+          <v-btn color="primary" :text="$t('Confirm')" variant="tonal" @click="signUp"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -95,6 +98,8 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
 const { t } = useI18n();
 
 // State variables
@@ -107,13 +112,16 @@ const mobile = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
+const signupEmail = ref('');
+const signupPassword = ref('');
+const isLoggedIn = ref(false); // Placeholder for login status
 
 // Functions
 const openForgotPasswordDialog = () => {
   forgotPasswordDialog.value = true;
 };
 
-const SignUp = async () => {
+const signUp = async () => {
   try {
     const response = await fetch('http://development.somee.com/api/User/register', {
       method: 'POST',
@@ -123,8 +131,8 @@ const SignUp = async () => {
       body: JSON.stringify({
         userName: userName.value,
         Mobile: mobile.value,
-        email: email.value,
-        password: password.value,
+        email: signupEmail.value,
+        password: signupPassword.value,
         confirmPassword: confirmPassword.value,
       })
     });
@@ -143,4 +151,66 @@ const SignUp = async () => {
     responseDialog.value = true;
   }
 };
+
+const signIn = async () => {
+  try {
+    const response = await fetch('http://development.somee.com/api/User/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      })
+    });
+
+    if (response.ok) {
+      // Handle successful sign in
+      responseMessage.value = 'User successfully signed in';
+
+      // Save email to localStorage
+      localStorage.setItem('email', email.value);
+
+      // Set login status
+      isLoggedIn.value = true;
+
+      // Optionally, navigate to another page using Vue Router
+      // const router = useRouter();
+      // router.push('/profile'); // Example navigation
+    } else {
+      // Handle sign in errors
+      const errorMessage = await response.json();
+      responseMessage.value = errorMessage.message; // Adjust based on actual response structure
+    }
+
+    dialog.value = false;
+    if (!isLoggedIn.value) {
+      responseDialog.value = true;
+    }
+  } catch (error) {
+    responseMessage.value = error.message;
+    responseDialog.value = true;
+  }
+};
+
+const signOut = () => {
+  // Clear localStorage
+  localStorage.removeItem('email');
+
+  // Reset login status
+  isLoggedIn.value = false;
+
+  navigateTo('/')
+};
+
+// Uncomment this if you want to retrieve email from localStorage on component mount
+// import { onMounted } from 'vue';
+// onMounted(() => {
+//   const savedEmail = localStorage.getItem('email');
+//   if (savedEmail) {
+//     email.value = savedEmail;
+//   }
+// });
+
 </script>
