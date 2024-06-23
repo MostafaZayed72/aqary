@@ -20,7 +20,7 @@
         <h1 class="font-bold text-xl">{{ $t('Financial Ratios') }}</h1>
       </v-tab>
       <v-tab :value="4" :class="{ 'active-tab': tab === 4 }">
-        <h1 class="font-bold text-xl">{{ $t('Comparisons') }}</h1>
+        <h1 class="font-bold text-xl">{{ $t('News') }}</h1>
       </v-tab>
     </v-tabs>
 
@@ -35,7 +35,7 @@
         <StockFinancialRatios />
       </v-tabs-window-item>
       <v-tabs-window-item v-if="tab === 4" :value="4">
-        <StockComparisons />
+        <StockNews />
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>

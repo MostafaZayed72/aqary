@@ -38,7 +38,7 @@
         </div>
       </div>
       <div v-else>
-        <p>No news available.</p>
+        <p class="text-center">{{ $t('No news available now for this stock') }}</p>
       </div>
     </div>
   </div>

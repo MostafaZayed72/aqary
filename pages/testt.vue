@@ -1,4 +1,4 @@
 <template>
-          <StockComparisons />
+          <StockNews />
 
 </template>
