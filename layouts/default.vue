@@ -57,6 +57,14 @@
       >
         {{ $t('News') }} <Icon class="text-2xl" name="material-symbols:news-sharp" />
       </nuxt-link>
+      <nuxt-link
+      v-if="myEmail"
+        to="/profile"
+        class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
+        :class="{ 'bg-teal-400': isActiveLink('/profile') }"
+      >
+        {{ $t('My Profile') }} <Icon class="text-2xl" name="material-symbols:account-circle" />
+      </nuxt-link>
      
         <UserSign class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end "/> 
       <input type="text" :placeholder="$t('Search')" class="flex text-center justify-center md:hidden rounded-xl pa-2  md:w-[60%] lg:w-[70%] w-full mx-auto" style="border: 1px solid;">
@@ -80,7 +88,7 @@
         </div>
         <HomeMenu class="md:hidden"/> 
 
-        <div class="hidden flex items-center gap-2 md:flex mx-10">
+        <div class="hidden  items-center gap-2 md:flex mx-10">
           <ColorMode />
           <LanguageSelector />
         </div>
@@ -111,8 +119,19 @@ export default {
     return {
       isSidebarExpanded: false, 
     };
+  },
+  setup() {
     const colorMode = useColorMode();
+    const myEmail = ref('');
 
+    onMounted(() => {
+      myEmail.value = localStorage.getItem('email') || ''; ;
+    });
+
+    return {
+      colorMode,
+      myEmail,
+    };
   },
   computed: {
     sidebarClass() {

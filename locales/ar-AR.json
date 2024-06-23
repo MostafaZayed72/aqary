@@ -979,7 +979,14 @@
 "dividendYield": "عائد التوزيعات",
 "enterpriseValueMultiple": "مضاعف قيمة المنشأة",
 "priceFairValue": "السعر إلى القيمة العادلة",
-"Logout":"تسجيل الخروج"
+"Logout":"تسجيل الخروج",
+"User not found.":"هذا الحساب غير مسجل",
+"My Profile":"حسابي",
+"Password reset link sent to your email.":"تم إرسال رمز استعادة كلمة المرور إلى بريدك الإلكتروني",
+"Password reset instructions sent to your email.":"تم إرسال رمز استعادة كلمة المرور إلى بريدك الإلكتروني",
+"Submit":"تأكيد",
+"Cancel":"إلغاء",
+"Password successfully reset.":"تم تعيين كلمة المرور بنجاح"
 
 
 
