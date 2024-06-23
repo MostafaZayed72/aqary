@@ -73,6 +73,7 @@ async function fetchNews() {
 onBeforeMount(() => {
   fetchNews();
 });
+
 </script>
 
 <style scoped>

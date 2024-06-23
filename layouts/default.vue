@@ -50,7 +50,13 @@
       >
         {{ $t('Comparisons') }} <Icon class="text-2xl" name="uil:comparison" />
       </nuxt-link>
-      
+      <nuxt-link
+        to="/news"
+        class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
+        :class="{ 'bg-teal-400': isActiveLink('/news') }"
+      >
+        {{ $t('News') }} <Icon class="text-2xl" name="material-symbols:news-sharp" />
+      </nuxt-link>
       <nuxt-link
       v-if="myEmail"
         to="/profile"
