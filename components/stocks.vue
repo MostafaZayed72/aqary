@@ -1,143 +1,135 @@
 <template>
-  <div id="container" class="chart mx-auto rounded-lg sm:w-100 md:w-[90%]" style="height: 600px; min-width: 310px;"></div>
-  <HomeNumbers class="mt-10" />
+  <div id="container" style="height: 600px; min-width: 310px;"></div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
+import Highcharts from 'highcharts/highstock';
 
-// جلب البيانات من الـ API
-const data = ref(null);
-const error = ref(null);
-const isLoading = ref(true);
-const symbol = ref();
-async function fetchData() {
-  try {
-    const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/historical-price-full/%5ETASI.SR?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh'
-    );
-    const json = await response.json();
-    data.value = json.historical.slice(0, 50);
-    symbol.value = json.symbol;
-    isLoading.value = false;
-  } catch (err) {
-    error.value = err;
-    isLoading.value = false;
+// Function to generate dummy candlestick data starting from 2023
+const generateCandlestickData = () => {
+  const data = [];
+  let currentDate = new Date('2023-11-01').getTime(); // Start from January 1, 2023
+
+  // Generate 70 candlesticks
+  for (let i = 0; i < 70; i++) {
+    const open = Math.random() * 10 + 120;
+    const high = open + Math.random() * 5;
+    const low = open - Math.random() * 5;
+    const close = Math.random() * (high - low) + low;
+
+    data.push([
+      currentDate,
+      open,
+      high,
+      low,
+      close
+    ]);
+
+    currentDate += 24 * 3600 * 1000; // Increase date by one day
   }
-}
 
-await fetchData();
+  return data; // Data is already in order from oldest to newest
+};
 
-// تأكد من تحميل Highcharts فقط على الجانب العميل
-if (process.client) {
-  const Highcharts = await import('highcharts/highstock');
+// Function to calculate SMA (Simple Moving Average)
+const calculateSMA = (data, period) => {
+  const smaData = [];
+  let total = 0;
 
-  onMounted(() => {
-    if (data.value) {
-      // تحويل البيانات إلى التنسيق المطلوب لـ Highcharts
-      const priceData = data.value.map(item => [
-        new Date(item.date).getTime(),
-        item.open,
-        item.high,
-        item.low,
-        item.close
-      ]);
+  for (let i = 0; i < period - 1; i++) {
+    smaData.push([data[i][0], null]); // Fill initial null values
+    total += data[i][4]; // Accumulate total for average calculation
+  }
 
-      const volumeData = data.value.map(item => [
-        new Date(item.date).getTime(),
-        item.volume
-      ]);
+  for (let i = period - 1; i < data.length; i++) {
+    total += data[i][4]; // Add current close price to total
+    const average = total / period; // Calculate SMA
+    smaData.push([
+      data[i][0], // Date
+      parseFloat(average.toFixed(2)) // SMA value
+    ]);
+    total -= data[i - period + 1][4]; // Remove oldest close price from total
+  }
 
-      Highcharts.stockChart('container', {
-        chart: {
-          backgroundColor: 'transparent'
-        },
-        rangeSelector: {
-          selected: 1,
-          inputStyle: {
-            color: '#2caffe', // تغيير لون النص في حقول الإدخال إلى الأسود
-          },
+  return smaData;
+};
 
-        },
-        title: {
-          text: 'TASI Price and Volume',
-          style: {
-            color: '#2caffe'
-          }
-        },
-        xAxis: {
-          type: 'datetime',
-          labels: {
-            style: {
-              color: '#2caffe'
-            }
-          }
-        },
-        yAxis: [{
-          title: {
-            text: 'Price',
-            style: {
-              color: '#2caffe'
-            }
-          },
-          labels: {
-            style: {
-              color: '#2caffe'
-            }
-          },
-          height: '60%',
-          lineWidth: 2
-        }, {
-          title: {
-            text: 'Volume',
-            style:{
-              color:'#2caffe' 
-             } 
-         }, 
-         top:'65%', 
-         height:'35%', 
-         offset :0, 
-         lineWidth :2  
-       }],
-       series:[{
-         type:'candlestick', 
-         name:'Stock Price', 
-         data :priceData, 
-         tooltip:{
-           valueDecimals :2  
-         },  
-         yAxis :0,  
-         upColor:'#00FF00', // لون الشموع الخضراء (Up)
-         color:'#FF0000' // لون الشموع الحمراء (Down)
-       },{
-         type :'column', 
-         name :'Volume', 
-         data :volumeData,  
-         yAxis :1,  
-         color:'#2caffe' // لون الفوليوم الأخضر (Up)
-       }],
-       plotOptions:{
-           series:{
-             dataGrouping:{
-               enabled:false // or groupPixelWidth :10
-             },
-             turboThreshold :0 // or a higher value like 1000
-           }
-       },
-       legend:{
-           itemStyle:{
-               color:'#2caffe'   
-           }   
-       }   
-     });
-   }
- });
-}
+// Generate dummy data
+const candlestickData = generateCandlestickData();
+// Calculate SMA with period 10
+const smaData = calculateSMA(candlestickData, 10);
+
+onMounted(() => {
+  createChart();
+});
+
+// Function to create the Highcharts chart
+const createChart = () => {
+  Highcharts.stockChart('container', {
+    rangeSelector: {
+      selected: 1 // Default range selection
+    },
+    title: {
+      text: 'Candlestick Chart with SMA'
+    },
+    subtitle: {
+      text: 'Dummy Data'
+    },
+    xAxis: {
+      type: 'datetime',
+      min: Date.UTC(2023, 11, 1), // January 1, 2023
+      max: Date.UTC(2023, 11, 31), // December 31, 2023
+      labels: {
+        format: '{value:%Y-%m-%d}', // Format date labels
+        rotation: 45,
+        align: 'left'
+      }
+    },
+    yAxis: [{
+      startOnTick: false,
+      endOnTick: false,
+      labels: {
+        align: 'right',
+        x: -3
+      },
+      title: {
+        text: 'OHLC'
+      },
+      height: '60%',
+      lineWidth: 2,
+      resize: {
+        enabled: true
+      }
+    }],
+    tooltip: {
+      split: true
+    },
+    series: [{
+      type: 'candlestick',
+      name: 'AAPL',
+      id: 'aapl',
+      zIndex: 2,
+      data: candlestickData
+    }, {
+      type: 'line',
+      name: 'SMA (10)',
+      id: 'sma',
+      data: smaData,
+      yAxis: 0,
+      color: 'red',
+      lineWidth: 1,
+      tooltip: {
+        valueDecimals: 2
+      }
+    }]
+  });
+};
 </script>
 
 <style scoped>
-#container{
-   height :600px;    
-   min-width :310px;    
+#container {
+  height: 600px;
+  min-width: 310px;
 }
 </style>
