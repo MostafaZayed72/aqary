@@ -6,7 +6,7 @@
   import { onMounted } from 'vue';
   import Highcharts from 'highcharts/highstock';
   
-  // Function to generate dummy candlestick data starting from 2023
+  // Function to generate dummy candlestick and volume data starting from 2023
   const generateCandlestickData = () => {
     const data = [];
     let currentDate = new Date('2023-11-01').getTime(); // Start from January 1, 2023
@@ -17,14 +17,16 @@
       const high = open + Math.random() * 5;
       const low = open - Math.random() * 5;
       const close = Math.random() * (high - low) + low;
+      const volume = Math.random() * 1000 + 100; // Generate random volume
   
-      data.push([
-        currentDate,
+      data.push({
+        x: currentDate,
         open,
         high,
         low,
-        close
-      ]);
+        close,
+        volume
+      });
   
       currentDate += 24 * 3600 * 1000; // Increase date by one day
     }
@@ -38,18 +40,15 @@
     let total = 0;
   
     for (let i = 0; i < period - 1; i++) {
-      smaData.push([data[i][0], null]); // Fill initial null values
-      total += data[i][4]; // Accumulate total for average calculation
+      smaData.push([data[i].x, null]); // Fill initial null values
+      total += data[i].close; // Accumulate total for average calculation
     }
   
     for (let i = period - 1; i < data.length; i++) {
-      total += data[i][4]; // Add current close price to total
+      total += data[i].close; // Add current close price to total
       const average = total / period; // Calculate SMA
-      smaData.push([
-        data[i][0], // Date
-        parseFloat(average.toFixed(2)) // SMA value
-      ]);
-      total -= data[i - period + 1][4]; // Remove oldest close price from total
+      smaData.push([data[i].x, parseFloat(average.toFixed(2))]); // SMA value
+      total -= data[i - period + 1].close; // Remove oldest close price from total
     }
   
     return smaData;
@@ -57,6 +56,10 @@
   
   // Generate dummy data
   const candlestickData = generateCandlestickData();
+  // Extract OHLC data for candlestick chart
+  const ohlc = candlestickData.map(item => [item.x, item.open, item.high, item.low, item.close]);
+  // Extract volume data
+  const volumeData = candlestickData.map(item => [item.x, item.volume]);
   // Calculate SMA with period 10
   const smaData = calculateSMA(candlestickData, 10);
   
@@ -71,7 +74,7 @@
         selected: 1 // Default range selection
       },
       title: {
-        text: 'Candlestick Chart with SMA'
+        text: 'Candlestick Chart with SMA and Volume'
       },
       subtitle: {
         text: 'Dummy Data'
@@ -101,6 +104,18 @@
         resize: {
           enabled: true
         }
+      }, {
+        labels: {
+          align: 'right',
+          x: -3
+        },
+        title: {
+          text: 'Volume'
+        },
+        top: '65%',
+        height: '35%',
+        offset: 0,
+        lineWidth: 2
       }],
       tooltip: {
         split: true
@@ -110,7 +125,13 @@
         name: 'AAPL',
         id: 'aapl',
         zIndex: 2,
-        data: candlestickData
+        data: ohlc
+      }, {
+        type: 'column',
+        name: 'Volume',
+        id: 'volume',
+        data: volumeData,
+        yAxis: 1
       }, {
         type: 'line',
         name: 'SMA (10)',
