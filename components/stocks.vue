@@ -5,11 +5,6 @@
 <script setup>
 import { onMounted } from 'vue';
 import Highcharts from 'highcharts/highstock';
-import IndicatorsCore from 'highcharts/indicators/indicators';
-import MACD from 'highcharts/indicators/macd';
-
-IndicatorsCore(Highcharts);
-MACD(Highcharts);
 
 // Function to generate dummy candlestick and volume data starting from 2023
 const generateCandlestickData = () => {
@@ -79,7 +74,7 @@ const createChart = () => {
       selected: 1 // Default range selection
     },
     title: {
-      text: 'Candlestick Chart with SMA, Volume, and MACD'
+      text: 'Candlestick Chart with SMA and Volume'
     },
     subtitle: {
       text: 'Dummy Data'
@@ -118,19 +113,7 @@ const createChart = () => {
         text: 'Volume'
       },
       top: '65%',
-      height: '15%',
-      offset: 0,
-      lineWidth: 2
-    }, {
-      labels: {
-        align: 'right',
-        x: -3
-      },
-      title: {
-        text: 'MACD'
-      },
-      top: '80%',
-      height: '20%',
+      height: '35%',
       offset: 0,
       lineWidth: 2
     }],
@@ -157,31 +140,6 @@ const createChart = () => {
       yAxis: 0,
       color: 'red',
       lineWidth: 1,
-      tooltip: {
-        valueDecimals: 2
-      }
-    }, {
-      type: 'macd',
-      name: 'MACD',
-      yAxis: 2,
-      linkedTo: 'aapl',
-      color: 'green',
-      lineWidth: 1,
-      macdLine: {
-        styles: {
-          lineColor: 'green'
-        }
-      },
-      signalLine: {
-        styles: {
-          lineColor: 'red'
-        }
-      },
-      histogram: {
-        styles: {
-          lineColor: 'blue'
-        }
-      },
       tooltip: {
         valueDecimals: 2
       }
