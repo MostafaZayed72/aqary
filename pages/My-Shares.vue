@@ -1,5 +1,5 @@
 <template>
-    <v-card :title="$t('Favorite Stocks')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%] mt-10">
+    <v-card :title="$t('Favorite Stocks')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%] mt-10" :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
       <template v-slot:text>
         <v-text-field
           v-model="search"
@@ -101,6 +101,21 @@
       <div v-else class="text-center pa-4">
         Loading...
       </div>
+  
+      <!-- Confirmation Dialog -->
+      <v-dialog v-model="confirmDeleteDialog" max-width="400">
+        <template v-slot:activator="{ on }"></template>
+        <v-card :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
+          <v-card-title>{{ $t('Confirm Deletion') }}</v-card-title>
+          <v-card-text>
+            {{ $t('Are you sure you want to delete this stock?') }}
+          </v-card-text>
+          <v-card-actions>
+            <v-btn text @click="hideDeleteDialog">{{ $t('No') }}</v-btn>
+            <v-btn color="error" text @click="confirmDelete">{{ $t('Yes') }}</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-card>
   </template>
   
@@ -117,6 +132,8 @@
   const { t, locale } = useI18n();
   const router = useRouter();
   const myEmail = ref('');
+  const confirmDeleteDialog = ref(false); // Add this line
+  let currentStock = null; // Add this line
   
   // Fetch favorite symbols on component mount
   onMounted(() => {
@@ -198,31 +215,53 @@
   
   // Function to delete stock from favorite list
   const deleteStock = async (stock) => {
-    const symbolName = stock.symbol; // Assuming 'symbol' is the property containing the symbol name
-    try {
-      // Send DELETE request to delete symbol from favorites
-      await axios.post(`https://development.somee.com/api/FavoriteSymbol/deleteSymbol?UserEmail=${myEmail.value}&SymbolName=${symbolName}`);
-      
-      // Remove the stock from local array after successful deletion
-      const index = stocks.value.findIndex(item => item.symbol === stock.symbol);
-      if (index !== -1) {
-        stocks.value.splice(index, 1);
-      }
-    } catch (err) {
-      console.error('Failed to delete stock:', err);
-      // Optionally handle error (e.g., show an error message to the user)
-    }
+    // Store the current stock for deletion confirmation
+    currentStock = stock;
+    // Show delete confirmation dialog
+    confirmDeleteDialog.value = true;
   };
   
-  // Computed property for filtered stocks based on search query
-  const filteredStocks = computed(() => {
-    return stocks.value.filter(stock =>
-      Object.values(stock).some(value =>
-        String(value).toLowerCase().includes(search.value.toLowerCase())
-      )
-    );
-  });
-  // Function to navigate to stock details page
+  // Confirm deletion action
+  const confirmDelete = async () => {
+    if (!currentStock) {
+      console.error('Stock object is not defined.');
+      return;
+    }
+  
+    const symbolName = currentStock.symbol; // Assuming 'symbol' is the property containing the symbol name
+    try {
+      // Send DELETE request
+      await axios.post(`https://development.somee.com/api/FavoriteSymbol/deleteSymbol?UserEmail=${myEmail.value}&SymbolName=${symbolName}`);
+    
+    // Remove the stock from local array after successful deletion
+    const index = stocks.value.findIndex(item => item.symbol === currentStock.symbol);
+    if (index !== -1) {
+      stocks.value.splice(index, 1);
+    }
+  } catch (err) {
+    console.error('Failed to delete stock:', err);
+    // Optionally handle error (e.g., show an error message to the user)
+  } finally {
+    // Hide the confirmation dialog
+    confirmDeleteDialog.value = false;
+  }
+};
+
+// Hide delete confirmation dialog
+const hideDeleteDialog = () => {
+  confirmDeleteDialog.value = false;
+};
+
+// Computed property for filtered stocks based on search query
+const filteredStocks = computed(() => {
+  return stocks.value.filter(stock =>
+    Object.values(stock).some(value =>
+      String(value).toLowerCase().includes(search.value.toLowerCase())
+    )
+  );
+});
+
+// Function to navigate to stock details page
 const navigateToStock = (symbol) => {
   router.push(`/stocks/${symbol}`);
 };
@@ -248,3 +287,4 @@ definePageMeta({
   color: green;
 }
 </style>
+  

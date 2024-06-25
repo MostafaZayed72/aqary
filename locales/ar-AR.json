@@ -992,7 +992,11 @@
 "Password is incorrect.":"كلمة المرور غير صحيحة",
 "Stock added to favorites successfully!": "تم إضافة السهم إلى المفضلة بنجاح!",
 "Failed to add stock to favorites.": "فشل في إضافة السهم إلى المفضلة.",
-"Favorite Stocks":"الأسهم المفضلة"
+"Favorite Stocks":"الأسهم المفضلة",
+"Are you sure you want to delete this stock?":"هل تريد حذف هذا السهم بالتأكيد؟",
+"Yes":"نعم",
+"No":"إلغاء",
+"Confirm Deletion":"تأكيد الحذف"
 
 
 
