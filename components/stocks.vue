@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full   my-10 ">
+  <div class="sm:w-100 md:w-[80%] mx-auto  mt-4 mb-12 bg-black">
     <iframe
-      class=" w-full  rounded-lg "
+      class=" w-full  rounded-lg bg-black"
       frameborder="0"
       scrolling="no"
       :src="src"
@@ -19,7 +19,11 @@ iframe {
   width: 100%;
   height: auto;
   min-height: 420px;
-  
+  background-color:black !important ;
+
+}
+.StockdioWidget_MainBorder{
+  background-color:black !important ;
 }
 
 </style>

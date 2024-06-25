@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto nav pa-4 rounded my-10">
+  <div class="container mx-auto nav pa-4 rounded-lg my-10 ">
     <h1 class="text-3xl font-bold my-4 text-center">{{ $t('Lowest 10 stocks in terms of percentage change') }}</h1>
     
     <!-- عرض شرطي لـ "Loading" -->

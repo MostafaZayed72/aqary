@@ -5,7 +5,7 @@
           <h1 class="text-center text-2xl font-bold">{{ $t('Saudi exchange data') }}</h1>
         </v-card-title>
         <v-card-text>
-          <div class="grid grid-cols-2  gap-4 mt-6">
+          <div class="grid grid-cols-1 md:grid-cols-3  gap-4 mt-6">
             <div class="flex gap-2 text-center mx-auto">
               <span class="font-bold">{{ $t('Open :') }}</span>
               <span>{{ latestData.open }}</span>
