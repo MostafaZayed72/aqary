@@ -256,7 +256,7 @@ const signIn = async () => {
     if (response.ok) {
       const responseData = await response.json();
       myEmail.value = responseData.email;
-      localStorage.setItem('email', responseData.email);
+      localStorage.setItem('email', email.value);
       dialog.value = false; // Close dialog on success
       location.reload(); // Reload the page
     } else {

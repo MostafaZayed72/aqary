@@ -45,7 +45,9 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const tab = ref(1);
 const route = useRoute();
 const myEmail = ref('');
@@ -62,10 +64,13 @@ const addToFavorite = async () => {
   try {
     const response = await axios.post(endpoint);
     console.log('Response:', response.data);
-    alert('Stock added to favorites successfully!');
+    alert(t('Stock added to favorites successfully!'));
   } catch (error) {
     console.error('Error adding stock to favorites:', error);
-    alert('Failed to add stock to favorites.');
+    const errorMessage = error.response && error.response.data && error.response.data.msg
+      ? error.response.data.msg
+      : t('Failed to add stock to favorites.');
+    alert(errorMessage);
   }
 };
 </script>

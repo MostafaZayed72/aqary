@@ -989,7 +989,11 @@
 "Password successfully reset.":"تم تعيين كلمة المرور بنجاح",
 "International news":"الأخبار العالمية",
 "No news available now for this stock":"لا يوجد أخبار جديدة لهذا السهم حالياً",
-"Password is incorrect.":"كلمة المرور غير صحيحة"
+"Password is incorrect.":"كلمة المرور غير صحيحة",
+"Stock added to favorites successfully!": "تم إضافة السهم إلى المفضلة بنجاح!",
+"Failed to add stock to favorites.": "فشل في إضافة السهم إلى المفضلة.",
+"Favorite Stocks":"الأسهم المفضلة"
+
 
 
 

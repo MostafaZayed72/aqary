@@ -18,7 +18,7 @@
         <thead class="bg-teal-400">
           <tr>
             <th v-for="(value, key) in stocks[0]" :key="key" v-if="key !== 'symbol'" class="px-4 py-2 text-left">{{ $t(key) }}</th>
-            <th class="px-4 py-2 text-left">{{ $t('Actions') }}</th> <!-- إضافة عمود للإجراءات -->
+            <th class="px-4 py-2 text-left">{{ $t('Delete') }}</th> <!-- إضافة عمود للإجراءات -->
           </tr>
         </thead>
         <tbody>
