@@ -58,6 +58,13 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      script: [
+        {
+          src: 'https://www.stockdio.com/visualization/financial/charts/js/Stockdio.FinancialCharts.js',
+          type: 'text/javascript'
+        }
+      ],
+  
       meta: [
         {
           'http-equiv': 'Content-Security-Policy',
