@@ -3,7 +3,7 @@
     <v-btn v-if="myEmail == ''" class="text-none font-weight-regular" prepend-icon="mdi-account" :text="$t('Login')" variant="tonal"
       @click="dialog = true" style="background-color: transparent"></v-btn>
     <v-btn v-else class="text-none font-weight-regular" prepend-icon="mdi-account" :text="$t('Logout')" variant="tonal"
-      @click="signOut()" style="background-color: transparent"></v-btn>
+      @click="signOut" style="background-color: transparent"></v-btn>
 
     <v-dialog v-model="dialog" max-width="600">
       <!-- SIGN IN -->
@@ -238,5 +238,41 @@ const signUp = async () => {
     responseMessage.value = error.message;
     responseDialog.value = true;
   }
+};
+
+const signIn = async () => {
+  try {
+    const response = await fetch('http://development.somee.com/api/User/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      })
+    });
+
+    if (response.ok) {
+      const responseData = await response.json();
+      myEmail.value = responseData.email;
+      localStorage.setItem('email', responseData.email);
+      dialog.value = false; // Close dialog on success
+      location.reload(); // Reload the page
+    } else {
+      const errorData = await response.json();
+      responseMessage.value = errorData.msg;
+      responseDialog.value = true;
+    }
+  } catch (error) {
+    responseMessage.value = error.message;
+    responseDialog.value = true;
+  }
+};
+
+const signOut = () => {
+  localStorage.removeItem('email');
+  myEmail.value = '';
+  location.reload(); // Reload the page
 };
 </script>
