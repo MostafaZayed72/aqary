@@ -1,6 +1,6 @@
 <template>
   <h1 v-if="myEmail" @click="addToFavorite" class="bg-gray-500 hover:bg-gray-600 delayed w-fit mb-2 px-10 py-2 rounded-lg text-white flex gap-2 items-center justify-center text-xl font-bold cursor-pointer">
-    {{ $t('Add this stock to favorite') }} 
+    {{ $t('Add to favorite') }} 
     <Icon class="text-2xl text-red" name="material-symbols:favorite-rounded" />
   </h1>
   <v-card class="navv rounded-lg">
@@ -20,6 +20,9 @@
         <h1 class="font-bold text-xl">{{ $t('Financial Ratios') }}</h1>
       </v-tab>
       <v-tab :value="4" :class="{ 'active-tab': tab === 4 }">
+        <h1 class="font-bold text-xl">{{ $t('Technical Analysis') }}</h1>
+      </v-tab>
+      <v-tab :value="5" :class="{ 'active-tab': tab === 5 }">
         <h1 class="font-bold text-xl">{{ $t('News') }}</h1>
       </v-tab>
     </v-tabs>
@@ -35,6 +38,9 @@
         <StockFinancialRatios />
       </v-tabs-window-item>
       <v-tabs-window-item v-if="tab === 4" :value="4">
+        <StockTechnicalAnalysis />
+      </v-tabs-window-item>
+      <v-tabs-window-item v-if="tab === 5" :value="5">
         <StockNews />
       </v-tabs-window-item>
     </v-tabs-window>

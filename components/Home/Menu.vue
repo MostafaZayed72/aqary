@@ -42,12 +42,12 @@
           <v-list-item >
             <v-list-item-title>
               <nuxt-link
-      to="/Financial-Analysis/2222.SR"
+      to="/Stock-Analysis/2222.SR"
       class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
       :class="{ 'bg-teal-400': activeLink === 'Stocks Scanner' }"
-      @click="setActive('Financial Analysis')"
+      @click="setActive('Stock Analysis')"
     >
-      {{ $t('Financial Analysis') }} <Icon class="text-2xl" name="streamline:money-cash-bag-dollar-bag-payment-cash-money-finance"/>
+      {{ $t('Stock Analysis') }} <Icon class="text-2xl" name="streamline:money-cash-bag-dollar-bag-payment-cash-money-finance"/>
     </nuxt-link>
             </v-list-item-title>
           </v-list-item>

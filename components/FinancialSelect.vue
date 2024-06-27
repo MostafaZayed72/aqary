@@ -42,7 +42,7 @@
     
     // Navigate to the selectedSymbol route
     if (selectedSymbol.value) {
-      router.push(`/Financial-Analysis/${selectedSymbol.value}`);
+      router.push(`/Stock-Analysis/${selectedSymbol.value}`);
     }
   };
   
