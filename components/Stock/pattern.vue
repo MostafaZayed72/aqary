@@ -7,7 +7,7 @@
         <v-card-subtitle class="text-sm ">{{ pattern.patterntype }}</v-card-subtitle>
         <v-card-text>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div><strong>Symbol:</strong> {{ pattern.symbol }}</div>
+            <div><strong>Symbol:</strong> {{ $t(pattern.symbol) }}</div>
             <div><strong>Status:</strong> {{ pattern.status }}</div>
             <div><strong>Start Time:</strong> {{ formatDate(pattern.start_time) }}</div>
             <div><strong>End Time:</strong> {{ formatDate(pattern.end_time) }}</div>

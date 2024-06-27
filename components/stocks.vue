@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-const src = 'http://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=D71369AD69FB456EA6304F570A3AEB2A&symbol=^tasi&days=365&width=800&height=420'
+const src = 'http://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=CC11192CB64C4897A4E9B60C6D2D1930&symbol=^tasi&days=365&width=800&height=420'
 </script>
 
 <style scoped>

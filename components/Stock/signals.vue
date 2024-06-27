@@ -3,11 +3,11 @@
       <v-card-title class="text-center">إشارات السهم</v-card-title>
       <v-card-text>
         <div class="text-center">
-          <p><strong>إشارة عامة:</strong> {{ signal }}</p>
+          <p><strong>إشارة عامة:</strong> {{ $t(signal) }}</p>
           <p><strong>شراء:</strong> {{ count.buy }}</p>
           <p><strong>محايد:</strong> {{ count.neutral }}</p>
           <p><strong>بيع:</strong> {{ count.sell }}</p>
-          <p><strong>مؤشر ADX:</strong> {{ trend.adx }}</p>
+          <!-- <p><strong>Adx :</strong> {{ trend.adx }}</p> -->
           <p><strong>الاتجاه:</strong> {{ trend.trending ? 'صاعد' : 'هابط' }}</p>
         </div>
       </v-card-text>
