@@ -1,6 +1,6 @@
 <template>
   <div>
-   <!-- <stocks /> -->
+   <stocks />
    <div class="flex flex-col md:flex-row  md:gap-4">
     <HomeTopFive />
     <HomeFewestFive />

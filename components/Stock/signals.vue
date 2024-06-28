@@ -3,7 +3,7 @@
       <v-card-title class="text-center">{{ $t('Stock Signals') }}</v-card-title>
       <v-card-text>
         <div class="text-center">
-          <p><strong>{{$t('General Signal')}}:</strong> {{ $t(signal) }}</p>
+          <!-- <p><strong>{{$t('General Signal')}}:</strong> {{ $t(signal) }}</p> -->
           <p><strong>{{ $t('Buy') }}:</strong> {{ count.buy }}</p>
           <p><strong>{{ $t('Neutral') }}:</strong> {{ count.neutral }}</p>
           <p><strong>{{ $t('Sell') }}:</strong> {{ count.sell }}</p>
