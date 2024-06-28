@@ -1,5 +1,5 @@
 <template>
-    <v-card class="nav text-center w-[80%] lg:w-[50%] mx-auto rounded-lg h-fit my-auto py-3" v-if="levels">
+    <v-card class="nav text-center w-[80%] lg:w-[50%] mx-auto rounded-lg h-fit my-auto py-3" v-if="levels.length">
       <v-card-title>نقاط الدعم والمقاومة</v-card-title>
       <v-card-text>
         <ul>
