@@ -1,5 +1,5 @@
 <template>
-    <v-card class="nav text-center w-[80%] lg:w-[50%] mx-auto rounded-lg h-fit my-auto py-3">
+    <v-card class="nav text-center w-[80%] lg:w-[50%] mx-auto rounded-lg h-fit my-auto py-3" v-if="levels">
       <v-card-title>نقاط الدعم والمقاومة</v-card-title>
       <v-card-text>
         <ul>
@@ -16,7 +16,7 @@
   const route = useRoute();
   const symbol = ref(route.params.id.toUpperCase());
 
-  const levels = ref([]);
+  const levels = ref(false);
   
   onMounted(async () => {
     try {
