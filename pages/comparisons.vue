@@ -41,9 +41,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
-import { useI18n } from 'vue-i18n';
-
-const { t } = useI18n();
 
 const selectedStock = ref(null);
 const stocks = ref([]);
@@ -129,7 +126,7 @@ function deleteStock(index) {
 
 onMounted(fetchStocksList);
 
-const stocksListNames = computed(() => stocksList.value.map(stock => t(`${stock.name}`)));
+const stocksListNames = computed(() => stocksList.value.map(stock => stock.name));
 
 function translateKey(key) {
   return translations[key] || key;
