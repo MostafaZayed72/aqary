@@ -1,16 +1,17 @@
 <template>
   <div class="cursor-pointer">
+   
     <Icon
-      v-if="$colorMode.preference == 'light'"
-      name="material-symbols:nightlight"
-      class="text-3xl"
-      @click="$colorMode.preference = 'dark'"
-    />
-    <Icon
-      v-else
+      v-if="$colorMode.preference == 'dark'"
       name="material-symbols:sunny-outline-rounded"
       class="text-3xl"
       @click="$colorMode.preference = 'light'"
+    />
+    <Icon
+      v-else
+      name="material-symbols:nightlight"
+      class="text-3xl"
+      @click="$colorMode.preference = 'dark'"
     />
   </div>
 </template>

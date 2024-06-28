@@ -25,7 +25,7 @@
         hide-default-pagination
       >
         <template v-slot:item.symbol="{ item }">
-          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
+          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
         </template>
         <template v-slot:item.name="{ item }">
           {{ $t(item.name) }}

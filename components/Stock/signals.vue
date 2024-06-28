@@ -1,14 +1,14 @@
 <template>
     <v-card class="w-[80%] lg:w-[50%] mx-auto nav rounded-lg" text-center>
-      <v-card-title class="text-center">إشارات السهم</v-card-title>
+      <v-card-title class="text-center">{{ $t('Stock Signals') }}</v-card-title>
       <v-card-text>
         <div class="text-center">
-          <p><strong>إشارة عامة:</strong> {{ $t(signal) }}</p>
-          <p><strong>شراء:</strong> {{ count.buy }}</p>
-          <p><strong>محايد:</strong> {{ count.neutral }}</p>
-          <p><strong>بيع:</strong> {{ count.sell }}</p>
+          <p><strong>{{$t('General Signal')}}:</strong> {{ $t(signal) }}</p>
+          <p><strong>{{ $t('Buy') }}:</strong> {{ count.buy }}</p>
+          <p><strong>{{ $t('Neutral') }}:</strong> {{ count.neutral }}</p>
+          <p><strong>{{ $t('Sell') }}:</strong> {{ count.sell }}</p>
           <!-- <p><strong>Adx :</strong> {{ trend.adx }}</p> -->
-          <p><strong>الاتجاه:</strong> {{ trend.trending ? 'صاعد' : 'هابط' }}</p>
+          <p><strong>{{ $t('Direction') }}:</strong> {{ $t(trend.trending ? 'Bullish' : 'Bearish') }}</p>
         </div>
       </v-card-text>
     </v-card>

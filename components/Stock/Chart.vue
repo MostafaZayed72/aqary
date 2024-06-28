@@ -17,7 +17,7 @@ const route = useRoute();
 const symbol = ref(route.params.id.toUpperCase());
 
 const iframeSrc = computed(() => {
-  return `http://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=D71369AD69FB456EA6304F570A3AEB2A&symbol=${symbol.value}&days=365&width=800&height=420`;
+  return `http://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=CC11192CB64C4897A4E9B60C6D2D1930&symbol=${symbol.value}&days=365&width=800&height=420`;
 });
 </script>
 

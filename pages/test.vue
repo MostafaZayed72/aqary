@@ -1,26 +1,65 @@
+<!-- components/TradingViewWidget.vue -->
 <template>
-      <div class="sm:w-100 md:w-[80%] mx-auto  mt-4 mb-12">
-        <iframe
-          class=" w-full  rounded-lg"
-          frameborder="0"
-          scrolling="no"
-          :src="src"
-        ></iframe>
-      </div>
-      <HomeNumbers />
-    </template>
-    
-    <script setup>
-    const src = 'http://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=CC11192CB64C4897A4E9B60C6D2D1930&symbol=^tasi&days=365&width=800&height=420'
-    </script>
-    
-    <style scoped>
-    iframe {
-      width: 100%;
-      height: auto;
-      min-height: 420px;
-    
-    }
-    
-    </style>
-    
+      <StockPattern />
+
+</template>
+
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const script = document.createElement('script')
+  script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js'
+  script.async = true
+  script.innerHTML = JSON.stringify({
+    "autosize": true,
+    "symbol": "NASDAQ:AAPL",
+    "interval": "D",
+    "timezone": "Etc/UTC",
+    "theme": "light",
+    "style": "1",
+    "locale": "en",
+    "allow_symbol_change": true,
+    "calendar": false,
+    "support_host": "https://www.tradingview.com"
+  })
+  document.querySelector('.tradingview-widget-container__widget').appendChild(script)
+})
+
+definePageMeta({
+  layout: 'custom'
+});
+
+</script>
+
+<style scoped>
+.tradingview-widget-container {
+  position: relative;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: #333;
+  width: 100%;
+  height: 500px; /* زيادة ارتفاع الحاوية */
+}
+
+.tradingview-widget-container__widget {
+  width: 100%;
+  height: 100%; /* ضبط ارتفاع الـ div الداخلي ليملأ الحاوية */
+}
+
+.tradingview-widget-copyright {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 32px;
+  background: #f4f4f4;
+  border-top: 1px solid #e5e5e5;
+}
+
+.blue-text {
+  color: #3bafea;
+}
+</style>
