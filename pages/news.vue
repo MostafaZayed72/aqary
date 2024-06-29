@@ -60,8 +60,9 @@
   }
   
   const formatDate = (timestamp: number) => {
-    return new Date(timestamp * 1000).toLocaleDateString()
-  }
+  const options = { day: '2-digit', month: '2-digit', year: 'numeric' }
+  return new Date(timestamp * 1000).toLocaleDateString('en-GB', options) // يمكنك تغيير 'en-GB' إلى اللغة المطلوبة
+}
   
   onBeforeMount(fetchNews)
   </script>
