@@ -1,5 +1,5 @@
 <template>
-    <v-card :title="$t('Filter stocks by trending')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
+    <v-card :title="$t('Filter stocks by trending')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
      
   
       <!-- Filter Chips for Sectors -->
@@ -21,13 +21,13 @@
   
       <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
   
-      <v-data-table v-if="!loading" class="navy rounded-lg text-start" :headers="translatedColumns"
+      <v-data-table v-if="!loading" class="nav rounded-lg text-start v-data-table text-green-700" :headers="translatedColumns"
         :items="filteredStocks" :search="search" item-value="symbol">
-        <template v-slot:item.symbol="{ item }">
-          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
+        <template v-slot:item.symbol="{ item }" >
+          <nuxtLink  @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</nuxtLink>
         </template>
         <template v-slot:item.name="{ item }">
-          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ translateName(item.name) }}</a>
+          <nuxtLink @click.prevent="navigateToStock(item.symbol)" href="#">{{ translateName(item.name) }}</nuxtLink>
         </template>
         <template v-slot:item.sector="{ item }">
           {{ $t(item.sector) }}
@@ -173,5 +173,25 @@ if (uptrendStocks.length > 0) {
   .delayed {
     transition: 0.5s;
   }
+  v-data-table th,
+v-data-table td {
+  color: #333; /* لون النص في الأعمدة */
+  background-color: #f5f5f5; /* لون خلفية الأعمدة */
+  border-bottom: 1px solid #ddd; /* خط سفلي للأعمدة */
+  padding: 10px; /* تباعد الحشو داخل الأعمدة */
+}
+
+/* تحديد الأنماط للعناوين في الجدول */
+v-data-table v-data-table-header th {
+  background-color: #e0e0e0; /* لون خلفية عناوين الأعمدة */
+  color: #444; /* لون النص في عناوين الأعمدة */
+  font-weight: bold; /* عرض الخط لعناوين الأعمدة */
+}
+
+/* تحديد الأنماط للأعمدة عند التحويل (hover) */
+v-data-table tbody tr:hover {
+  background-color: #f0f0f0; /* لون الخلفية عند التحويل على الصف */
+}
+
   </style>
   

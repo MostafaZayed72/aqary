@@ -1,5 +1,5 @@
 <template>
-  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
+  <v-card :title="$t('Stocks Filter')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
     <template v-slot:text>
       <v-text-field
         v-model="search"
@@ -8,7 +8,7 @@
         variant="outlined"
         hide-details
         single-line
-        class="navy rounded"
+        class="nav rounded"
       ></v-text-field>
     </template>
 
@@ -16,7 +16,7 @@
 
     <v-data-table 
       v-if="!loading"
-      class="navy rounded-lg"
+      class="nav rounded-lg"
       :headers="translatedColumns"
       :items="filteredStocks"
       :search="search"

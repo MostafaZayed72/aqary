@@ -47,6 +47,22 @@ body {
   @apply bg-dark1;
   color: white
 }
+.dark .nav th:hover {
+  @apply text-teal-400 !important;
+}
+.dark .nav th {
+@apply font-bold;
+@apply text-teal-400;
+@apply text-lg;
+}
+ .nav th:hover {
+  @apply text-emerald-500 !important;
+}
+ .nav th {
+@apply font-bold;
+@apply text-emerald-500;
+@apply text-lg;
+}
 .dark .navy {
   @apply bg-dark1;
   color: white

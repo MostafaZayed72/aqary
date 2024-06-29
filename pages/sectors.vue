@@ -1,5 +1,5 @@
 <template>
-  <v-card :title="$t('Filter stocks by sector')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
+  <v-card :title="$t('Filter stocks by sector')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
    
 
     <!-- Filter Chips for Sectors -->
@@ -14,7 +14,7 @@
 
     <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
 
-    <v-data-table v-if="!loading" class="navy rounded-lg text-start" :headers="translatedColumns"
+    <v-data-table v-if="!loading" class="nav rounded-lg text-start" :headers="translatedColumns"
       :items="filteredStocks" :search="search" item-value="symbol">
       <template v-slot:item.symbol="{ item }">
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>

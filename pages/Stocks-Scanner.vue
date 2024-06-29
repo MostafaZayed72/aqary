@@ -1,5 +1,5 @@
 <template>
-  <v-card :title="$t('Stocks Filter')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]" :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
+  <v-card :title="$t('Stocks Filter')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]" :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
     <template v-slot:text>
       <v-text-field
         v-model="search"
@@ -8,7 +8,7 @@
         variant="outlined"
         hide-details
         single-line
-        class="navy rounded"
+        class="nav rounded"
       ></v-text-field>
     </template>
 
@@ -20,7 +20,7 @@
           :label="t(column.titleKey)"
           variant="outlined"
           hide-details
-          class="navy rounded mx-4"
+          class="nav rounded mx-4"
         ></v-text-field>
         <v-select
           v-if="column.filterType === 'select'"
@@ -29,7 +29,7 @@
           :label="t(column.titleKey)"
           variant="outlined"
           hide-details
-          class="navy rounded"
+          class="nav rounded"
         ></v-select>
       </v-col>
     </v-row>
@@ -38,7 +38,7 @@
 
     <v-data-table 
       v-if="!loading"
-      class="navy rounded-lg"
+      class="nav rounded-lg"
       :headers="translatedColumns"
       :items="filteredStocks"
       :search="search"
