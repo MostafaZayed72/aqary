@@ -1041,7 +1041,16 @@
 "Downtrend":"اتجاه هابط",
 "Uptrend":"اتجاه صاعد",
 "Filter stocks by trending":"فلترة الأسهم حسب الإتجاه",
-"Stocks Trending":"إتجاه الأسهم"
+"Stocks Trending":"إتجاه الأسهم",
+"The Email field is not a valid e-mail address.":"البريد الإلكتروني غير صحيح",
+"Please Provide a valid UserName":"برجاء كتابة الإسم بشكل صحيح",
+"The Mobile field is required.":"برجاء كتابة رقم الموبايل",
+"The Password field is required.":"برجاء كتابة كلمة المرور",
+"Password must be at least 8 characters long.":"كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+"Password must contain at least two special characters.":"كلمة المرور يجب أن تحتوي على رمزين على الأقل",
+"The ConfirmPassword field is required.":"أدخل كلمة المرور في الحقل الثاني",
+"'ConfirmPassword' and 'Password' do not match.":"كلمة المرور غير متطابقة في الحقلين"
+
 
 
 

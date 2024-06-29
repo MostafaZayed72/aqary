@@ -230,7 +230,39 @@ const signUp = async () => {
       dialog.value = false; // Close dialog on success
     } else {
       const errorMessage = await response.json();
-      responseMessage.value = errorMessage.errors.Email[0] + ' / ' + errorMessage.errors.Email[1];
+      
+      
+      
+   
+      if(errorMessage.errors.ConfirmPassword )
+      {
+        
+        responseMessage.value = errorMessage.errors.ConfirmPassword[0] 
+      }
+      if(errorMessage.errors.Password )
+      {
+        
+        responseMessage.value = errorMessage.errors.Password[0] 
+      }
+
+      if(errorMessage.errors.Email )
+      {
+        
+        responseMessage.value = errorMessage.errors.Email[0] 
+      }
+
+      if(errorMessage.errors.Mobile )
+      {
+        
+        responseMessage.value = errorMessage.errors.Mobile[0] 
+      }
+
+      if(errorMessage.errors.UserName )
+      {
+        
+        responseMessage.value = errorMessage.errors.UserName[0] 
+      }
+      
     }
 
     responseDialog.value = true;
