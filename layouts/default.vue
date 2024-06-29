@@ -101,11 +101,12 @@
       </nav>
 
       <!-- Main content -->
-      <div class="p-4 h-screen" :class="$i18n.locale === 'ar-AR' ?  'rtl': 'ltr'" >
+      <div class="p-4 min-h-screen" :class="$i18n.locale === 'ar-AR' ?  'rtl': 'ltr'" >
         <slot />
       </div>
+      <Footer />
+
     </div>
-    <Footer />
     <ScrollToTop />
   </div>
 </template>

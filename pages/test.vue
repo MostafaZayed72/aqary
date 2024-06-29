@@ -1,62 +1,48 @@
-<!-- components/TradingViewWidget.vue -->
 <template>
-      <StockPattern />
-
+  <div>
+    <!-- Your template code here -->
+  </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+const token = ref('');
+
+// Load token from localStorage on mounted
+onMounted(() => {
+  token.value = localStorage.getItem('token');
+});
+
+// Create axios instance with the API URL and headers
+const instance = axios.create({
+  baseURL: 'https://development.somee.com/api/StockMarket',
+});
+
+// Add a request interceptor to attach the token to the Authorization header
+instance.interceptors.request.use(
+  (config) => {
+    if (token.value) {
+      config.headers.Authorization = `Bearer ${token.value}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+const fetchData = async () => {
+  try {
+    const response = await instance.get('/TestSecurity?symbol=2222.SR');
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
 
 onMounted(() => {
-  const script = document.createElement('script')
-  script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js'
-  script.async = true
-  script.innerHTML = JSON.stringify({
-    "autosize": true,
-    "symbol": "NASDAQ:AAPL",
-    "interval": "D",
-    "timezone": "Etc/UTC",
-    "theme": "light",
-    "style": "1",
-    "locale": "en",
-    "allow_symbol_change": true,
-    "calendar": false,
-    "support_host": "https://www.tradingview.com"
-  })
-  document.querySelector('.tradingview-widget-container__widget').appendChild(script)
-})
-
-
+  fetchData();
+});
 </script>
-
-<style scoped>
-.tradingview-widget-container {
-  position: relative;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  color: #333;
-  width: 100%;
-  height: 500px; /* زيادة ارتفاع الحاوية */
-}
-
-.tradingview-widget-container__widget {
-  width: 100%;
-  height: 100%; /* ضبط ارتفاع الـ div الداخلي ليملأ الحاوية */
-}
-
-.tradingview-widget-copyright {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  line-height: 32px;
-  background: #f4f4f4;
-  border-top: 1px solid #e5e5e5;
-}
-
-.blue-text {
-  color: #3bafea;
-}
-</style>

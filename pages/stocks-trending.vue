@@ -1,7 +1,6 @@
 <template>
     <v-card :title="$t('Filter stocks by trending')" flat class="navy rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
-      <v-text-field v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" variant="outlined"
-        hide-details single-line class="navy rounded"></v-text-field>
+     
   
       <!-- Filter Chips for Sectors -->
       
