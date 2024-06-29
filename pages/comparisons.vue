@@ -132,9 +132,6 @@ function translateKey(key) {
   return translations[key] || key;
 }
 
-definePageMeta({
-  layout: 'custom'
-});
 </script>
 
 <style scoped>

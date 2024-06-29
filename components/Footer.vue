@@ -1,5 +1,5 @@
 <template>
-    <div  class="mt-10 shadow nav py-4 px-10 z-10">
+    <div  class="mt-10 shadow nav py-4 px-10 z-10 ">
         <div class="flex flex-col md:flex-row items-center justify-between gap-10">
             <!-- LOGO -->
             <nuxt-link v-if="$colorMode.preference == 'dark'" to="/" class="w-[50%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo-dark.png" alt="Logo"></nuxt-link>

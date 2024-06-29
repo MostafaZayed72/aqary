@@ -107,9 +107,6 @@
     redirectToStockPage();
   }
   
-  definePageMeta({
-    layout: 'custom'
-  });
   </script>
   
   <style scoped>

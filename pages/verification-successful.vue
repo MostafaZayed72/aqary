@@ -29,9 +29,6 @@
     }
   });
   
-  definePageMeta({
-    layout: 'custom'
-  });
   </script>
   
   <style>

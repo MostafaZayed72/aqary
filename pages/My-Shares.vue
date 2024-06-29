@@ -267,9 +267,6 @@ const navigateToStock = (symbol) => {
 };
 
 // Define the page meta if needed
-definePageMeta({
-  layout: 'custom' // Adjust as per your layout needs
-});
 </script>
 
 <style scoped>

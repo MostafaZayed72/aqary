@@ -26,9 +26,6 @@ onMounted(() => {
   document.querySelector('.tradingview-widget-container__widget').appendChild(script)
 })
 
-definePageMeta({
-  layout: 'custom'
-});
 
 </script>
 

@@ -101,7 +101,7 @@
       </nav>
 
       <!-- Main content -->
-      <div class="p-4" :class="$i18n.locale === 'ar-AR' ?  'rtl': 'ltr'">
+      <div class="p-4 h-screen" :class="$i18n.locale === 'ar-AR' ?  'rtl': 'ltr'" >
         <slot />
       </div>
     </div>
