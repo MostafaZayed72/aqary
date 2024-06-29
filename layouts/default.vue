@@ -39,7 +39,7 @@
       :class="{ 'bg-teal-400': activeLink === 'Stocks Scanner' }"
       @click="setActive('Stock Analysis')"
     >
-      {{ $t('Stock Analysis') }} <Icon class="text-2xl" name="streamline:money-cash-bag-dollar-bag-payment-cash-money-finance"/>
+      {{ $t('Stock Analysis') }} <Icon class="text-2xl" name="streamline:money-graph-bar-product-data-bars-analysis-analytics-graph-business-chart"/>
     </nuxt-link>
       <nuxt-link
         to="/stocks-scanner"
