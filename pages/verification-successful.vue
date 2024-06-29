@@ -29,6 +29,10 @@
     }
   });
   
+  useHead({
+  title: 'Verification'
+})
+
   </script>
   
   <style>

@@ -266,6 +266,10 @@ const navigateToStock = (symbol) => {
   router.push(`/stocks/${symbol}`);
 };
 
+useHead({
+  title: 'My Shares'
+})
+
 // Define the page meta if needed
 </script>
 

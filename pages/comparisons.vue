@@ -132,6 +132,10 @@ function translateKey(key) {
   return translations[key] || key;
 }
 
+useHead({
+  title: 'Comparisons'
+})
+
 </script>
 
 <style scoped>

@@ -155,6 +155,10 @@ const filterBySector = (sector) => {
     }
   }
 };
+useHead({
+  title: 'Sectors'
+})
+
 </script>
 
 <style scoped>

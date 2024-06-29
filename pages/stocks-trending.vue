@@ -162,6 +162,11 @@ if (uptrendStocks.length > 0) {
   const navigateToStock = (symbol) => {
     router.push(`/stocks/${symbol}`);
   };
+
+  useHead({
+  title: 'Stocks Trending'
+})
+
   </script>
   
   <style scoped>

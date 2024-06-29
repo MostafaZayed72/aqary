@@ -168,6 +168,11 @@ const filteredStocks = computed(() => {
 const navigateToStock = (symbol) => {
   router.push(`/stocks/${symbol}`);
 };
+
+useHead({
+  title: 'Stocks Scanner'
+})
+
 </script>
 
 <style scoped>

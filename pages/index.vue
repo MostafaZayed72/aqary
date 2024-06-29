@@ -13,4 +13,8 @@
 </template>
 
 <script setup>
+useHead({
+  title: 'Home Page'
+})
+
 </script>

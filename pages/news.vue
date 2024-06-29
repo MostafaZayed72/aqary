@@ -65,6 +65,10 @@
 }
   
   onBeforeMount(fetchNews)
+  useHead({
+  title: 'News'
+})
+
   </script>
   
   <style scoped>
