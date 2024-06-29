@@ -257,8 +257,9 @@ const signIn = async () => {
       const responseData = await response.json();
       myEmail.value = responseData.email;
       localStorage.setItem('email', email.value);
-      dialog.value = false; // Close dialog on success
-      location.reload(); // Reload the page
+      localStorage.setItem('token', responseData.token); // حفظ التوكن في localStorage
+      dialog.value = false; // إغلاق النافذة على النجاح
+      location.reload(); // إعادة تحميل الصفحة
     } else {
       const errorData = await response.json();
       responseMessage.value = errorData.msg;
@@ -272,7 +273,8 @@ const signIn = async () => {
 
 const signOut = () => {
   localStorage.removeItem('email');
+  localStorage.removeItem('token'); // حذف التوكن من localStorage
   myEmail.value = '';
-  location.reload(); // Reload the page
+  location.reload(); // إعادة تحميل الصفحة
 };
 </script>

@@ -20,6 +20,13 @@
           {{ $t('Sectors') }} <Icon class="text-2xl" name="mingcute:sector-fill" />
         </nuxt-link>
         <nuxt-link
+        to="/stocks-trending"
+        class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
+        :class="{ 'bg-teal-400': isActiveLink('/stocks-trending') }"
+      >
+        {{ $t('Stocks Trending') }} <Icon class="text-2xl" name="material-symbols:trending-up-rounded" />
+      </nuxt-link>
+        <nuxt-link
           to="/my-shares"
           class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
           :class="{ 'bg-teal-400': isActiveLink('/my-shares') }"

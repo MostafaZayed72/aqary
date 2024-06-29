@@ -1036,7 +1036,12 @@
 "9601.SR":"9601",
 "8313.SR":"8313",
 "1834.SR":"1834",
-"Read More":"قراءة المزيد"
+"Read More":"قراءة المزيد",
+"Trending":"الإتجاه",
+"Downtrend":"اتجاه هابط",
+"Uptrend":"اتجاه صاعد",
+"Filter stocks by trending":"فلترة الأسهم حسب الإتجاه",
+"Stocks Trending":"إتجاه الأسهم"
 
 
 
