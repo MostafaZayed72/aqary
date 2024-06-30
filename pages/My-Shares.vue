@@ -25,10 +25,11 @@
         hide-default-pagination
       >
         <template v-slot:item.symbol="{ item }">
-          <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
+          <nuxtLink @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</nuxtLink>
         </template>
         <template v-slot:item.name="{ item }">
-          {{ $t(item.name) }}
+         
+          <nuxtLink @click.prevent="navigateToStock(item.symbol)" href="#"> {{ $t(item.name) }}</nuxtLink>
         </template>
         <template v-slot:item.price="{ item }">
           {{ formatNumber(item.price) }}
