@@ -2,7 +2,7 @@
   <div class="container mx-auto p-4">
     <h2 class="text-2xl font-semibold mb-4 text-center text-teal-400">{{ $t('Stocks comparison') }}</h2>
 
-    <div class="flex flex-col nav mb-8">
+    <div class="flex flex-col nav mb-8 rounded-lg">
       <v-autocomplete
         class="nav"
         v-model="selectedStock"
@@ -13,9 +13,9 @@
       <v-btn @click="fetchStockData" color="primary" class="mx-auto w-fit mb-4" :disabled="isLoading">{{ isLoading ? $t('Loading...') : $t('Add to comparison list') }}</v-btn>
     </div>
 
-    <div class="overflow-x-auto nav">
-      <table v-if="stocks.length > 0" class="min-w-full bg-white border-gray-200 shadow-md rounded-lg overflow-hidden nav">
-        <thead class="bg-teal-400">
+    <div class="overflow-x-auto rounded-lg">
+      <table v-if="stocks.length > 0" class="min-w-full bg-white border-gray-200 shadow-md rounded-lg overflow-hidden rounded-lg">
+        <thead class="nav">
           <tr>
             <th v-for="(value, key) in stocks[0]" :key="key" v-if="key !== 'symbol'" class="px-4 py-2 text-left">{{ $t(key) }}</th>
             <th class="px-4 py-2 text-left">{{ $t('Delete') }}</th> <!-- إضافة عمود للإجراءات -->
