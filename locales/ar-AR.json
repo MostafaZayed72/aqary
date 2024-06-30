@@ -1049,7 +1049,8 @@
 "Password must be at least 8 characters long.":"كلمة المرور يجب أن تكون 8 أحرف على الأقل",
 "Password must contain at least two special characters.":"كلمة المرور يجب أن تحتوي على رمزين على الأقل",
 "The ConfirmPassword field is required.":"أدخل كلمة المرور في الحقل الثاني",
-"'ConfirmPassword' and 'Password' do not match.":"كلمة المرور غير متطابقة في الحقلين"
+"'ConfirmPassword' and 'Password' do not match.":"كلمة المرور غير متطابقة في الحقلين",
+"Riyadh Steel Co.":"الرياض للحديد"
 
 
 
