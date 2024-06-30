@@ -8,7 +8,7 @@
       <h1 class="text-center text-2xl font-bold">{{ $t('Company News') }}</h1>
       <div v-if="news.length">
         <div v-for="article in news" :key="article.uuid" class="mb-4">
-          <v-card class="mx-auto my-4 nav">
+          <v-card class="mx-auto my-4 nav text-center">
             <v-card-title class="headline">{{ article.title }}</v-card-title>
             <img
             v-if="article.image_url"
