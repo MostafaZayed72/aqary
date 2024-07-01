@@ -31,17 +31,17 @@
   let stocksList = ref([]);
   
   async function fetchStocksList() {
-    try {
-      const response = await axios.get(`https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=${apiKey}`);
-      stocksList.value = response.data.map(stock => ({
-        name: stock.name,
-        symbol: stock.symbol.replace('.sr', '')
-      }));
-    } catch (error) {
-      console.error('Error fetching stocks list:', error);
-      alert('Failed to fetch stocks list. Please try again.');
-    }
+  try {
+    const response = await axios.get('/api/search');
+    stocksList.value = response.data.map(stock => ({
+      name: stock.name,
+      symbol: stock.symbol.replace('.sr', '')
+    }));
+  } catch (error) {
+    console.error('Error fetching stocks list:', error);
+    alert('Failed to fetch stocks list. Please try again.');
   }
+}
   
   async function fetchStockData() {
     if (!selectedStock.value) {

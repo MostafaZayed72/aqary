@@ -45,7 +45,6 @@ import axios from 'axios';
 const selectedStock = ref(null);
 const stocks = ref([]);
 const isLoading = ref(false);  // حالة التحميل
-const apiKey = 'yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh';
 let stocksList = ref([]);
 
 const translations = {
@@ -76,7 +75,7 @@ const translations = {
 
 async function fetchStocksList() {
   try {
-    const response = await axios.get(`https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=${apiKey}`);
+    const response = await axios.get('/api/stocksList');
     stocksList.value = response.data.map(stock => ({
       name: stock.name,
       symbol: stock.symbol.replace('.sr', '')  // إزالة .sr من الرموز
@@ -103,8 +102,12 @@ async function fetchStockData() {
   isLoading.value = true;
 
   try {
-    const response = await axios.get(`https://financialmodelingprep.com/api/v3/quote/${selectedStockSymbol}?apikey=${apiKey}`);
-    const stockData = response.data[0];
+    const response = await axios.get(`/api/stocks`, {
+      params: {
+        symbol: selectedStockSymbol,
+      },
+    });
+    const stockData = response.data.body;
 
     // تأكد من أن الرمز مضبوط في البيانات
     if (stockData.symbol) {
@@ -135,7 +138,6 @@ function translateKey(key) {
 useHead({
   title: 'Comparisons'
 })
-
 </script>
 
 <style scoped>

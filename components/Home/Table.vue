@@ -80,22 +80,21 @@ const columns = [
 ];
 
 const fetchStocks = async () => {
-  loading.value = true; // بدء التحميل
+  loading.value = true;
+  error.value = null;
   try {
-    const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh'
-    );
+    const response = await fetch('/api/allStocks');
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
     stocks.value = data.map(stock => ({
       ...stock,
-      symbol: (stock.symbol)
+      symbol: stock.symbol.replace('.sr', '')
     }));
   } catch (err) {
     error.value = err.message;
     console.error('There was a problem with the fetch operation:', err);
   } finally {
-    loading.value = false; // انتهاء التحميل
+    loading.value = false;
   }
 };
 
