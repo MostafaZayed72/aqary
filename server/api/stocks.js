@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 export default defineEventHandler(async (event) => {
-  const apiKey = process.env.FINANCIAL_MODELING_PREP_API_KEY; // قم بتخزين API key في متغيرات البيئة
+  const apiKey = "yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh"; // قم بتخزين API key في متغيرات البيئة
 
   const query = getQuery(event);
   const { symbol } = query;

@@ -1,7 +1,7 @@
 <template>
   <div class="sm:w-100 md:w-[80%] mx-auto  mt-4 mb-12">
     <iframe
-      class=" w-full  rounded-lg"
+      class=" w-full frame  rounded-lg"
       frameborder="0"
       scrolling="no"
       :src="src"
@@ -19,7 +19,6 @@ iframe {
   width: 100%;
   height: auto;
   min-height: 420px;
-
 }
 
 </style>

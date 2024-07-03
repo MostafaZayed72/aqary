@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 export default defineEventHandler(async (event) => {
-  const apiKey = process.env.FINANCIAL_MODELING_PREP_API_KEY; // تأكد من تخزين API key في متغيرات البيئة
+  const apiKey = "yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh"; // تأكد من تخزين API key في متغيرات البيئة
 
   try {
     const response = await axios.get(`https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=${apiKey}`);
