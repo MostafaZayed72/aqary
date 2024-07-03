@@ -75,8 +75,8 @@
       <!-- Navbar -->
       <nav class="flex items-center justify-center text-center mx-auto shadow-lg sticky top-0 nav w-full z-50">
         <!-- Logo -->
-        <nuxt-link v-if="$colorMode.preference == 'dark'" to="/" class="w-[20%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo-dark.png" alt="Logo"></nuxt-link>
-        <nuxt-link v-else to="/" class="w-[20%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo.png" alt="Logo"></nuxt-link>
+        <nuxt-link v-if="$colorMode.preference == 'dark'" to="/" class="w-[80%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo-dark.png" alt="Logo"></nuxt-link>
+        <nuxt-link v-else to="/" class="w-[80%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo.png" alt="Logo"></nuxt-link>
 
         <!-- Search -->
 <search />
