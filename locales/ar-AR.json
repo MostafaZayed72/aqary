@@ -1050,7 +1050,10 @@
 "Password must contain at least two special characters.":"كلمة المرور يجب أن تحتوي على رمزين على الأقل",
 "The ConfirmPassword field is required.":"أدخل كلمة المرور في الحقل الثاني",
 "'ConfirmPassword' and 'Password' do not match.":"كلمة المرور غير متطابقة في الحقلين",
-"Riyadh Steel Co.":"الرياض للحديد"
+"Riyadh Steel Co.":"الرياض للحديد",
+"9600.SR":"9600",
+"9603.SR":"9603",
+"9604.SR":"9604"
 
 
 
