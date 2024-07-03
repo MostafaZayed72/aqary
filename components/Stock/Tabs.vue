@@ -57,9 +57,10 @@ const { t } = useI18n();
 const tab = ref(1);
 const route = useRoute();
 const myEmail = ref('');
-
+const token = ref('');
 onMounted(() => {
   myEmail.value = localStorage.getItem('email') || '';
+  token.value = localStorage.getItem('token');
 });
 
 const addToFavorite = async () => {
@@ -68,7 +69,11 @@ const addToFavorite = async () => {
   const endpoint = `https://development.somee.com/api/FavoriteSymbol/AddSymbol?UserEmail=${userEmail}&SymbolName=${symbolName}`;
 
   try {
-    const response = await axios.post(endpoint);
+    const response = await axios.post(endpoint, {}, {
+      headers: {
+        'Authorization': `Bearer ${token.value}`,
+      },
+    });
     console.log('Response:', response.data);
     alert(t('Stock added to favorites successfully!'));
   } catch (error) {
