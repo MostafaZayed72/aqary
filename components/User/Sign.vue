@@ -177,7 +177,7 @@ const forgotPassword = async () => {
 
 const submitPasswordReset = async () => {
   try {
-    const response = await fetch('http://development.somee.com/api/User/reset-password', {
+    const response = await fetch('https://finrep.net/api/User/reset-password', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -214,7 +214,7 @@ const submitPasswordReset = async () => {
 
 const signUp = async () => {
   try {
-    const response = await fetch('http://development.somee.com/api/User/register', {
+    const response = await fetch('https://finrep.net/api/User/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -272,7 +272,7 @@ const signUp = async () => {
 
 const signIn = async () => {
   try {
-    const response = await fetch('http://development.somee.com/api/User/login', {
+    const response = await fetch('https://finrep.net/api/User/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
