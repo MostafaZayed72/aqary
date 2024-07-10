@@ -1,15 +1,11 @@
 <template>
-  <h1 v-if="myEmail" @click="addToFavorite" class="bg-gray-500 hover:bg-gray-600 delayed w-fit mb-2 px-10 py-2 rounded-lg text-white flex gap-2 items-center justify-center text-xl font-bold cursor-pointer">
-    {{ $t('Add to favorite') }} 
+  <h1 v-if="myEmail" @click="addToFavorite"
+    class="bg-gray-500 hover:bg-gray-600 delayed w-fit mb-2 px-10 py-2 rounded-lg text-white flex gap-2 items-center justify-center text-xl font-bold cursor-pointer">
+    {{ $t('Add to favorite') }}
     <Icon class="text-2xl text-red" name="material-symbols:favorite-rounded" />
   </h1>
   <v-card class="navv rounded-lg">
-    <v-tabs
-      v-model="tab"
-      align-tabs="center"
-      color="white"
-      class="bg-gray-500 text-black"
-    >
+    <v-tabs v-model="tab" align-tabs="center" color="white" class="bg-gray-500 text-black">
       <v-tab :value="1" :class="{ 'active-tab underline': tab === 1 }">
         <h1 class="font-bold text-xl">{{ $t('Company Profile') }}</h1>
       </v-tab>
@@ -66,7 +62,7 @@ onMounted(() => {
 const addToFavorite = async () => {
   const userEmail = myEmail.value;
   const symbolName = route.params.id;
-  const endpoint = `https://development.somee.com/api/FavoriteSymbol/AddSymbol?UserEmail=${userEmail}&SymbolName=${symbolName}`;
+  const endpoint = `https://finrep.net/api/FavoriteSymbol/AddSymbol?UserEmail=${userEmail}&SymbolName=${symbolName}`;
 
   try {
     const response = await axios.post(endpoint, {}, {

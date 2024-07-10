@@ -1,11 +1,12 @@
 <template>
   <v-card :title="$t('Filter stocks by sector')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
-   
+
 
     <!-- Filter Chips for Sectors -->
     <v-chip-group v-model="selectedSector" class="mt-4 text-center">
       <div class="grid grid-cols-2 mx-auto text-center gap-1 md:grid-cols-4 lg:grid-cols-6">
-        <v-chip v-for="sector in sectors" :key="sector" :value="sector" class="ma-1 hover:bg-teal-400 delayed text-center flex justify-center items-center rounded-lg w-[150px]"
+        <v-chip v-for="sector in sectors" :key="sector" :value="sector"
+          class="ma-1 hover:bg-teal-400 delayed text-center flex justify-center items-center rounded-lg w-[150px]"
           color="primary" label="true">
           {{ $t(sector) }}
         </v-chip>
@@ -14,8 +15,8 @@
 
     <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
 
-    <v-data-table v-if="!loading" class="nav rounded-lg text-start" :headers="translatedColumns"
-      :items="filteredStocks" :search="search" item-value="symbol">
+    <v-data-table v-if="!loading" class="nav rounded-lg text-start" :headers="translatedColumns" :items="filteredStocks"
+      :search="search" item-value="symbol">
       <template v-slot:item.symbol="{ item }">
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
       </template>
@@ -83,7 +84,7 @@ const fetchStocks = async () => {
   loading.value = true;
   try {
     const response = await fetch(
-      'https://development.somee.com/api/StockMarket/GetAllSymbolData?apikey=pYR3gnW9oyf6juDsf5rtdP7hs2d8wuHg'
+      'https://finrep.net/api/StockMarket/GetAllSymbolData?apikey=pYR3gnW9oyf6juDsf5rtdP7hs2d8wuHg'
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();

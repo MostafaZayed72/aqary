@@ -23,10 +23,10 @@
       item-value="symbol"
     >
       <template v-slot:item.symbol="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
       </template>
       <template v-slot:item.name="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.name) }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.name }}</a>
       </template>
       <template v-slot:item.price="{ item }">
         {{ formatNumber(item.price) }}
@@ -46,10 +46,11 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 const search = ref('');
 const stocks = ref([]);
-const loading = ref(false); // حالة التحميل
+const loading = ref(false);
 const error = ref(null);
 const { t, locale } = useI18n();
 const router = useRouter();
@@ -82,10 +83,14 @@ const columns = [
 const fetchStocks = async () => {
   loading.value = true;
   error.value = null;
+
   try {
-    const response = await fetch('/api/allStocks');
-    if (!response.ok) throw new Error('Network response was not ok');
-    const data = await response.json();
+    const apiKey = "yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh";
+    const response = await axios.get(`https://financialmodelingprep.com/api/v3/quotes/nyse?apikey=${apiKey}`);
+    
+    if (response.status !== 200) throw new Error('Network response was not ok');
+
+    const data = response.data;
     stocks.value = data.map(stock => ({
       ...stock,
       symbol: stock.symbol.replace('.sr', '')
@@ -117,7 +122,6 @@ const formatNumber = (number) => {
   // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
   return parseFloat(number).toFixed(2);
 };
-
 
 const filteredStocks = computed(() => {
   return stocks.value.filter(stock =>

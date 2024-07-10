@@ -18,8 +18,7 @@
   
   onMounted(async () => {
     try {
-      const response = await axios.get(`https://development.somee.com/api/User/IsVerified?token=${token}`);
-      if (response.data) {
+      const response = await axios.get(`https://finrep.net/apicom/api/User/IsVerified?token=${token}`);      if (response.data) {
         isVerified.value = true;
       } else {
         errorMessage.value = 'Token is invalid or expired.';

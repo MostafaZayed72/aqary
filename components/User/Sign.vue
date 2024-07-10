@@ -1,7 +1,7 @@
 <template>
   <div class="pa-4 text-center w-100" :style="$i18n.locale == 'ar-AR' ? 'direction:rtl' : ''">
-    <v-btn v-if="myEmail == ''" class="text-none font-weight-regular" prepend-icon="mdi-account" :text="$t('Login')" variant="tonal"
-      @click="dialog = true" style="background-color: transparent"></v-btn>
+    <v-btn v-if="myEmail == ''" class="text-none font-weight-regular" prepend-icon="mdi-account" :text="$t('Login')"
+      variant="tonal" @click="dialog = true" style="background-color: transparent"></v-btn>
     <v-btn v-else class="text-none font-weight-regular" prepend-icon="mdi-account" :text="$t('Logout')" variant="tonal"
       @click="signOut" style="background-color: transparent"></v-btn>
 
@@ -10,7 +10,8 @@
       <v-card prepend-icon="mdi-account" :title="$t('Login')">
         <v-text-field v-model="email" :label="$t('E-mail*')" required></v-text-field>
         <v-text-field v-model="password" label="Password*" type="password" required></v-text-field>
-        <v-btn color="primary" class="w-fit mx-auto px-10 rounded" :text="$t('Confirm')" variant="tonal" @click="signIn"></v-btn>
+        <v-btn color="primary" class="w-fit mx-auto px-10 rounded" :text="$t('Confirm')" variant="tonal"
+          @click="signIn"></v-btn>
 
         <small class="text-caption mt-2 text-medium-emphasis mx-4 underline cursor-pointer hover:text-teal-400"
           @click="openForgotPasswordDialog">{{ $t('Forget Password ?') }}</small>
@@ -87,7 +88,8 @@
         <v-card-text>
           <v-text-field v-model="resetCode" :label="$t('Enter Reset Code')" required></v-text-field>
           <v-text-field v-model="newPassword" :label="$t('New Password')" type="password" required></v-text-field>
-          <v-text-field v-model="confirmNewPassword" :label="$t('Confirm New Password')" type="password" required></v-text-field>
+          <v-text-field v-model="confirmNewPassword" :label="$t('Confirm New Password')" type="password"
+            required></v-text-field>
         </v-card-text>
 
         <v-card-actions>
@@ -108,7 +110,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" :text="$t('Close')" @click="responseDialog = false" class="text-center mx-auto"></v-btn>
+          <v-btn color="primary" :text="$t('Close')" @click="responseDialog = false"
+            class="text-center mx-auto"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -122,7 +125,7 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const myEmail = ref('')
 onMounted(() => {
-    myEmail.value = localStorage.getItem('email') || '';
+  myEmail.value = localStorage.getItem('email') || '';
 });
 
 // State variables
@@ -150,7 +153,7 @@ const openForgotPasswordDialog = () => {
 
 const forgotPassword = async () => {
   try {
-    const response = await fetch(`https://development.somee.com/api/User/forgot-password?email=${forgotPasswordEmail.value}`, {
+    const response = await fetch(`https://finrep.net/api/User/forgot-password?email=${forgotPasswordEmail.value}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -230,39 +233,34 @@ const signUp = async () => {
       dialog.value = false; // Close dialog on success
     } else {
       const errorMessage = await response.json();
-      
-      
-      
-   
-      if(errorMessage.errors.ConfirmPassword )
-      {
-        
-        responseMessage.value = errorMessage.errors.ConfirmPassword[0] 
+
+
+
+
+      if (errorMessage.errors.ConfirmPassword) {
+
+        responseMessage.value = errorMessage.errors.ConfirmPassword[0]
       }
-      if(errorMessage.errors.Password )
-      {
-        
-        responseMessage.value = errorMessage.errors.Password[0] 
+      if (errorMessage.errors.Password) {
+
+        responseMessage.value = errorMessage.errors.Password[0]
       }
 
-      if(errorMessage.errors.Email )
-      {
-        
-        responseMessage.value = errorMessage.errors.Email[0] 
+      if (errorMessage.errors.Email) {
+
+        responseMessage.value = errorMessage.errors.Email[0]
       }
 
-      if(errorMessage.errors.Mobile )
-      {
-        
-        responseMessage.value = errorMessage.errors.Mobile[0] 
+      if (errorMessage.errors.Mobile) {
+
+        responseMessage.value = errorMessage.errors.Mobile[0]
       }
 
-      if(errorMessage.errors.UserName )
-      {
-        
-        responseMessage.value = errorMessage.errors.UserName[0] 
+      if (errorMessage.errors.UserName) {
+
+        responseMessage.value = errorMessage.errors.UserName[0]
       }
-      
+
     }
 
     responseDialog.value = true;

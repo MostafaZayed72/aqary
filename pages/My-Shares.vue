@@ -1,29 +1,15 @@
 <template>
-  <v-card :title="$t('Favorite Stocks')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%] mt-10" :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
+  <v-card :title="$t('Favorite Stocks')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%] mt-10"
+    :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
     <template v-slot:text>
-      <v-text-field
-        v-model="search"
-        :label="$t('Search')"
-        prepend-inner-icon="mdi-magnify"
-        variant="outlined"
-        hide-details
-        single-line
-        class="nav rounded"
-      ></v-text-field>
+      <v-text-field v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" variant="outlined"
+        hide-details single-line class="nav rounded"></v-text-field>
     </template>
 
     <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
 
-    <v-data-table
-      v-if="!loading"
-      class="nav rounded-lg"
-      :headers="translatedColumns"
-      :items="filteredStocks"
-      :search="search"
-      item-value="symbol"
-      hide-default-footer
-      hide-default-pagination
-    >
+    <v-data-table v-if="!loading" class="nav rounded-lg" :headers="translatedColumns" :items="filteredStocks"
+      :search="search" item-value="symbol" hide-default-footer hide-default-pagination>
       <template v-slot:item.symbol="{ item }">
         <nuxtLink @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</nuxtLink>
       </template>
@@ -176,7 +162,7 @@ const columns = [
 const fetchFavoriteSymbols = async () => {
   loading.value = true;
   try {
-    const response = await axios.get(`https://development.somee.com/api/FavoriteSymbol/GetSymbols?UserEmail=${myEmail.value}`, {
+    const response = await axios.get(`https://finrep.net/api/FavoriteSymbol/GetSymbols?UserEmail=${myEmail.value}`, {
       headers: {
         'Authorization': `Bearer ${token.value}`,
       },
@@ -239,47 +225,47 @@ const confirmDelete = async () => {
   const symbolName = currentStock.symbol; // Assuming 'symbol' is the property containing the symbol name
   try {
     // Send DELETE request
-    await axios.post(`https://development.somee.com/api/FavoriteSymbol/deleteSymbol?UserEmail=${myEmail.value}&SymbolName=${symbolName}`, {}, {
+    await axios.post(`https://finrep.net/api/FavoriteSymbol/deleteSymbol?UserEmail=${myEmail.value}&SymbolName=${symbolName}`, {}, {
       headers: {
         'Authorization': `Bearer ${token.value}`,
       },
     });
-  
-  // Remove the stock from local array after successful deletion
-  const index = stocks.value.findIndex(item => item.symbol === currentStock.symbol);
-  if (index !== -1) {
-    stocks.value.splice(index, 1);
+
+    // Remove the stock from local array after successful deletion
+    const index = stocks.value.findIndex(item => item.symbol === currentStock.symbol);
+    if (index !== -1) {
+      stocks.value.splice(index, 1);
+    }
+  } catch (err) {
+    console.error('Failed to delete stock:', err);
+    // Optionally handle error (e.g., show an error message to the user)
+  } finally {
+    // Hide the confirmation dialog
+    confirmDeleteDialog.value = false;
   }
-} catch (err) {
-  console.error('Failed to delete stock:', err);
-  // Optionally handle error (e.g., show an error message to the user)
-} finally {
-  // Hide the confirmation dialog
-  confirmDeleteDialog.value = false;
-}
 };
 
 // Hide delete confirmation dialog
 const hideDeleteDialog = () => {
-confirmDeleteDialog.value = false;
+  confirmDeleteDialog.value = false;
 };
 
 // Computed property for filtered stocks based on search query
 const filteredStocks = computed(() => {
-return stocks.value.filter(stock =>
-  Object.values(stock).some(value =>
-    String(value).toLowerCase().includes(search.value.toLowerCase())
-  )
-);
+  return stocks.value.filter(stock =>
+    Object.values(stock).some(value =>
+      String(value).toLowerCase().includes(search.value.toLowerCase())
+    )
+  );
 });
 
 // Function to navigate to stock details page
 const navigateToStock = (symbol) => {
-router.push(`/stocks/${symbol}`);
+  router.push(`/stocks/${symbol}`);
 };
 
 useHead({
-title: 'My Shares'
+  title: 'My Shares'
 })
 
 // Define the page meta if needed
@@ -288,15 +274,15 @@ title: 'My Shares'
 <style scoped>
 /* Scoped styles for the component */
 #container {
-height: 600px;
-min-width: 310px;
+  height: 600px;
+  min-width: 310px;
 }
 
 .text-red-500 {
-color: red;
+  color: red;
 }
 
 .text-green-500 {
-color: green;
+  color: green;
 }
 </style>

@@ -17,7 +17,7 @@
       <table v-if="stocks.length > 0" class="min-w-full bg-white border-gray-200 shadow-md rounded-lg overflow-hidden rounded-lg">
         <thead class="nav">
           <tr>
-            <th v-for="(value, key) in stocks[0]" :key="key" v-if="key !== 'symbol'" class="px-4 py-2 text-left">{{ $t(key) }}</th>
+            <th v-for="(value, key) in stocks[0]" :key="key" v-if="key !== 'symbol'" class="px-4 py-2 text-left">{{ translateKey(key) }}</th>
             <th class="px-4 py-2 text-left">{{ $t('Delete') }}</th> <!-- إضافة عمود للإجراءات -->
           </tr>
         </thead>
@@ -25,7 +25,7 @@
           <tr v-for="(stock, index) in stocks" :key="index">
             <td v-for="(value, key) in stock" :key="key" v-if="key !== 'symbol'" class="border px-4 py-2 nav">
               <!-- استخدام router-link لتحويل المسار عند النقر -->
-              <router-link :to="`/stocks/${stock.symbol}`">{{ $t(value) }}</router-link>
+              <router-link :to="`/stocks/${stock.symbol}`">{{ value }}</router-link>
             </td>
             <td class="border px-4 py-2 nav">
               <v-btn @click="deleteStock(index)" color="error" outlined>{{ $t('Delete') }}</v-btn> <!-- زر لحذف السهم -->
@@ -75,7 +75,7 @@ const translations = {
 
 async function fetchStocksList() {
   try {
-    const response = await axios.get('/api/stocksList');
+    const response = await axios.get(`https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`);
     stocksList.value = response.data.map(stock => ({
       name: stock.name,
       symbol: stock.symbol.replace('.sr', '')  // إزالة .sr من الرموز
@@ -102,12 +102,8 @@ async function fetchStockData() {
   isLoading.value = true;
 
   try {
-    const response = await axios.get(`/api/stocks`, {
-      params: {
-        symbol: selectedStockSymbol,
-      },
-    });
-    const stockData = response.data.body;
+    const response = await axios.get(`https://financialmodelingprep.com/api/v3/quote/${selectedStockSymbol}?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`);
+    const stockData = response.data[0];
 
     // تأكد من أن الرمز مضبوط في البيانات
     if (stockData.symbol) {
@@ -137,7 +133,7 @@ function translateKey(key) {
 
 useHead({
   title: 'Comparisons'
-})
+});
 </script>
 
 <style scoped>
