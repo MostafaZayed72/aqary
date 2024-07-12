@@ -1,49 +1,24 @@
 <template>
-  <v-card :title="$t('Stocks Filter')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]" :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
+  <v-card :title="$t('Stocks Filter')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]"
+    :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
     <template v-slot:text>
-      <v-text-field
-        v-model="search"
-        :label="$t('Search')"
-        prepend-inner-icon="mdi-magnify"
-        variant="outlined"
-        hide-details
-        single-line
-        class="nav rounded"
-      ></v-text-field>
+      <v-text-field v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" variant="outlined"
+        hide-details single-line class="nav rounded"></v-text-field>
     </template>
 
     <v-row class="mb-4" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
       <v-col v-for="(column, index) in columnss" :key="index" cols="12" sm="4">
-        <v-text-field
-          v-if="column.filterType === 'text'"
-          v-model="filters[column.key]"
-          :label="t(column.titleKey)"
-          variant="outlined"
-          hide-details
-          class="nav rounded mx-4"
-        ></v-text-field>
-        <v-select
-          v-if="column.filterType === 'select'"
-          v-model="filters[column.key]"
-          :items="column.options"
-          :label="t(column.titleKey)"
-          variant="outlined"
-          hide-details
-          class="nav rounded"
-        ></v-select>
+        <v-text-field v-if="column.filterType === 'text'" v-model="filters[column.key]" :label="t(column.titleKey)"
+          variant="outlined" hide-details class="nav rounded mx-4"></v-text-field>
+        <v-select v-if="column.filterType === 'select'" v-model="filters[column.key]" :items="column.options"
+          :label="t(column.titleKey)" variant="outlined" hide-details class="nav rounded"></v-select>
       </v-col>
     </v-row>
 
     <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
 
-    <v-data-table 
-      v-if="!loading"
-      class="nav rounded-lg"
-      :headers="translatedColumns"
-      :items="filteredStocks"
-      :search="search"
-      item-value="symbol"
-    >
+    <v-data-table v-if="!loading" class="nav rounded-lg" :headers="translatedColumns" :items="filteredStocks"
+      :search="search" item-value="symbol">
       <template v-slot:item.symbol="{ item }">
         <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
       </template>
@@ -114,7 +89,7 @@ const fetchStocks = async () => {
   loading.value = true; // بدء التحميل
   try {
     const response = await fetch(
-      'https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh'
+      'https://development.somee.com/StockMarket/GetMainSymbolData'
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();

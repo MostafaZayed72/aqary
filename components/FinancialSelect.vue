@@ -22,8 +22,7 @@
   const selectedSymbol = ref(null);
   
   const fetchStockSymbols = () => {
-    const apiKey = 'yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh'; // Replace with your actual API key
-    const apiUrl = `https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=${apiKey}`;
+    const apiUrl = `https://development.somee.com/StockMarket/GetMainSymbolData`;
   
     axios.get(apiUrl)
       .then(response => {

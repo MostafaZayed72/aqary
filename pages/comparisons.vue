@@ -75,7 +75,7 @@ const translations = {
 
 async function fetchStocksList() {
   try {
-    const response = await axios.get(`https://financialmodelingprep.com/api/v3/symbol/SAU?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`);
+    const response = await axios.get(`https://development.somee.com/StockMarket/GetMainSymbolData`);
     stocksList.value = response.data.map(stock => ({
       name: stock.name,
       symbol: stock.symbol.replace('.sr', '')  // إزالة .sr من الرموز
