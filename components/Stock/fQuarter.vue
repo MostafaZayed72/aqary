@@ -93,7 +93,9 @@ const loadItems = async ({ page, itemsPerPage, sortBy }) => {
     loading.value = true;
     try {
         const response = await axios.get(`https://financialmodelingprep.com/api/v3/ratios/${symbol.value}?period=quarter&apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`);
-        const financials = response.data;
+        let financials = response.data;
+
+        // تحديد النطاق الزمني والفرز
         if (sortBy.length) {
             const sortKey = sortBy[0].key;
             const sortOrder = sortBy[0].order;
@@ -103,6 +105,18 @@ const loadItems = async ({ page, itemsPerPage, sortBy }) => {
                 return sortOrder === 'desc' ? bValue - aValue : aValue - bValue;
             });
         }
+
+        // تقريب الأرقام إلى رقمين بعد الفاصلة العشرية
+        financials = financials.map(item => {
+            for (let key in item) {
+                if (typeof item[key] === 'number') {
+                    item[key] = parseFloat(item[key].toFixed(2));
+                }
+            }
+            return item;
+        });
+
+        // تقسيم البيانات لعرضها على صفحات
         const start = (page - 1) * itemsPerPage;
         const end = start + itemsPerPage;
         serverItems.value = financials.slice(start, end);

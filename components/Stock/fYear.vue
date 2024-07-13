@@ -1,14 +1,14 @@
 <template>
     <v-data-table-server
-      class="nav"
-      v-model:items-per-page="itemsPerPage"
-      :headers="translatedHeaders"
-      :items="serverItems"
-      :items-length="totalItems"
-      :loading="loading"
-      item-value="date"
-      @update:options="loadItems"
-      :style="$i18n.locale === 'ar-AR' ? 'direction: rtl;' : 'direction: ltr;'"
+        class="nav"
+        v-model:items-per-page="itemsPerPage"
+        :headers="translatedHeaders"
+        :items="serverItems"
+        :items-length="totalItems"
+        :loading="loading"
+        item-value="date"
+        @update:options="loadItems"
+        :style="$i18n.locale === 'ar-AR' ? 'direction: rtl;' : 'direction: ltr;'"
     ></v-data-table-server>
 </template>
 
@@ -88,17 +88,36 @@ const translatedHeaders = computed(() => [
 // استخدام route.params.id لتحديد قيمة الـ symbol في رابط الاستعلام
 const symbol = ref(route.params.id.toUpperCase());
 
+const formatNumber = (number) => {
+    // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
+    return parseFloat(number).toFixed(2);
+};
+
 const loadItems = async ({ page, itemsPerPage, sortBy }) => {
     loading.value = true;
     try {
         const response = await axios.get(`https://financialmodelingprep.com/api/v3/ratios/${symbol.value}?period=annual&apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`);
-        const financials = response.data;
+        let financials = response.data;
+
+        // تنسيق الأرقام العشرية
+        financials = financials.map(item => {
+            const formattedItem = {};
+            for (const key in item) {
+                if (typeof item[key] === 'number') {
+                    formattedItem[key] = formatNumber(item[key]);
+                } else {
+                    formattedItem[key] = item[key];
+                }
+            }
+            return formattedItem;
+        });
+
         if (sortBy.length) {
             const sortKey = sortBy[0].key;
             const sortOrder = sortBy[0].order;
             financials.sort((a, b) => {
-                const aValue = a[sortKey];
-                const bValue = b[sortKey];
+                const aValue = parseFloat(a[sortKey]);
+                const bValue = parseFloat(b[sortKey]);
                 return sortOrder === 'desc' ? bValue - aValue : aValue - bValue;
             });
         }

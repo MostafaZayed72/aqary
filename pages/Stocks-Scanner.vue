@@ -68,11 +68,7 @@ const columns = [
   { key: 'change', titleKey: 'Change', filterType: 'text' },
   { key: 'dayLow', titleKey: 'Day Low', filterType: 'text' },
   { key: 'dayHigh', titleKey: 'Day High', filterType: 'text' },
-  { key: 'yearHigh', titleKey: 'Year High', filterType: 'text' },
-  { key: 'yearLow', titleKey: 'Year Low', filterType: 'text' },
   { key: 'marketCap', titleKey: 'Market Cap', filterType: 'text' },
-  { key: 'priceAvg50', titleKey: 'Price Avg 50', filterType: 'text' },
-  { key: 'priceAvg200', titleKey: 'Price Avg 200', filterType: 'text' },
   { key: 'exchange', titleKey: 'Exchange', filterType: 'select', options: ['NYSE', 'NASDAQ', 'AMEX'] },
   { key: 'volume', titleKey: 'Volume', filterType: 'text' },
   { key: 'avgVolume', titleKey: 'Avg Volume', filterType: 'text' },
@@ -121,8 +117,10 @@ watch(locale, () => {
 });
 
 const formatNumber = (number) => {
-  // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
-  return parseFloat(number).toFixed(2);
+  if (typeof number !== 'number') {
+    return number;
+  }
+  return parseFloat(number.toFixed(2));
 };
 
 

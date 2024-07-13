@@ -22,8 +22,8 @@
         <tbody>
           <tr v-for="(stock, index) in stocks" :key="index">
             <td v-for="(value, key) in stock" :key="key" v-if="key !== 'symbol'" class="border px-4 py-2 nav">
-              <!-- استخدام router-link لتحويل المسار عند النقر -->
-              <router-link :to="`/stocks/${stock.symbol}`">{{ value }}</router-link>
+              <!-- استخدام formatNumber لعرض الأرقام بعد الفاصلة العشرية -->
+              {{ typeof value === 'number' ? formatNumber(value) : value }}
             </td>
             <td class="border px-4 py-2 nav">
               <v-btn @click="deleteStock(index)" color="error" outlined>{{ $t('Delete') }}</v-btn>
@@ -130,6 +130,14 @@ const stocksListNames = computed(() => stocksList.value.map(stock => stock.name)
 function translateKey(key) {
   return translations[key] || key;
 }
+
+const formatNumber = (number) => {
+  if (typeof number === 'number') {
+    return parseFloat(number.toFixed(2));
+  } else {
+    return number; // لا يحتاج النصوص إلى تقريب
+  }
+};
 
 useHead({
   title: 'Comparisons'
