@@ -23,16 +23,61 @@
       item-value="symbol"
     >
       <template v-slot:item.symbol="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
       </template>
       <template v-slot:item.name="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.name }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.name) }}</a>
       </template>
       <template v-slot:item.price="{ item }">
         {{ formatNumber(item.price) }}
       </template>
       <template v-slot:item.changesPercentage="{ item }">
         {{ formatNumber(item.changesPercentage) }}%
+      </template>
+      <template v-slot:item.change="{ item }">
+        {{ formatNumber(item.change) }}
+      </template>
+      <template v-slot:item.dayLow="{ item }">
+        {{ formatNumber(item.dayLow) }}
+      </template>
+      <template v-slot:item.dayHigh="{ item }">
+        {{ formatNumber(item.dayHigh) }}
+      </template>
+      <template v-slot:item.yearHigh="{ item }">
+        {{ formatNumber(item.yearHigh) }}
+      </template>
+      <template v-slot:item.yearLow="{ item }">
+        {{ formatNumber(item.yearLow) }}
+      </template>
+      <template v-slot:item.marketCap="{ item }">
+        {{ formatNumber(item.marketCap) }}
+      </template>
+      <template v-slot:item.priceAvg50="{ item }">
+        {{ formatNumber(item.priceAvg50) }}
+      </template>
+      <template v-slot:item.priceAvg200="{ item }">
+        {{ formatNumber(item.priceAvg200) }}
+      </template>
+      <template v-slot:item.volume="{ item }">
+        {{ formatNumber(item.volume) }}
+      </template>
+      <template v-slot:item.avgVolume="{ item }">
+        {{ formatNumber(item.avgVolume) }}
+      </template>
+      <template v-slot:item.open="{ item }">
+        {{ formatNumber(item.open) }}
+      </template>
+      <template v-slot:item.previousClose="{ item }">
+        {{ formatNumber(item.previousClose) }}
+      </template>
+      <template v-slot:item.eps="{ item }">
+        {{ formatNumber(item.eps) }}
+      </template>
+      <template v-slot:item.pe="{ item }">
+        {{ formatNumber(item.pe) }}
+      </template>
+      <template v-slot:item.sharesOutstanding="{ item }">
+        {{ formatNumber(item.sharesOutstanding) }}
       </template>
     </v-data-table>
     
@@ -86,7 +131,7 @@ const fetchStocks = async () => {
 
   try {
     const apiKey = "yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh";
-    const response = await axios.get(`https://financialmodelingprep.com/api/v3/quotes/nyse?apikey=${apiKey}`);
+    const response = await axios.get(`https://financialmodelingprep.com/api/v3/quotes/SAU?apikey=${apiKey}`);
     
     if (response.status !== 200) throw new Error('Network response was not ok');
 
@@ -120,7 +165,10 @@ watch(locale, () => {
 
 const formatNumber = (number) => {
   // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
-  return parseFloat(number).toFixed(2);
+  if (number !== null && number !== undefined) {
+    return parseFloat(number).toFixed(2);
+  }
+  return number;
 };
 
 const filteredStocks = computed(() => {

@@ -61,11 +61,28 @@ const translatedHeaders = computed(() => [
 // استخدام route.params.id لتحديد قيمة الـ symbol في رابط الاستعلام
 const symbol = ref(route.params.id.toUpperCase());
 
+const formatNumber = (number) => {
+  if (typeof number === 'number') {
+    return parseFloat(number.toFixed(2));
+  }
+  return number;
+};
+
+const formatData = (data) => {
+  return data.map(item => {
+    const formattedItem = {};
+    for (const key in item) {
+      formattedItem[key] = formatNumber(item[key]);
+    }
+    return formattedItem;
+  });
+};
+
 const loadItems = async ({ page, itemsPerPage, sortBy }) => {
   loading.value = true;
   try {
     const response = await axios.get(`https://financialmodelingprep.com/api/v4/company-outlook?symbol=${symbol.value}&apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`);
-    const financials = response.data.financialsQuarter.income;
+    let financials = response.data.financialsQuarter.income;
     if (sortBy.length) {
       const sortKey = sortBy[0].key;
       const sortOrder = sortBy[0].order;
@@ -75,6 +92,7 @@ const loadItems = async ({ page, itemsPerPage, sortBy }) => {
         return sortOrder === 'desc' ? bValue - aValue : aValue - bValue;
       });
     }
+    financials = formatData(financials); // تنسيق البيانات هنا
     const start = (page - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     serverItems.value = financials.slice(start, end);
