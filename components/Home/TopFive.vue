@@ -48,7 +48,7 @@ const formatPercentage = (percentage) => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get('https://development.somee.com/StockMarket/GetMainSymbolData');
+    const response = await axios.get('https://finrep.net/api/StockMarket/GetMainSymbolData');
     const stocks = response.data;
     // Sort stocks by changesPercentage descending
     stocks.sort((a, b) => b.changesPercentage - a.changesPercentage);

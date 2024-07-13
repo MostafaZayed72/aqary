@@ -3,21 +3,19 @@
     <h2 class="text-2xl font-semibold mb-4 text-center text-teal-400">{{ $t('Stocks comparison') }}</h2>
 
     <div class="flex flex-col nav mb-8 rounded-lg">
-      <v-autocomplete
-        class="nav"
-        v-model="selectedStock"
-        :items="stocksListNames"
-        :label="$t('Select stock')"
-        outlined
-      ></v-autocomplete>
-      <v-btn @click="fetchStockData" color="primary" class="mx-auto w-fit mb-4" :disabled="isLoading">{{ isLoading ? $t('Loading...') : $t('Add to comparison list') }}</v-btn>
+      <v-autocomplete class="nav" v-model="selectedStock" :items="stocksListNames" :label="$t('Select stock')"
+        outlined></v-autocomplete>
+      <v-btn @click="fetchStockData" color="primary" class="mx-auto w-fit mb-4" :disabled="isLoading">{{ isLoading ?
+        $t('Loading...') : $t('Add to comparison list') }}</v-btn>
     </div>
 
     <div class="overflow-x-auto rounded-lg">
-      <table v-if="stocks.length > 0" class="min-w-full bg-white border-gray-200 shadow-md rounded-lg overflow-hidden rounded-lg">
+      <table v-if="stocks.length > 0"
+        class="min-w-full bg-white border-gray-200 shadow-md rounded-lg overflow-hidden rounded-lg">
         <thead class="nav">
           <tr>
-            <th v-for="(value, key) in stocks[0]" :key="key" v-if="key !== 'symbol'" class="px-4 py-2 text-left">{{ translateKey(key) }}</th>
+            <th v-for="(value, key) in stocks[0]" :key="key" v-if="key !== 'symbol'" class="px-4 py-2 text-left">{{
+              translateKey(key) }}</th>
             <th class="px-4 py-2 text-left">{{ $t('Delete') }}</th> <!-- إضافة عمود للإجراءات -->
           </tr>
         </thead>
@@ -28,12 +26,14 @@
               <router-link :to="`/stocks/${stock.symbol}`">{{ value }}</router-link>
             </td>
             <td class="border px-4 py-2 nav">
-              <v-btn @click="deleteStock(index)" color="error" outlined>{{ $t('Delete') }}</v-btn> <!-- زر لحذف السهم -->
+              <v-btn @click="deleteStock(index)" color="error" outlined>{{ $t('Delete') }}</v-btn>
+              <!-- زر لحذف السهم -->
             </td>
           </tr>
         </tbody>
       </table>
-      <p v-else class="text-center mt-4 text-gray-600 nav">{{ $t('No stock data available. Please select a stock.') }}</p>
+      <p v-else class="text-center mt-4 text-gray-600 nav">{{ $t('No stock data available. Please select a stock.') }}
+      </p>
     </div>
   </div>
 </template>
@@ -75,7 +75,7 @@ const translations = {
 
 async function fetchStocksList() {
   try {
-    const response = await axios.get(`https://development.somee.com/StockMarket/GetMainSymbolData`);
+    const response = await axios.get(`https://finrep.net/api/StockMarket/GetMainSymbolData`);
     stocksList.value = response.data.map(stock => ({
       name: stock.name,
       symbol: stock.symbol.replace('.sr', '')  // إزالة .sr من الرموز

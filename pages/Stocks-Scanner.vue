@@ -89,7 +89,7 @@ const fetchStocks = async () => {
   loading.value = true; // بدء التحميل
   try {
     const response = await fetch(
-      'https://development.somee.com/StockMarket/GetMainSymbolData'
+      'https://finrep.net/api/StockMarket/GetMainSymbolData'
     );
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();

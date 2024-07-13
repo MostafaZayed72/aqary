@@ -1,15 +1,8 @@
 <template>
   <div class="container mx-auto my-auto rounded-xl">
     <div class="flex flex-col nav my-auto rounded-xl">
-      <v-autocomplete
-        class="nav rounded-xl"
-        v-model="selectedStock"
-        :items="stocksListNames"
-        :label="$t('Select stock')"  
-        outlined
-        hide-details
-        @update:model-value="onModelValueUpdate"
-      ></v-autocomplete>
+      <v-autocomplete class="nav rounded-xl" v-model="selectedStock" :items="stocksListNames"
+        :label="$t('Select stock')" outlined hide-details @update:model-value="onModelValueUpdate"></v-autocomplete>
     </div>
   </div>
 </template>
@@ -30,7 +23,7 @@ let stocksList = ref([]);
 
 async function fetchStocksList() {
   try {
-    const response = await axios.get(`https://development.somee.com/StockMarket/GetMainSymbolData`);
+    const response = await axios.get(`https://finrep.net/api/StockMarket/GetMainSymbolData`);
     stocksList.value = response.data.map(stock => ({
       name: stock.name,
       symbol: stock.symbol.replace('.sr', '')
