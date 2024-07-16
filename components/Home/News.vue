@@ -24,7 +24,7 @@ const articles = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await fetch('https://financialmodelingprep.com/api/v3/fmp/articles?page=0&size=5&apikey=2YrQJiN4rDLCH2PfOsj5Up9utgAsazNN');
+    const response = await fetch('https://finrep.net/api/StockMarket/GetArticlesData?page=0&size=5');
     const data = await response.json();
     articles.value = data.content.map(article => ({
       title: article.title,

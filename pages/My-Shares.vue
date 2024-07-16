@@ -75,9 +75,9 @@
       <template v-slot:item.sharesOutstanding="{ item }">
         {{ formatNumber(item.sharesOutstanding) }}
       </template>
-      <template v-slot:item.timestamp="{ item }">
+      <!-- <template v-slot:item.timestamp="{ item }">
         {{ item.timestamp }}
-      </template>
+      </template> -->
       <template v-slot:item.actions="{ item }">
         <v-btn @click="deleteStock(item)" color="error" outlined>{{ $t('Delete') }}</v-btn>
       </template>
@@ -154,7 +154,7 @@ const columns = [
   { key: 'pe', titleKey: 'PE' },
   { key: 'earningsAnnouncement', titleKey: 'Earnings Announcement' },
   { key: 'sharesOutstanding', titleKey: 'Shares Outstanding' },
-  { key: 'timestamp', titleKey: 'Timestamp' },
+  // { key: 'timestamp', titleKey: 'Timestamp' },
   { key: 'actions', titleKey: 'Delete' }
 ];
 
@@ -171,7 +171,7 @@ const fetchFavoriteSymbols = async () => {
 
     // Fetch stock details for each symbol
     for (const symbol of symbols) {
-      const stockResponse = await axios.get(`https://financialmodelingprep.com/api/v3/quote/${symbol}?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`);
+      const stockResponse = await axios.get(`https://finrep.net/api/StockMarket/GetQuoteSymbolData?symbol=${symbol}`);
       if (stockResponse.data && stockResponse.data.length > 0) {
         stocks.value.push(stockResponse.data[0]);
       }

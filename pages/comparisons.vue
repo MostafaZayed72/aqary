@@ -3,37 +3,43 @@
     <h2 class="text-2xl font-semibold mb-4 text-center text-teal-400">{{ $t('Stocks comparison') }}</h2>
 
     <div class="flex flex-col nav mb-8 rounded-lg">
-      <v-autocomplete class="nav" v-model="selectedStock" :items="stocksListNames" :label="$t('Select stock')"
-        outlined></v-autocomplete>
-      <v-btn @click="fetchStockData" color="primary" class="mx-auto w-fit mb-4" :disabled="isLoading">{{ isLoading ?
-        $t('Loading...') : $t('Add to comparison list') }}</v-btn>
+      <v-autocomplete
+        class="nav"
+        v-model="selectedStock"
+        :items="stocksListNames"
+        :label="$t('Select stock')"
+        outlined
+      ></v-autocomplete>
+      <v-btn @click="fetchStockData" color="primary" class="mx-auto w-fit mb-4" :disabled="isLoading">
+        {{ isLoading ? $t('Loading...') : $t('Add to comparison list') }}
+      </v-btn>
     </div>
 
     <div class="overflow-x-auto rounded-lg">
-      <table v-if="stocks.length > 0"
-        class="min-w-full bg-white border-gray-200 shadow-md rounded-lg overflow-hidden rounded-lg">
+      <table
+        v-if="stocks.length > 0"
+        class="min-w-full bg-white border-gray-200 shadow-md rounded-lg overflow-hidden rounded-lg"
+      >
         <thead class="nav">
           <tr>
-            <th v-for="(value, key) in stocks[0]" :key="key" v-if="key !== 'symbol'" class="px-4 py-2 text-left">{{
-              translateKey(key) }}</th>
-            <th class="px-4 py-2 text-left">{{ $t('Delete') }}</th> <!-- إضافة عمود للإجراءات -->
+            <th v-for="(value, key) in stocks[0]" :key="key" v-if="key !== 'symbol'" class="px-4 py-2 text-left">
+              {{ translateKey(key) }}
+            </th>
+            <th class="px-4 py-2 text-left">{{ $t('Delete') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(stock, index) in stocks" :key="index">
             <td v-for="(value, key) in stock" :key="key" v-if="key !== 'symbol'" class="border px-4 py-2 nav">
-              <!-- استخدام formatNumber لعرض الأرقام بعد الفاصلة العشرية -->
               {{ typeof value === 'number' ? formatNumber(value) : value }}
             </td>
             <td class="border px-4 py-2 nav">
               <v-btn @click="deleteStock(index)" color="error" outlined>{{ $t('Delete') }}</v-btn>
-              <!-- زر لحذف السهم -->
             </td>
           </tr>
         </tbody>
       </table>
-      <p v-else class="text-center mt-4 text-gray-600 nav">{{ $t('No stock data available. Please select a stock.') }}
-      </p>
+      <p v-else class="text-center mt-4 text-gray-600 nav">{{ $t('No stock data available. Please select a stock.') }}</p>
     </div>
   </div>
 </template>
@@ -44,8 +50,8 @@ import axios from 'axios';
 
 const selectedStock = ref(null);
 const stocks = ref([]);
-const isLoading = ref(false);  // حالة التحميل
-let stocksList = ref([]);
+const isLoading = ref(false);
+const stocksList = ref([]);
 
 const translations = {
   name: 'الاسم',
@@ -70,15 +76,15 @@ const translations = {
   exchange: 'المؤشر',
   earningsAnnouncement: "توزيع الأرباح السنوي",
   sharesOutstanding: 'الأسهم المعلقة',
-  timestamp: 'الطابع الزمني'
+  // timestamp: 'الطابع الزمني'
 };
 
 async function fetchStocksList() {
   try {
-    const response = await axios.get(`https://finrep.net/api/StockMarket/GetMainSymbolData`);
+    const response = await axios.get('https://finrep.net/api/StockMarket/GetMainSymbolData');
     stocksList.value = response.data.map(stock => ({
       name: stock.name,
-      symbol: stock.symbol.replace('.sr', '')  // إزالة .sr من الرموز
+      symbol: stock.symbol.replace('.sr', '')
     }));
   } catch (error) {
     console.error('Error fetching stocks list:', error);
@@ -102,10 +108,9 @@ async function fetchStockData() {
   isLoading.value = true;
 
   try {
-    const response = await axios.get(`https://financialmodelingprep.com/api/v3/quote/${selectedStockSymbol}?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`);
+    const response = await axios.get(`https://finrep.net/api/StockMarket/GetQuoteSymbolData?symbol=${selectedStockSymbol}`);
     const stockData = response.data[0];
 
-    // تأكد من أن الرمز مضبوط في البيانات
     if (stockData.symbol) {
       stocks.value.push(stockData);
     } else {
@@ -133,9 +138,9 @@ function translateKey(key) {
 
 const formatNumber = (number) => {
   if (typeof number === 'number') {
-    return parseFloat(number.toFixed(2));
+    return parseFloat(number.toFixed(2)).toLocaleString();
   } else {
-    return number; // لا يحتاج النصوص إلى تقريب
+    return number;
   }
 };
 
@@ -145,5 +150,5 @@ useHead({
 </script>
 
 <style scoped>
-/* أي تخصيصات لـ Tailwind CSS يمكن إضافتها هنا */
+/* تخصيصات لـ Tailwind CSS */
 </style>

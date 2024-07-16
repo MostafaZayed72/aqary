@@ -122,7 +122,7 @@ const columns = [
   { key: 'pe', titleKey: 'PE' },
   { key: 'earningsAnnouncement', titleKey: 'Earnings Announcement' },
   { key: 'sharesOutstanding', titleKey: 'Shares Outstanding' },
-  { key: 'timestamp', titleKey: 'Timestamp' },
+  // { key: 'timestamp', titleKey: 'Timestamp' },
 ];
 
 const fetchStocks = async () => {
@@ -131,7 +131,7 @@ const fetchStocks = async () => {
 
   try {
     const apiKey = "yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh";
-    const response = await axios.get(`https://financialmodelingprep.com/api/v3/quotes/SAU?apikey=${apiKey}`);
+    const response = await axios.get(`https://finrep.net/api/StockMarket/GetMainSymbolData`);
     
     if (response.status !== 200) throw new Error('Network response was not ok');
 
@@ -164,9 +164,9 @@ watch(locale, () => {
 });
 
 const formatNumber = (number) => {
-  // تنسيق الأرقام لعرض رقمين بعد الفاصلة العشرية
+  // تنسيق الأرقام لعرضها بفواصل لكل 3 أرقام
   if (number !== null && number !== undefined) {
-    return parseFloat(number).toFixed(2);
+    return parseFloat(number).toLocaleString();
   }
   return number;
 };

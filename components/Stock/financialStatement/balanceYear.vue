@@ -3,7 +3,7 @@
     class="nav"
     v-model:items-per-page="itemsPerPage"
     :headers="translatedHeaders"
-    :items="serverItems"
+    :items="formattedServerItems"
     :items-length="totalItems"
     :loading="loading"
     item-value="date"
@@ -16,8 +16,9 @@
 import axios from 'axios';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import { ref, computed, watchEffect } from 'vue';
 
-const route = useRoute(); // Access route params
+const route = useRoute();
 const { t } = useI18n();
 
 const itemsPerPage = ref(5);
@@ -25,7 +26,13 @@ const serverItems = ref([]);
 const loading = ref(true);
 const totalItems = ref(0);
 
-// ترجمة العناوين بشكل ديناميكي باستخدام مفتاح الترجمة
+const formatNumber = (number) => {
+  if (number !== null && number !== undefined) {
+    return Number(number).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  return number;
+};
+
 const translatedHeaders = computed(() => [
   { title: t('date'), key: 'date', align: 'start' },
   { title: t('totalAssets'), key: 'totalAssets', align: 'start' },
@@ -73,8 +80,17 @@ const translatedHeaders = computed(() => [
   { title: t('totalDebt'), key: 'totalDebt', align: 'start' },
 ]);
 
-// استخدام route.params.id لتحديد قيمة الـ symbol في رابط الاستعلام
 const symbol = ref(route.params.id.toUpperCase());
+
+const formattedServerItems = computed(() => {
+  return serverItems.value.map(item => {
+    const formattedItem = {};
+    for (const key in item) {
+      formattedItem[key] = typeof item[key] === 'number' ? formatNumber(item[key]) : item[key];
+    }
+    return formattedItem;
+  });
+});
 
 const loadItems = async ({ page, itemsPerPage, sortBy }) => {
   loading.value = true;
@@ -101,7 +117,6 @@ const loadItems = async ({ page, itemsPerPage, sortBy }) => {
   }
 };
 
-// تحميل البيانات عندما يتغير route.params.id
 watchEffect(() => {
   symbol.value = route.params.id.toUpperCase();
   loadItems({ page: 1, itemsPerPage: itemsPerPage.value, sortBy: [] });

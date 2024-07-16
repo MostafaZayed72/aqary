@@ -50,7 +50,7 @@ async function fetchStockData() {
   isLoading.value = true;
 
   try {
-    const response = await axios.get(`https://financialmodelingprep.com/api/v3/quote/${selectedStockSymbol}?apikey=${apiKey}`);
+    const response = await axios.get(`https://finrep.net/api/StockMarket/GetQuoteSymbolData?symbol=${selectedStockSymbol}`);
     const stockData = response.data[0];
 
     if (stockData.symbol) {

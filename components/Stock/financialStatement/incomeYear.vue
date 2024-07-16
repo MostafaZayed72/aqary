@@ -16,6 +16,7 @@
 import axios from 'axios';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import { ref, computed, watchEffect } from 'vue';
 
 const route = useRoute(); // Access route params
 const { t } = useI18n();
@@ -64,7 +65,7 @@ const symbol = ref(route.params.id.toUpperCase());
 
 const formatNumber = (number) => {
   if (typeof number === 'number') {
-    return parseFloat(number.toFixed(2));
+    return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
   return number;
 };

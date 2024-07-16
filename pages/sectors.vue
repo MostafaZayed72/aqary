@@ -1,7 +1,5 @@
 <template>
   <v-card :title="$t('Filter stocks by sector')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
-
-
     <!-- Filter Chips for Sectors -->
     <v-chip-group v-model="selectedSector" class="mt-4 text-center">
       <div class="grid grid-cols-2 mx-auto text-center gap-1 md:grid-cols-4 lg:grid-cols-6">
@@ -28,6 +26,12 @@
       </template>
       <template v-slot:item.price="{ item }">
         {{ formatNumber(item.price) }}
+      </template>
+      <template v-slot:item.marketCap="{ item }">
+        {{ formatNumber(item.marketCap) }}
+      </template>
+      <template v-slot:item.sharesOutstanding="{ item }">
+        {{ formatNumber(item.sharesOutstanding) }}
       </template>
       <template v-slot:item.changesPercentage="{ item }">
         {{ formatNumber(item.changesPercentage) }}%
@@ -113,7 +117,7 @@ watch(locale, () => {
 });
 
 const formatNumber = (number) => {
-  return parseFloat(number).toFixed(2);
+  return parseFloat(number).toLocaleString();
 };
 
 const filteredStocks = computed(() => {

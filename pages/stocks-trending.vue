@@ -1,9 +1,6 @@
 <template>
   <v-card :title="$t('Filter stocks by trending')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]">
-
-
     <!-- Filter Chips for Sectors -->
-
 
     <!-- Filter Chips for Trending -->
     <v-chip-group v-model="selectedTrending" class="mt-4 text-center">
@@ -36,6 +33,12 @@
       </template>
       <template v-slot:item.price="{ item }">
         {{ formatNumber(item.price) }}
+      </template>
+      <template v-slot:item.marketCap="{ item }">
+        {{ formatNumber(item.marketCap) }}
+      </template>
+      <template v-slot:item.sharesOutstanding="{ item }">
+        {{ formatNumber(item.sharesOutstanding) }}
       </template>
       <template v-slot:item.changesPercentage="{ item }">
         {{ formatNumber(item.changesPercentage) }}%
@@ -129,7 +132,11 @@ watch(locale, () => {
 });
 
 const formatNumber = (number) => {
-  return parseFloat(number).toFixed(2);
+  // تنسيق الأرقام لعرضها بفواصل لكل 3 أرقام
+  if (number !== null && number !== undefined) {
+    return Number(number).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  return number;
 };
 
 const filteredStocks = computed(() => {

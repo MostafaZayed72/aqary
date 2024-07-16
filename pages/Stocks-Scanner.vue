@@ -1,29 +1,59 @@
 <template>
-  <v-card :title="$t('Stocks Filter')" flat class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]"
-    :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'">
+  <v-card
+    :title="$t('Stocks Filter')"
+    flat
+    class="nav rounded-lg text-center mx-auto sm:w-100 md:w-[90%]"
+    :style="$i18n.locale === 'ar-AR' ? 'direction:rtl' : 'direction:ltr'"
+  >
     <template v-slot:text>
-      <v-text-field v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" variant="outlined"
-        hide-details single-line class="nav rounded"></v-text-field>
+      <v-text-field
+        v-model="search"
+        :label="$t('Search')"
+        prepend-inner-icon="mdi-magnify"
+        variant="outlined"
+        hide-details
+        single-line
+        class="nav rounded"
+      ></v-text-field>
     </template>
 
     <v-row class="mb-4" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
       <v-col v-for="(column, index) in columnss" :key="index" cols="12" sm="4">
-        <v-text-field v-if="column.filterType === 'text'" v-model="filters[column.key]" :label="t(column.titleKey)"
-          variant="outlined" hide-details class="nav rounded mx-4"></v-text-field>
-        <v-select v-if="column.filterType === 'select'" v-model="filters[column.key]" :items="column.options"
-          :label="t(column.titleKey)" variant="outlined" hide-details class="nav rounded"></v-select>
+        <v-text-field
+          v-if="column.filterType === 'text'"
+          v-model="filters[column.key]"
+          :label="t(column.titleKey)"
+          variant="outlined"
+          hide-details
+          class="nav rounded mx-4"
+        ></v-text-field>
+        <v-select
+          v-if="column.filterType === 'select'"
+          v-model="filters[column.key]"
+          :items="column.options"
+          :label="t(column.titleKey)"
+          variant="outlined"
+          hide-details
+          class="nav rounded"
+        ></v-select>
       </v-col>
     </v-row>
 
     <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-4"></v-progress-linear>
 
-    <v-data-table v-if="!loading" class="nav rounded-lg" :headers="translatedColumns" :items="filteredStocks"
-      :search="search" item-value="symbol">
+    <v-data-table
+      v-if="!loading"
+      class="nav rounded-lg"
+      :headers="translatedColumns"
+      :items="filteredStocks"
+      :search="search"
+      item-value="symbol"
+    >
       <template v-slot:item.symbol="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.symbol) }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.symbol }}</a>
       </template>
       <template v-slot:item.name="{ item }">
-        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ $t(item.name) }}</a>
+        <a @click.prevent="navigateToStock(item.symbol)" href="#">{{ item.name }}</a>
       </template>
       <template v-slot:item.price="{ item }">
         {{ formatNumber(item.price) }}
@@ -31,6 +61,22 @@
       <template v-slot:item.changesPercentage="{ item }">
         {{ formatNumber(item.changesPercentage) }}%
       </template>
+      <template v-slot:item.marketCap="{ item }">
+        {{ formatNumber(item.marketCap) }}
+      </template>
+      <template v-slot:item.volume="{ item }">
+        {{ formatNumber(item.volume) }}
+      </template>
+      <template v-slot:item.avgVolume="{ item }">
+        {{ formatNumber(item.avgVolume) }}
+      </template>
+      <template v-slot:item.sharesOutstanding="{ item }">
+        {{ formatNumber(item.sharesOutstanding) }}
+      </template>
+      <!-- <template v-slot:item.timestamp="{ item }">
+        {{ formatDate(item.timestamp) }}
+      </template> -->
+      <!-- تكرر هذا القالب لبقية الأعمدة التي تحتاج إلى تنسيق الأرقام -->
     </v-data-table>
 
     <div v-else class="text-center pa-4">
@@ -78,20 +124,18 @@ const columns = [
   { key: 'pe', titleKey: 'PE', filterType: 'text' },
   { key: 'earningsAnnouncement', titleKey: 'Earnings Announcement', filterType: 'text' },
   { key: 'sharesOutstanding', titleKey: 'Shares Outstanding', filterType: 'text' },
-  { key: 'timestamp', titleKey: 'Timestamp', filterType: 'text' },
+  // { key: 'timestamp', titleKey: 'Timestamp', filterType: 'text' },
 ];
 
 const fetchStocks = async () => {
   loading.value = true; // بدء التحميل
   try {
-    const response = await fetch(
-      'https://finrep.net/api/StockMarket/GetMainSymbolData'
-    );
+    const response = await fetch('https://finrep.net/api/StockMarket/GetMainSymbolData');
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
-    stocks.value = data.map(stock => ({
+    stocks.value = data.map((stock) => ({
       ...stock,
-      symbol: (stock.symbol)
+      symbol: stock.symbol,
     }));
   } catch (err) {
     error.value = err.message;
@@ -106,9 +150,9 @@ onMounted(() => {
 });
 
 const translatedColumns = computed(() => {
-  return columns.map(col => ({
+  return columns.map((col) => ({
     ...col,
-    title: t(col.titleKey)
+    title: t(col.titleKey),
   }));
 });
 
@@ -120,17 +164,27 @@ const formatNumber = (number) => {
   if (typeof number !== 'number') {
     return number;
   }
-  return parseFloat(number.toFixed(2));
+  return number.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 };
 
+const formatDate = (timestamp) => {
+  if (!timestamp) {
+    return '';
+  }
+  const date = new Date(timestamp);
+  return date.toLocaleString();
+};
 
 const filteredStocks = computed(() => {
-  return stocks.value.filter(stock => {
-    const matchesSearch = Object.values(stock).some(value =>
+  return stocks.value.filter((stock) => {
+    const matchesSearch = Object.values(stock).some((value) =>
       String(value).toLowerCase().includes(search.value.toLowerCase())
     );
 
-    const matchesFilters = Object.keys(filters.value).every(key => {
+    const matchesFilters = Object.keys(filters.value).every((key) => {
       return !filters.value[key] || String(stock[key]).toLowerCase().includes(filters.value[key].toLowerCase());
     });
 
@@ -143,9 +197,8 @@ const navigateToStock = (symbol) => {
 };
 
 useHead({
-  title: 'Stocks Scanner'
-})
-
+  title: 'Stocks Scanner',
+});
 </script>
 
 <style scoped>

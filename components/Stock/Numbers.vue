@@ -11,7 +11,7 @@
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <div class="mb-4">
-                <strong>{{ $t('Price') }}:</strong> {{ sessionData.price }}
+                <strong>{{ $t('Price') }}:</strong> {{ formatNumber(sessionData.price) }}
               </div>
             </v-col>
             <v-col cols="12" sm="6" md="4">
@@ -21,22 +21,22 @@
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <div class="mb-4">
-                <strong>{{ $t('Day Low') }}:</strong> {{ sessionData.dayLow }}
+                <strong>{{ $t('Day Low') }}:</strong> {{ formatNumber(sessionData.dayLow) }}
               </div>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <div class="mb-4">
-                <strong>{{ $t('Day High') }}:</strong> {{ sessionData.dayHigh }}
+                <strong>{{ $t('Day High') }}:</strong> {{ formatNumber(sessionData.dayHigh) }}
               </div>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <div class="mb-4">
-                <strong>{{ $t('Year Low') }}:</strong> {{ sessionData.yearLow }}
+                <strong>{{ $t('Year Low') }}:</strong> {{ formatNumber(sessionData.yearLow) }}
               </div>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <div class="mb-4">
-                <strong>{{ $t('Year High') }}:</strong> {{ sessionData.yearHigh }}
+                <strong>{{ $t('Year High') }}:</strong> {{ formatNumber(sessionData.yearHigh) }}
               </div>
             </v-col>
             <v-col cols="12" sm="6" md="4">
@@ -46,22 +46,22 @@
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <div class="mb-4">
-                <strong>{{ $t('Volume') }}:</strong> {{ sessionData.volume }}
+                <strong>{{ $t('Volume') }}:</strong> {{ formatNumber(sessionData.volume) }}
               </div>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <div class="mb-4">
-                <strong>{{ $t('Average Volume') }}:</strong> {{ sessionData.avgVolume }}
+                <strong>{{ $t('Average Volume') }}:</strong> {{ formatNumber(sessionData.avgVolume) }}
               </div>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <div class="mb-4">
-                <strong>{{ $t('Open') }}:</strong> {{ sessionData.open }}
+                <strong>{{ $t('Open') }}:</strong> {{ formatNumber(sessionData.open) }}
               </div>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <div class="mb-4">
-                <strong>{{ $t('Previous Close') }}:</strong> {{ sessionData.previousClose }}
+                <strong>{{ $t('Previous Close') }}:</strong> {{ formatNumber(sessionData.previousClose) }}
               </div>
             </v-col>
             <v-col cols="12" sm="6" md="4">
@@ -90,43 +90,37 @@
 </template>
 
 <script setup>
-// استيراد ref و onMounted من Vue
 import { ref, onMounted } from 'vue';
-// استيراد useRoute من vue-router
 import { useRoute } from 'vue-router';
 
-// تعريف sessionData و error كـ ref
 const sessionData = ref(null);
 const error = ref(null);
-// تعريف isLoading كـ ref وتعيينها إلى true في البداية
 const isLoading = ref(true);
 
-// استخدام useRoute للوصول إلى route
 const route = useRoute();
-// تعريف symbol كـ ref وتعيينها إلى قيمة route.params.id مع التحويل للأحرف الكبيرة
 const symbol = ref(route.params.id.toUpperCase());
 
-// دالة fetchSessionData لجلب بيانات الجلسة
+const formatNumber = (number) => {
+  if (number !== null && number !== undefined) {
+    return Number(number).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  return number;
+};
+
 async function fetchSessionData() {
   try {
-    // استدعاء fetch لجلب البيانات من API بناءً على الرمز (symbol)
     const response = await fetch(
-      `https://financialmodelingprep.com/api/v3/quote/${symbol.value}?apikey=yJ2JzqBMsGlz3rV7rkogCtrEc7eY6QDh`
+      `https://finrep.net/api/StockMarket/GetQuoteSymbolData?symbol=${symbol.value}`
     );
-    // تحويل الرد إلى JSON
     const json = await response.json();
-    // تعيين قيمة sessionData لتكون السجل الأول في الاستجابة
     sessionData.value = json[0];
-    // تعيين isLoading إلى false بمجرد اكتمال التحميل
     isLoading.value = false;
   } catch (err) {
-    // في حالة وجود خطأ، تعيين error وتعيين isLoading إلى false
     error.value = err;
     isLoading.value = false;
   }
 }
 
-// دالة formatMarketCap لتنسيق قيمة Market Cap
 function formatMarketCap(value) {
   if (value >= 1e12) {
     return (value / 1e12).toFixed(2) + ' T';
@@ -139,17 +133,12 @@ function formatMarketCap(value) {
   }
 }
 
-// دالة formatDate لتنسيق التاريخ
 function formatDate(dateString) {
-  // إنشاء كائن تاريخ من السلسلة النصية
   const date = new Date(dateString);
-  // إذا كنت ترغب في إزالة "ص" من التنسيق، يمكنك استخدام replace لإزالته
   const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-  // يمكنك استخدام replace لإزالة "ص" من التنسيق
   return formattedDate.replace('ص', '');
 }
 
-// عندما يتم تحميل المكون، قم بتنفيذ fetchSessionData لجلب البيانات
 onMounted(() => {
   fetchSessionData();
 });
