@@ -2,7 +2,7 @@
     <div class="header" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
         <v-container>
             <!-- START NAVBAR -->
-            <v-row class="nav mx-auto rounded-lg  flex justify-between items-center sticky top-10 z-20"
+            <v-row class="nav mx-auto rounded-lg  flex justify-between items-center fixed w-[70%]  top-10 z-20"
                 :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
                 <v-col cols="8" class="flex items-center ">
                     <ul class="flex flex-row-reverse text-slate-300 items-center gap-8">
@@ -19,14 +19,14 @@
                     </ul>
                 </v-col>
                 <v-col cols="2" class="flex justify-end gap-3">
-                    <div class="text-end">
+                    <!-- <div class="text-end">
                         <h1 class="text-sm text-white">{{ $i18n.locale === 'ar-AR' ? $t('Report') : $t('Financial') }}
                         </h1>
                         <h1 class="text-lg font-bold text-white">{{ $i18n.locale === 'ar-AR' ? $t('Financial') :
                             $t('Report') }}</h1>
-                    </div>
+                    </div> -->
 
-                    <img class="w-12 h-12  logo rounded-lg" src="/assets/images/landingPage/logo.png" alt="">
+                    <img  src="/assets/images/landingPage/lastLogo.png" alt="">
 
                 </v-col>
             </v-row>
