@@ -7,7 +7,7 @@
 
 <style>
 body {
-  font-family: 'Cairo', sans-serif;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 .delayed{
   transition:  0.5s;
