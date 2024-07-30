@@ -20,7 +20,7 @@
         <div class="mt-8 flex justify-center mx-auto gap-8 font-bold" style="direction: rtl;">
           <div class="flex flex-col">
             <h1 class="text-gray-500">ليس لديك حساب؟</h1>
-            <NuxtLink to="/login" class="text-blue-500">تسجيل حساب جديد</NuxtLink>
+            <NuxtLink to="/register" class="text-blue-500">تسجيل حساب جديد</NuxtLink>
   
 </div>
 
