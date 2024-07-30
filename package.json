@@ -13,12 +13,14 @@
     "@nuxt/devtools": "latest",
     "@nuxt/ui": "^2.13.0",
     "@nuxtjs/i18n": "^8.3.1",
+    "@primevue/nuxt-module": "^4.0.2",
     "nuxt": "^3.10.1",
     "vite-plugin-vuetify": "^2.0.3",
     "vuetify": "^3.6.8"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "@primevue/themes": "^4.0.2",
     "@syncfusion/ej2-vue-charts": "^25.2.6",
     "apexcharts": "^3.49.1",
     "axios": "^1.7.2",
@@ -30,6 +32,7 @@
     "lightweight-charts": "^4.1.6",
     "nuxt-highcharts": "^3.1.1",
     "plotly.js": "^2.33.0",
+    "primevue": "^4.0.2",
     "vue-chartjs": "^5.3.1",
     "vue-highcharts": "^0.2.0",
     "vue-i18n": "^9.13.1",

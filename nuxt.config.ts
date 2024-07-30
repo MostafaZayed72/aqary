@@ -1,4 +1,5 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
+import Aura from '@primevue/themes/aura';
 
 export default defineNuxtConfig({
   //...
@@ -13,7 +14,7 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
 
-  modules: ['@nuxtjs/i18n','nuxt-highcharts',"@nuxt/ui",
+  modules: ['@nuxtjs/i18n','@primevue/nuxt-module','nuxt-highcharts',"@nuxt/ui",
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
@@ -22,7 +23,13 @@ export default defineNuxtConfig({
     },
     //...
   ],
-
+  primevue: {
+    options: {
+        theme: {
+            preset: Aura
+        }
+    }
+},
   vite: {
     
     vue: {

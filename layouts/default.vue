@@ -1,194 +1,21 @@
 <template>
-  <div class=" h-screen" :class="$i18n.locale === 'ar-AR' ? 'ltr' : 'rtl'">
-    <!-- Sidebar -->
-    <div :class="sidebarClass" :style="sidebarStyle" class="sidebar hidden px-4 shadow md:flex flex-col items-center gap-4 h-full transition-none fixed top-0 nav overflow-hidden text-center">
-      <!-- Sidebar content -->
-      <nuxt-link to="/" class="rounded py-4 text-teal-400 delayed hover:text-teal-600 font-bold text-xl cursor-pointer" style="border-bottom: 1px solid;" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">{{ $t('Financial Report') }}</nuxt-link>
-      <!-- Add other sidebar links here -->
-      <nuxt-link
-        to="/"
-        class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
-        :class="{ 'bg-teal-400': isActiveLink('/') }"
-      >
-        {{ $t('Market Summary') }} <Icon class="text-2xl" name="arcticons:stockswidget" />
-      </nuxt-link>
-      <nuxt-link
-        to="/sectors"
-        class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
-        :class="{ 'bg-teal-400': isActiveLink('/sectors') }"
-      >
-        {{ $t('Sectors') }} <Icon class="text-2xl" name="mingcute:sector-fill" />
-      </nuxt-link>
-      <nuxt-link
-        to="/stocks-trending"
-        class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
-        :class="{ 'bg-teal-400': isActiveLink('/stocks-trending') }"
-      >
-        {{ $t('Stocks Trending') }} <Icon class="text-2xl" name="material-symbols:trending-up-rounded" />
-      </nuxt-link>
-      <nuxt-link
-        to="/My-Shares"
-        class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
-        :class="{ 'bg-teal-400': isActiveLink('/My-Shares') }"
-      >
-        {{ $t('My Shares') }} <Icon class="text-2xl" name="streamline:stock" />
-      </nuxt-link>
-      <nuxt-link
-      to="/Stock-Analysis/2222.SR"
-      class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex  gap-2 items-center justify-end"
-      :class="{ 'bg-teal-400': activeLink === 'Stocks Scanner' }"
-      @click="setActive('Stock Analysis')"
-    >
-      {{ $t('Stock Analysis') }} <Icon class="text-2xl" name="streamline:money-graph-bar-product-data-bars-analysis-analytics-graph-business-chart"/>
-    </nuxt-link>
-      <nuxt-link
-        to="/stocks-scanner"
-        class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
-        :class="{ 'bg-teal-400': isActiveLink('/stocks-scanner') }"
-      >
-        {{ $t('Stocks Scanner') }} <Icon class="text-2xl" name="streamline:scanner" />
-      
-      </nuxt-link>
-      
-      <nuxt-link
-        to="/comparisons"
-        class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
-        :class="{ 'bg-teal-400': isActiveLink('/comparisons') }"
-      >
-        {{ $t('Comparisons') }} <Icon class="text-2xl" name="uil:comparison" />
-      </nuxt-link>
-      <nuxt-link
-        to="/news"
-        class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end"
-        :class="{ 'bg-teal-400': isActiveLink('/news') }"
-      >
-        {{ $t('News') }} <Icon class="text-2xl" name="material-symbols:news-sharp" />
-      </nuxt-link>
-      
-     
-        <UserSign class="cursor-pointer delayed hover:bg-teal-400 font-bold pa-2 rounded w-full flex gap-2 items-center justify-end "/> 
-      <input type="text" :placeholder="$t('Search')" class="flex text-center justify-center md:hidden rounded-xl pa-2  md:w-[60%] lg:w-[70%] w-full mx-auto" style="border: 1px solid;">
-    </div>
-
-    <!-- Main content container -->
-    <div :class="mainContentClass" :style="$i18n.locale === 'ar-AR' ? 'direction:ltr' : 'direction:rtl'">
-      <!-- Navbar -->
-      <nav class="flex items-center justify-center text-center mx-auto shadow-lg sticky top-0 nav w-full z-50">
-        <!-- Logo -->
-        <nuxt-link v-if="$colorMode.preference == 'dark'" to="/" class="w-[80%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo-dark.png" alt="Logo"></nuxt-link>
-        <nuxt-link v-else to="/" class="w-[80%] md:w-[15%] lg:w-[10%] cursor-pointer"><img src="/assets/images/logo.png" alt="Logo"></nuxt-link>
-
-        <!-- Search -->
-<search />
-        <!-- Color Mode and language-->
-        <div class="flex gap-2 items-center w-full justify-center text-center mx-auto md:hidden">      
-          <ColorMode />
-          <LanguageSelector />
-        </div>
-        <HomeMenu class="md:hidden"/> 
-
-        <div class="hidden  items-center gap-2 md:flex mx-10">
-          <ColorMode />
-          <LanguageSelector />
-        </div>
-        <!-- Toggle Sidebar Button -->
-        <button @click="toggleSidebar" class="p-2 ml-20 hidden md:flex">
-          <svg v-if="isSidebarExpanded" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
-          </svg>
-          <Icon class="text-2xl" name="iconamoon:menu-burger-horizontal-bold" v-else />
-        </button>
-      </nav>
-
-      <!-- Main content -->
-      <div class="p-4 min-h-screen" :class="$i18n.locale === 'ar-AR' ?  'rtl': 'ltr'" >
-        <slot />
+  <div >
+      <div class="navbar-container ">
+          <LandingNavbar class="fixed top-10 z-30"/>
       </div>
-      <Footer />
+      <slot />
+      <landingFooter class="mt-10"/>
 
-    </div>
-    <ScrollToTop />
   </div>
 </template>
 
-<script>
-import { useRoute } from 'vue-router';
-
-export default {
-  data() {
-    return {
-      isSidebarExpanded: false, 
-    };
-  },
-  setup() {
-    const colorMode = useColorMode();
-    const myEmail = ref('');
-
-    onMounted(() => {
-      myEmail.value = localStorage.getItem('email') || ''; ;
-    });
-
-    return {
-      colorMode,
-      myEmail,
-    };
-  },
-  computed: {
-    sidebarClass() {
-      return {
-        'w-48': this.isSidebarExpanded,
-        'w-0': !this.isSidebarExpanded
-      };
-    },
-    sidebarStyle() {
-      return this.$i18n.locale === 'ar-AR' ? { right: '0', left: 'auto', transform: this.isSidebarExpanded ? 'translateX(0)' : 'translateX(100%)' } : { left: '0', right: 'auto', transform: this.isSidebarExpanded ? 'translateX(0)' : 'translateX(-100%)' };
-    },
-    mainContentClass() {
-      return {
-        'flex-grow ml-48': this.isSidebarExpanded && this.$i18n.locale !== 'ar-AR',
-        'flex-grow mr-48': this.isSidebarExpanded && this.$i18n.locale === 'ar-AR',
-        'flex-grow': !this.isSidebarExpanded
-      };
-    },
-    activeLink() {
-      return this.$route.path;
-    }
-  },
-  methods: {
-    toggleSidebar() {
-      this.isSidebarExpanded = !this.isSidebarExpanded;
-    },
-    isActiveLink(path) {
-      return this.activeLink === path;
-    },
-    setActive(link) {
-      this.activeLink = link;
-    }
-  }
-};
-</script>
-
 <style scoped>
-.delayed {
-  transition: 0.5s;
-}
-.sidebar {
-  overflow-x: hidden;
-  white-space: nowrap;
-  transition: transform 0.3s ease;
-}
-nav {
-  height: 60px;
-  padding: 0 1rem;
-}
-button {
-  border: none;
-  cursor: pointer;
-}
-.rtl {
-  direction: rtl;
-}
-.ltr {
-  direction: ltr;
+.navbar-container {
+  display: flex;
+  justify-content: center; /* To center horizontally */
+  position: fixed; /* Fixing the position of the container */
+  width: 100%; /* Ensuring it takes the full width of the screen */
+  top: 10px; /* Adjust this value as needed */
+  z-index: 30; /* To keep the z-index high */
 }
 </style>
